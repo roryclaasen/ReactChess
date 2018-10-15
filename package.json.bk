@@ -1,0 +1,34 @@
+{
+	"name": "reactchess",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"start:js": "react-scripts start",
+		"build:js": "react-scripts build",
+		"lint:js": "eslint src/**/*.js",
+		"eject": "react-scripts eject"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/roryclaasen/ReactChess.git"
+	},
+	"author": "Rory Claasen",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/roryclaasen/ReactChess/issues"
+	},
+	"dependencies": {
+		"react": "^16.4.2",
+		"react-dom": "^16.4.2",
+		"react-router-dom": "^4.3.1",
+		"react-scripts": "1.1.5"
+	},
+	"devDependencies": {
+		"babel-eslint": "^10.0.1",
+		"eslint": "^5.6.0",
+		"eslint-config-airbnb": "^17.1.0",
+		"eslint-plugin-import": "^2.14.0",
+		"eslint-plugin-jsx-a11y": "^6.1.1",
+		"eslint-plugin-react": "^7.11.1"
+	}
+}
