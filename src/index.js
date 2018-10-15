@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import 'normalize.css';
+
+import BoardComponent from './client/components/board';
+
 ReactDOM.render(
 	<React.Fragment>
-		<span>App Goes here</span>
+		<BoardComponent />
 	</React.Fragment>,
 	document.getElementById('root')
 );

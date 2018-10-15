@@ -1,0 +1,35 @@
+.chessboard {
+	padding: 1em;
+	border-collapse: collapse;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.chessboard .cell {
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	cursor: default;
+}
+
+.chessboard .cell.piece {
+	background-color: rgb(34, 139, 34);
+	cursor: pointer;
+}
+
+.chessboard .row:nth-child(2n+0) .cell.piece:nth-child(2n+0) {
+	background-color: rgb(50, 205, 50);
+}
+
+.chessboard .row:nth-child(2n+1) .cell.piece:nth-child(2n+1) {
+	background-color: rgb(50, 205, 50);
+}
+
+.chessboard .cell.label {
+	font-weight: bold;
+}
