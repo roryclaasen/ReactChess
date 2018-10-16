@@ -3,8 +3,10 @@ export default class Piece {
 		this.name = name;
 	}
 
-	availableMoves() {
+	/* eslint-disable no-unused-vars */
+	canMove = (x, y, toX, toY) => {
 		const { name } = this.name;
-		throw new Error(`Unimplemented method 'availableMoves()' for ${name}`);
+		// throw new Error(`Unimplemented method 'canMove()' for ${name} ${{ x, y, toX, toY }}`);
+		return false;
 	}
 }

@@ -57,9 +57,17 @@ export default class Board {
 		return undefined;
 	}
 
-	move(x1, y1, x2, y2) {
+	move = (x1, y1, x2, y2) => {
 		if (Number(x1) === Number(x2) && Number(y1) === Number(y2)) return;
 		this.grid[x2][y2] = this.grid[x1][y1];
 		this.grid[x1][y1] = undefined;
+	}
+
+	canMove = (x1, y1, x2, y2) => {
+		if (Number(x1) === Number(x2) && Number(y1) === Number(y2)) return false;
+		const piece = this.grid[x1][y1];
+		if (piece === undefined) return false;
+		// TODO Check if you can take a piece
+		return piece.canMove(x1, y1, x2, y2);
 	}
 }

@@ -62,11 +62,12 @@ class BoardComponent extends Component {
 					const piece = board.pieceAt(x - 1, y - 1);
 					items.push(
 						<td
-							className="cell piece"
+							className="cell grid"
 							key={itemKey}
 						>
 							<SquareComponent
 								move={this.move}
+								canMove={board.canMove}
 								x={x - 1}
 								y={y - 1}
 							>

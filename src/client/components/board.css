@@ -1,5 +1,6 @@
 .chessboard {
-	padding: 1em;
+	margin: 1em;
+	border: 2px solid black;
 	border-collapse: collapse;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -17,20 +18,48 @@
 	cursor: default;
 }
 
-.chessboard .cell.piece {
-	background-color: rgb(34, 139, 34);
+.chessboard .cell.grid {
+	background-color: white;
+	color: black;
 
 	/* cursor: pointer; */
 }
 
-.chessboard .row:nth-child(2n+0) .cell.piece:nth-child(2n+0) {
-	background-color: rgb(50, 205, 50);
+.chessboard .row:not(:first-child) .cell:nth-child(1) {
+	border-right: 2px solid black;
 }
 
-.chessboard .row:nth-child(2n+1) .cell.piece:nth-child(2n+1) {
-	background-color: rgb(50, 205, 50);
+.chessboard .row:first-child .cell:not(:first-child) {
+	border-bottom: 2px solid black;
 }
 
-.chessboard .cell.label {
-	font-weight: bold;
+.chessboard .row:nth-child(2n+0) .cell.grid:nth-child(2n+0),
+.chessboard .row:nth-child(2n+1) .cell.grid:nth-child(2n+1) {
+	background-color: black;
+	color: white;
 }
+
+.chessboard .cell .square,
+.chessboard .cell .piece {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.chessboard .cell .piece { cursor: move; }
+
+.chessboard .cell .square .available {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	opacity: 0.5;
+}
+
+.chessboard .cell .square .available.red { background-color: red; }
+.chessboard .cell .square .available.green { background-color: green; }
+.chessboard .cell .square .available.yellow { background-color: yellow; }
+
+.chessboard .cell.label { font-weight: bold; }

@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 
 const squareTarget = {
+	canDrop(props, monitor) {
+		const item = monitor.getItem();
+		return props.canMove(item.x, item.y, props.x, props.y);
+	},
 	drop(props, monitor) {
 		const item = monitor.getItem();
 		props.move(item.x, item.y, props.x, props.y);
@@ -13,37 +17,26 @@ const squareTarget = {
 function collect(connect, monitor) {
 	return {
 		connectDropTarget: connect.dropTarget(),
-		isOver: monitor.isOver()
+		isOver: monitor.isOver(),
+		canDrop: monitor.canDrop()
 	};
 }
 
 class SquareComponent extends Component {
+	renderOverlay = (type) => {
+		const className = `available ${type}`;
+		return <div className={className} />;
+	}
+
 	render() {
-		const { connectDropTarget, isOver, children } = this.props;
+		const { connectDropTarget, isOver, canDrop, children } = this.props;
 
 		return connectDropTarget(
-			<div
-				style={{
-					position: 'relative',
-					width: '100%',
-					height: '100%'
-				}}
-			>
+			<div className="square">
 				{children}
-				{isOver && (
-					<div
-						style={{
-							position: 'absolute',
-							top: 0,
-							left: 0,
-							height: '100%',
-							width: '100%',
-							zIndex: 1,
-							opacity: 0.5,
-							backgroundColor: 'yellow',
-						}}
-					/>
-				)}
+				{isOver && !canDrop && this.renderOverlay('red')}
+				{!isOver && canDrop && this.renderOverlay('yellow')}
+				{isOver && canDrop && this.renderOverlay('green')}
 			</div>
 		);
 	}
@@ -52,6 +45,7 @@ class SquareComponent extends Component {
 SquareComponent.propTypes = {
 	connectDropTarget: PropTypes.func.isRequired,
 	isOver: PropTypes.bool.isRequired,
+	canDrop: PropTypes.bool.isRequired,
 	children: PropTypes.any.isRequired
 };
 

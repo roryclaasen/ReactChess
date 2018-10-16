@@ -26,21 +26,21 @@ class PieceComponent extends Component {
 	render() {
 		const { piece, connectDragSource, isDragging } = this.props;
 		return connectDragSource(
-			<span
+			<div
+				className="piece"
 				style={{
-					opacity: isDragging ? 0.5 : 1,
-					width: '100%',
-					height: '100%',
-					cursor: 'move'
+					opacity: isDragging ? 0.5 : 1
 				}}
 			>
 				{piece.name}
-			</span>
+			</div>
 		);
 	}
 }
 
 PieceComponent.propTypes = {
+	// x: PropTypes.number.isRequired,
+	// y: PropTypes.number.isRequired,
 	piece: PropTypes.instanceOf(Piece).isRequired,
 	isDragging: PropTypes.bool.isRequired,
 	connectDragSource: PropTypes.func.isRequired
