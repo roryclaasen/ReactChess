@@ -7,7 +7,7 @@ import PieceComponent from './piece';
 import SquareComponent from './boardsquare';
 import Board, { SIZE as BoardSize } from '../../shared/board';
 
-import './board.css';
+import './board.scss';
 
 class BoardComponent extends Component {
 	constructor(props) {

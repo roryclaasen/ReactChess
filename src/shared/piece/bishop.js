@@ -1,8 +1,8 @@
 import Piece from './piece';
 
 class PieceBishop extends Piece {
-	constructor() {
-		super('bishop');
+	constructor(itemType) {
+		super(itemType, 'bishop');
 	}
 
 	canMove = (x, y, toX, toY) => {

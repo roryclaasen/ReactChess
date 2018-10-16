@@ -34,9 +34,9 @@ class SquareComponent extends Component {
 		return connectDropTarget(
 			<div className="square">
 				{children}
-				{isOver && !canDrop && this.renderOverlay('red')}
-				{!isOver && canDrop && this.renderOverlay('yellow')}
-				{isOver && canDrop && this.renderOverlay('green')}
+				{isOver && !canDrop && this.renderOverlay('unplaceable')}
+				{!isOver && canDrop && this.renderOverlay('placeable')}
+				{isOver && canDrop && this.renderOverlay('place')}
 			</div>
 		);
 	}

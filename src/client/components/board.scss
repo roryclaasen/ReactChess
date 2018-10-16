@@ -1,0 +1,102 @@
+$colorGrid: rgb(255, 255, 255);
+$colorGridAlternate: rgb(0, 0, 0);
+
+$colorUnplaceable: rgb(255, 0, 0);
+$colorPlaceable: rgb(255, 255, 0);
+$colorPlace: rgb(0, 255, 0);
+
+$colorPieceWhite: rgb(255, 255, 255);
+$colorPieceBlack: rgb(0, 0, 0);
+
+$colorBorder: rgb(0, 0, 0);
+
+$cellSize: 50px;
+
+.chessboard {
+	margin: 1em;
+	border: 2px solid $colorBorder;
+	border-collapse: collapse;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	.cell {
+		width: $cellSize;
+		height: $cellSize;
+		line-height: $cellSize;
+		text-align: center;
+		cursor: default;
+
+		&.label { font-weight: bold; }
+
+		&.grid {
+			background-color: $colorGrid;
+			color: $colorGridAlternate;
+			padding: 0;
+		}
+
+		.square,
+		.piece {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+
+		.piece {
+			cursor: move;
+			border-radius: 50%;
+			border: 1px solid;
+			max-height: $cellSize;
+			max-width: $cellSize;
+			// top: -1px;
+			// left: -1px;
+			// width: calc(100% - 2px);
+			// height: calc(100% - 2px);
+
+			&.black {
+				background-color: $colorPieceBlack;
+				color: $colorPieceWhite;
+				border-color: $colorPieceWhite;
+			}
+
+			&.white {
+				background-color: $colorPieceWhite;
+				color: $colorPieceBlack;
+				border-color: $colorPieceBlack;
+			}
+		}
+
+		.square .available {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			z-index: 1;
+			opacity: 0.5;
+
+			&.unplaceable { background-color: $colorUnplaceable; }
+			&.place { background-color: $colorPlace; }
+			&.placeable { background-color: $colorPlaceable; }
+		}
+	}
+
+	.row {
+		&:not(:first-child) .cell:nth-child(1) {
+			border-right: 2px solid $colorBorder;
+		}
+
+		&:first-child .cell:not(:first-child) {
+			border-bottom: 2px solid $colorBorder;
+		}
+
+		&:nth-child(2n+0) .cell.grid:nth-child(2n+0),
+		&:nth-child(2n+1) .cell.grid:nth-child(2n+1) {
+			background-color: $colorGridAlternate;
+			color: $colorGrid;
+		}
+	}
+}

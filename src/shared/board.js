@@ -1,5 +1,7 @@
 import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn } from './pieces';
 
+import { ItemTypes } from './constants';
+
 export const SIZE = 8;
 
 export default class Board {
@@ -18,35 +20,35 @@ export default class Board {
 
 		// Pawns
 		for (let x = 0; x < SIZE; x += 1) {
-			grid[x][1] = new PiecePawn();
-			grid[x][6] = new PiecePawn();
+			grid[x][1] = new PiecePawn(ItemTypes.WHITE);
+			grid[x][6] = new PiecePawn(ItemTypes.BLACK);
 		}
 
 		// Rooks
-		grid[0][0] = new PieceRook();
-		grid[7][0] = new PieceRook();
-		grid[0][7] = new PieceRook();
-		grid[7][7] = new PieceRook();
+		grid[0][0] = new PieceRook(ItemTypes.WHITE);
+		grid[7][0] = new PieceRook(ItemTypes.WHITE);
+		grid[0][7] = new PieceRook(ItemTypes.BLACK);
+		grid[7][7] = new PieceRook(ItemTypes.BLACK);
 
 		// Knight
-		grid[1][0] = new PieceKnight();
-		grid[6][0] = new PieceKnight();
-		grid[1][7] = new PieceKnight();
-		grid[6][7] = new PieceKnight();
+		grid[1][0] = new PieceKnight(ItemTypes.WHITE);
+		grid[6][0] = new PieceKnight(ItemTypes.WHITE);
+		grid[1][7] = new PieceKnight(ItemTypes.BLACK);
+		grid[6][7] = new PieceKnight(ItemTypes.BLACK);
 
 		// Bishop
-		grid[2][0] = new PieceBishop();
-		grid[5][0] = new PieceBishop();
-		grid[2][7] = new PieceBishop();
-		grid[5][7] = new PieceBishop();
+		grid[2][0] = new PieceBishop(ItemTypes.WHITE);
+		grid[5][0] = new PieceBishop(ItemTypes.WHITE);
+		grid[2][7] = new PieceBishop(ItemTypes.BLACK);
+		grid[5][7] = new PieceBishop(ItemTypes.BLACK);
 
 		// Queen
-		grid[3][0] = new PieceQueen();
-		grid[3][7] = new PieceQueen();
+		grid[3][0] = new PieceQueen(ItemTypes.WHITE);
+		grid[3][7] = new PieceQueen(ItemTypes.BLACK);
 
 		// King
-		grid[4][0] = new PieceKing();
-		grid[4][7] = new PieceKing();
+		grid[4][0] = new PieceKing(ItemTypes.WHITE);
+		grid[4][7] = new PieceKing(ItemTypes.BLACK);
 
 		return grid;
 	}

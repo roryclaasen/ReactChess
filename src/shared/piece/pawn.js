@@ -1,8 +1,8 @@
 import Piece from './piece';
 
 class PiecePawn extends Piece {
-	constructor() {
-		super('pawn');
+	constructor(itemType) {
+		super(itemType, 'pawn');
 	}
 
 	canMove = (x, y, toX, toY) => {

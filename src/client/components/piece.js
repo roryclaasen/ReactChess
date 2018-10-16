@@ -25,9 +25,10 @@ function collect(connect, monitor) {
 class PieceComponent extends Component {
 	render() {
 		const { piece, connectDragSource, isDragging } = this.props;
+		const className = `piece ${piece.itemType}`;
 		return connectDragSource(
 			<div
-				className="piece"
+				className={className}
 				style={{
 					opacity: isDragging ? 0.5 : 1
 				}}

@@ -1,5 +1,6 @@
 export default class Piece {
-	constructor(name) {
+	constructor(itemType, name) {
+		this.itemType = itemType;
 		this.name = name;
 	}
 
