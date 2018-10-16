@@ -19,7 +19,8 @@
 
 .chessboard .cell.piece {
 	background-color: rgb(34, 139, 34);
-	cursor: pointer;
+
+	/* cursor: pointer; */
 }
 
 .chessboard .row:nth-child(2n+0) .cell.piece:nth-child(2n+0) {

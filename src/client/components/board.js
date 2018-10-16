@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
+
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
+import PieceComponent from './piece';
+import SquareComponent from './boardsquare';
 import Board, { SIZE as BoardSize } from '../../shared/board';
 
 import './board.css';
 
-export default class BoardComponent extends Component {
+class BoardComponent extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			board: new Board()
 		};
+	}
+
+	move = (x1, y1, x2, y2) => {
+		const { board } = this.state;
+		board.move(x1, y1, x2, y2);
+		this.setState({ board });
 	}
 
 	render() {
@@ -47,12 +59,25 @@ export default class BoardComponent extends Component {
 						</td>
 					);
 				} else {
+					const piece = board.pieceAt(x - 1, y - 1);
 					items.push(
 						<td
 							className="cell piece"
 							key={itemKey}
 						>
-							{board.charAt(x - 1, y - 1)}
+							<SquareComponent
+								move={this.move}
+								x={x - 1}
+								y={y - 1}
+							>
+								{piece !== undefined && (
+									<PieceComponent
+										piece={piece}
+										x={x - 1}
+										y={y - 1}
+									/>
+								)}
+							</SquareComponent>
 						</td>
 					);
 				}
@@ -75,3 +100,5 @@ export default class BoardComponent extends Component {
 		);
 	}
 }
+
+export default DragDropContext(HTML5Backend)(BoardComponent);

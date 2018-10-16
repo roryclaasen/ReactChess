@@ -47,12 +47,24 @@ export default class Board {
 		// King
 		grid[4][0] = new PieceKing();
 		grid[4][7] = new PieceKing();
+
 		return grid;
+	}
+
+	pieceAt(x, y) {
+		const piece = this.grid[x][y];
+		if (piece !== undefined) return piece;
+		return undefined;
 	}
 
 	charAt(x, y) {
 		const piece = this.grid[x][y];
 		if (piece !== undefined) return piece.name.substring(0, 2); // TODO TEMP
 		return undefined;
+	}
+
+	move(x1, y1, x2, y2) {
+		this.grid[x2][y2] = this.grid[x1][y1];
+		this.grid[x1][y1] = undefined;
 	}
 }
