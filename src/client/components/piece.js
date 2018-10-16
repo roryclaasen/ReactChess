@@ -9,7 +9,8 @@ const pieceSource = {
 	beginDrag(props) {
 		return {
 			x: props.x,
-			y: props.y
+			y: props.y,
+			piece: props.piece
 		};
 	}
 };
