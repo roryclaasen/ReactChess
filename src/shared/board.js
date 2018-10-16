@@ -69,7 +69,15 @@ export default class Board {
 		if (Number(x1) === Number(x2) && Number(y1) === Number(y2)) return false;
 		const piece = this.grid[x1][y1];
 		if (piece === undefined) return false;
-		// TODO Check if you can take a piece
+
+		const pieceAt = this.grid[x2][y2];
+		if (pieceAt !== undefined) {
+			if (pieceAt.itemType === piece.itemType) return false;
+
+			// TODO Check line of sight
+			// TODO Check if you can take a piece
+			// Pawn, and not check
+		}
 		return piece.canMove(x1, y1, x2, y2);
 	}
 }

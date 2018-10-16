@@ -57,9 +57,10 @@ class BoardComponent extends Component {
 			);
 		}
 		const piece = board.pieceAt(x, y);
+		const cellClassName = `cell grid ${((x + y) % 2 === 1) ? 'black' : 'white'}`;
 		return (
 			<td
-				className="cell grid"
+				className={cellClassName}
 				key={itemKey}
 			>
 				<SquareComponent

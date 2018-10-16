@@ -35,9 +35,17 @@ $border: 2px solid $colorBorder;
 		&.label { font-weight: bold; }
 
 		&.grid {
-			background-color: $colorGrid;
-			color: $colorGridAlternate;
 			padding: 0;
+
+			&.white {
+				background-color: $colorGrid;
+				color: $colorGridAlternate;
+			}
+
+			&.black {
+				background-color: $colorGridAlternate;
+				color: $colorGrid;
+			}
 		}
 
 		.square,
@@ -98,12 +106,6 @@ $border: 2px solid $colorBorder;
 
 		&:last-child .cell:not(:first-child):not(:last-child) {
 			border-top: $border;
-		}
-
-		&:nth-child(2n+0) .cell.grid:nth-child(2n+0),
-		&:nth-child(2n+1) .cell.grid:nth-child(2n+1) {
-			background-color: $colorGridAlternate;
-			color: $colorGrid;
 		}
 	}
 }

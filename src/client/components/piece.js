@@ -18,15 +18,22 @@ const pieceSource = {
 function collect(connect, monitor) {
 	return {
 		connectDragSource: connect.dragSource(),
+		connectDragPreview: connect.dragPreview(),
 		isDragging: monitor.isDragging()
 	};
 }
 
 class PieceComponent extends Component {
-	render() {
-		const { piece, connectDragSource, isDragging } = this.props;
+	// TODO Still picks up the background with this, need to fix
+	// componentDidMount() {
+	// 	const { connectDragPreview } = this.props;
+	// 	connectDragPreview(this.pieceDOM());
+	// }
+
+	pieceDOM = () => {
+		const { piece, isDragging } = this.props;
 		const className = `piece ${piece.itemType}`;
-		return connectDragSource(
+		return (
 			<div
 				className={className}
 				style={{
@@ -36,6 +43,11 @@ class PieceComponent extends Component {
 				{piece.name}
 			</div>
 		);
+	};
+
+	render() {
+		const { connectDragSource } = this.props;
+		return connectDragSource(this.pieceDOM());
 	}
 }
 
@@ -44,7 +56,8 @@ PieceComponent.propTypes = {
 	// y: PropTypes.number.isRequired,
 	piece: PropTypes.instanceOf(Piece).isRequired,
 	isDragging: PropTypes.bool.isRequired,
-	connectDragSource: PropTypes.func.isRequired
+	connectDragSource: PropTypes.func.isRequired,
+	// connectDragPreview: PropTypes.func.isRequired
 };
 
 export default DragSource('piece', pieceSource, collect)(PieceComponent);
