@@ -78,6 +78,6 @@ export default class Board {
 			// TODO Check if you can take a piece
 			// Pawn, and not check
 		}
-		return piece.canMove(x1, y1, x2, y2);
+		return piece.canMove(x1, y1, x2, y2, this.grid);
 	}
 }

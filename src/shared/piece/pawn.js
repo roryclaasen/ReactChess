@@ -7,7 +7,7 @@ class PiecePawn extends Piece {
 		super(itemType, 'pawn');
 	}
 
-	canMove = (x, y, toX, toY) => {
+	canMove = (x, y, toX, toY, grid) => {
 		const dx = toX - x;
 		const dy = toY - y;
 
@@ -16,7 +16,11 @@ class PiecePawn extends Piece {
 
 		// TODO Can move two on first go
 		// TODO Can take diagonal
-		return Math.abs(dy) === 1 && Math.abs(dx) === 0;
+
+		if (Math.abs(dy) === 1 && Math.abs(dx) === 0) {
+			return grid[toX][toY] === undefined;
+		}
+		return false;
 	}
 }
 

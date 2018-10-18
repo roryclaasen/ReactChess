@@ -1,36 +1,35 @@
-$colorGrid: rgb(255, 255, 255);
-$colorGridAlternate: rgb(0, 0, 0);
+$color-grid: rgb(255, 255, 255);
+$color-grid-alternate: rgb(0, 0, 0);
 
-$colorUnplaceable: rgb(255, 0, 0);
-$colorPlaceable: rgb(255, 255, 0);
-$colorPlace: rgb(0, 255, 0);
+$color-unplaceable: rgb(255, 0, 0);
+$color-placeable: rgb(255, 255, 0);
+$color-place: rgb(0, 255, 0);
 
-$colorPieceWhite: rgb(255, 255, 255);
-$colorPieceBlack: rgb(0, 0, 0);
+$color-piece-white: rgb(255, 255, 255);
+$color-piece-black: rgb(0, 0, 0);
 
-$colorBorder: rgb(0, 0, 0);
+$color-border: rgb(0, 0, 0);
 
-$cellSize: 50px;
+$cell-size: 50px;
 
-$border: 2px solid $colorBorder;
+$border: 2px solid $color-border;
 
 .chessboard {
-	margin: 1em;
-	border: $border;
-	border-collapse: collapse;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	border: $border;
+	border-collapse: collapse;
+	margin: 1em;
 	user-select: none;
 
 	.cell {
-		width: $cellSize;
-		height: $cellSize;
-		line-height: $cellSize;
-		text-align: center;
 		cursor: default;
+		height: $cell-size;
+		line-height: $cell-size;
+		text-align: center;
+		width: $cell-size;
 
 		&.label { font-weight: bold; }
 
@@ -38,74 +37,82 @@ $border: 2px solid $colorBorder;
 			padding: 0;
 
 			&.white {
-				background-color: $colorGrid;
-				color: $colorGridAlternate;
+				background-color: $color-grid;
+				color: $color-grid-alternate;
 			}
 
 			&.black {
-				background-color: $colorGridAlternate;
-				color: $colorGrid;
+				background-color: $color-grid-alternate;
+				color: $color-grid;
 			}
 		}
 
 		.square,
 		.piece {
+			height: 100%;
 			position: relative;
 			width: 100%;
-			height: 100%;
 		}
 
 		.piece {
-			cursor: move;
-			border-radius: 50%;
 			border: 1px solid;
-			max-height: $cellSize;
-			max-width: $cellSize;
+			border-radius: 50%;
+			cursor: move;
+			max-height: $cell-size;
+			max-width: $cell-size;
 			// top: -1px;
 			// left: -1px;
 			// width: calc(100% - 2px);
 			// height: calc(100% - 2px);
 
 			&.black {
-				background-color: $colorPieceBlack;
-				color: $colorPieceWhite;
-				border-color: $colorPieceWhite;
+				background-color: $color-piece-black;
+				border-color: $color-piece-white;
+				color: $color-piece-white;
 			}
 
 			&.white {
-				background-color: $colorPieceWhite;
-				color: $colorPieceBlack;
-				border-color: $colorPieceBlack;
+				background-color: $color-piece-white;
+				border-color: $color-piece-black;
+				color: $color-piece-black;
 			}
 		}
 
-		.square .available {
-			position: absolute;
-			top: 0;
-			left: 0;
-			height: 100%;
-			width: 100%;
-			z-index: 1;
-			opacity: 0.5;
+		.square {
+			.available {
+				height: 100%;
+				left: 0;
+				opacity: .5;
+				position: absolute;
+				top: 0;
+				width: 100%;
+				z-index: 1;
 
-			&.unplaceable { background-color: $colorUnplaceable; }
-			&.place { background-color: $colorPlace; }
-			&.placeable { background-color: $colorPlaceable; }
+				&.unplaceable { background-color: $color-unplaceable; }
+				&.place { background-color: $color-place; }
+				&.placeable { background-color: $color-placeable; }
+			}
 		}
 	}
 
 	.row {
-		&:not(:first-child):not(:last-child) .cell {
-			&:first-child { border-right: $border; }
-			&:last-child { border-left: $border; }
+		&:not(:first-child):not(:last-child) {
+			.cell {
+				&:first-child { border-right: $border; }
+				&:last-child { border-left: $border; }
+			}
 		}
 
-		&:first-child .cell:not(:first-child):not(:last-child) {
-			border-bottom: $border;
+		&:first-child {
+			.cell:not(:first-child):not(:last-child) {
+				border-bottom: $border;
+			}
 		}
 
-		&:last-child .cell:not(:first-child):not(:last-child) {
-			border-top: $border;
+		&:last-child {
+			.cell:not(:first-child):not(:last-child) {
+				border-top: $border;
+			}
 		}
 	}
 }
