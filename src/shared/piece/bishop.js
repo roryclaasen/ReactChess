@@ -6,21 +6,12 @@ class PieceBishop extends Piece {
 	}
 
 	canMove = (x, y, toX, toY, grid) => {
-		const dx = Math.abs(toX - x);
-		const dy = Math.abs(toY - y);
-
-		if (dx === dy) {
-			const dir = (toX - x) > 0 ? 1 : -1;
-
-			let clear = true;
-			for (let i = 0; i !== dx; i += 1) {
-				const x1 = x + (i * dir);
-				const y1 = x + (i * dir);
-
-			}
-			return clear;
-		}
-		return false;
+		const dx = toX - x;
+		const dy = toY - y;
+		const path = (Math.abs(dx) === Math.abs(dy));
+		if (grid === undefined || !path) return path;
+		// TODO Add Blocking
+		return path;
 	}
 }
 

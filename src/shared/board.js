@@ -74,7 +74,6 @@ export default class Board {
 		if (pieceAt !== undefined) {
 			if (pieceAt.itemType === piece.itemType) return false;
 
-			// TODO Check line of sight
 			// TODO Check if you can take a piece
 			// Pawn, and not check
 		}

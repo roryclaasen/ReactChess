@@ -5,11 +5,13 @@ class PieceQueen extends Piece {
 		super(itemType, 'queen');
 	}
 
-	canMove = (x, y, toX, toY) => {
+	canMove = (x, y, toX, toY, grid) => {
 		const dx = toX - x;
 		const dy = toY - y;
-
-		return (Math.abs(dx) === Math.abs(dy)) || !(x !== toX && y !== toY);
+		const path = (Math.abs(dx) === Math.abs(dy)) || !(x !== toX && y !== toY);
+		if (grid === undefined || !path) return path;
+		// TODO Add Blocking
+		return path;
 	}
 }
 
