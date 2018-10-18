@@ -14,11 +14,13 @@ class PiecePawn extends Piece {
 		if (this.itemType === ItemTypes.WHITE && dy < 0) return false;
 		if (this.itemType === ItemTypes.BLACK && dy > 0) return false;
 
-		// TODO Can move two on first go
-		// TODO Can take diagonal
+		const moveTwo = y === 1 || y === 6;
 
-		if (Math.abs(dy) === 1 && Math.abs(dx) === 0) {
-			return grid[toX][toY] === undefined;
+		const path = (Math.abs(dy) === 1 || (moveTwo && Math.abs(dy) === 2)) && Math.abs(dx) === 0;
+		if (grid === undefined) return path;
+		if (path) return grid[toX][toY] === undefined;
+		if (Math.abs(dx) === 1 && Math.abs(dy) === 1) {
+			return grid[toX][toY] !== undefined;
 		}
 		return false;
 	}

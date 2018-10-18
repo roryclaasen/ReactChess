@@ -60,7 +60,7 @@ export default class Board {
 	}
 
 	move = (x1, y1, x2, y2) => {
-		if (Number(x1) === Number(x2) && Number(y1) === Number(y2)) return;
+		if (!this.canMove(x1, y1, x2, y2)) return;
 		this.grid[x2][y2] = this.grid[x1][y1];
 		this.grid[x1][y1] = undefined;
 	}
@@ -74,8 +74,7 @@ export default class Board {
 		if (pieceAt !== undefined) {
 			if (pieceAt.itemType === piece.itemType) return false;
 
-			// TODO Check if you can take a piece
-			// Pawn, and not check
+			// TODO Not in Check if move
 		}
 		return piece.canMove(x1, y1, x2, y2, this.grid);
 	}
