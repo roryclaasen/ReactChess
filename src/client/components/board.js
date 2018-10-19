@@ -6,7 +6,8 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import PieceComponent from './piece';
 import SquareComponent from './boardsquare';
-import Board, { SIZE as BoardSize } from '../../shared/board';
+import Board from '../../shared/board';
+import { BoardSize } from '../../shared/constants';
 
 import './board.scss';
 
@@ -65,7 +66,10 @@ class BoardComponent extends Component {
 			>
 				<SquareComponent
 					move={this.move}
-					canMove={board.canMove}
+					canMove={(x1, y1, x2, y2) => {
+						if (board.isTurn(x1, y1)) return board.canMove(x1, y1, x2, y2);
+						return false;
+					}}
 					x={x}
 					y={y}
 				>

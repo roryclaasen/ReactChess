@@ -1,16 +1,13 @@
 import Piece from './piece';
+import { King as moveLogic } from '../piece.logic';
+import { PieceTypes } from '../constants';
 
 class PieceKing extends Piece {
 	constructor(itemType) {
-		super(itemType, 'king');
+		super(itemType, PieceTypes.KING);
 	}
 
-	canMove = (x, y, toX, toY) => {
-		const dx = toX - x;
-		const dy = toY - y;
-
-		return !(Math.abs(dx) > 1 || Math.abs(dy) > 1);
-	}
+	canMove = (x, y, toX, toY) => moveLogic(x, y, toX, toY);
 }
 
 export default PieceKing;

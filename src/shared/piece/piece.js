@@ -1,12 +1,12 @@
 export default class Piece {
-	constructor(itemType, name) {
+	constructor(itemType, pieceType) {
 		this.itemType = itemType;
-		this.name = name;
+		this.pieceType = pieceType;
 	}
 
 	/* eslint-disable no-unused-vars */
 	canMove = (x, y, toX, toY, grid) => {
-		const { name } = this.name;
+		const { pieceType } = this.pieceType;
 		// throw new Error(`Unimplemented method 'canMove()' for ${name} ${{ x, y, toX, toY }}`);
 		return false;
 	}

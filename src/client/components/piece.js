@@ -40,7 +40,7 @@ class PieceComponent extends Component {
 					opacity: isDragging ? 0.5 : 1
 				}}
 			>
-				{piece.name}
+				{piece.pieceType}
 			</div>
 		);
 	};
