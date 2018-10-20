@@ -4,30 +4,16 @@ import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import PieceComponent from './piece';
-import SquareComponent from './boardsquare';
-import Board from '../../shared/board';
-import { BoardSize } from '../../shared/constants';
+import PieceComponent from './board.piece';
+import SquareComponent from './board.square';
+import Board from '../../../shared/board';
+import { BoardSize } from '../../../shared/constants';
 
 import './board.scss';
 
 class BoardComponent extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			board: new Board()
-		};
-	}
-
-	move = (x1, y1, x2, y2) => {
-		const { board } = this.state;
-		board.move(x1, y1, x2, y2);
-		this.setState({ board });
-	}
-
 	makeItem(x, y) {
-		const { board } = this.state;
+		const { board, move } = this.props;
 		const itemKey = `${x},${y}`;
 		if ((y === -1 && (x === -1 || x === BoardSize)) || (y === BoardSize && (x === -1 || x === BoardSize))) {
 			return (
@@ -65,7 +51,7 @@ class BoardComponent extends Component {
 				key={itemKey}
 			>
 				<SquareComponent
-					move={this.move}
+					move={move}
 					canMove={(x1, y1, x2, y2) => {
 						if (board.isTurn(x1, y1)) return board.canMove(x1, y1, x2, y2);
 						return false;
@@ -124,7 +110,9 @@ class BoardComponent extends Component {
 }
 
 BoardComponent.propTypes = {
-	fliped: PropTypes.bool
+	fliped: PropTypes.bool,
+	board: PropTypes.instanceOf(Board).isRequired,
+	move: PropTypes.func.isRequired
 };
 
 BoardComponent.defaultProps = {

@@ -43,7 +43,10 @@ export function Pawn(x, y, toX, toY, grid, itemType) {
 
 	const path = (Math.abs(dy) === 1 || (moveTwo && Math.abs(dy) === 2)) && Math.abs(dx) === 0;
 	if (grid === undefined) return path;
-	if (path) return grid[toX][toY] === undefined;
+	if (path) {
+		// TODO Fix jump over piece on start
+		return grid[toX][toY] === undefined;
+	}
 	if (Math.abs(dx) === 1 && Math.abs(dy) === 1) {
 		return grid[toX][toY] !== undefined;
 	}

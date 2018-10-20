@@ -2,12 +2,40 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import 'normalize.css';
+import './index.scss';
 
-import BoardComponent from './client/components/board';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+import MainApp from './client/components/app';
+
+const theme = createMuiTheme({
+	typography: {
+		useNextVariants: true,
+		fontFamily: '\'Roboto Slab\', serif'
+	},
+	palette: {
+		primary: {
+			light: '#757de8',
+			main: '#3f51b5',
+			dark: '#002984',
+			contrastText: '#fff',
+		},
+		secondary: {
+			light: '#fff350',
+			main: '#ffc107',
+			dark: '#c79100',
+			contrastText: '#000',
+		}
+	}
+});
 
 ReactDOM.render(
 	<React.Fragment>
-		<BoardComponent />
+		<CssBaseline />
+		<MuiThemeProvider theme={theme}>
+			<MainApp />
+		</MuiThemeProvider>
 	</React.Fragment>,
 	document.getElementById('root')
 );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { DragSource } from 'react-dnd';
 
-import Piece from '../../shared/piece/piece';
+import Piece from '../../../shared/piece/piece';
 
 const pieceSource = {
 	beginDrag(props) {

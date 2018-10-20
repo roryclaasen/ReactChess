@@ -115,7 +115,9 @@ export default class Board {
 		this.grid[x2][y2] = this.grid[x1][y1];
 		this.grid[x1][y1] = undefined;
 
+		// eslint-disable-next-line
 		if (this.isCheckMate(ItemTypes.WHITE, this.grid)) console.log('Checkmate', ItemTypes.WHITE);
+		// eslint-disable-next-line
 		if (this.isCheckMate(ItemTypes.BLACK, this.grid)) console.log('Checkmate', ItemTypes.BLACK);
 
 		this.current = this.current === ItemTypes.WHITE ? ItemTypes.BLACK : ItemTypes.WHITE;
