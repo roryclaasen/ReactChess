@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
+import GithubCorner from 'react-github-corner';
+
 import Board from '../../shared/board';
 import BoardRenderer from './board/board.renderer';
 
@@ -32,6 +34,13 @@ export default class MainApp extends Component {
 						/>
 					</Grid>
 				</Grid>
+				<GithubCorner
+					href="https://github.com/roryclaasen/ReactChess"
+					bannerColor="#000"
+					octoColor="#fff"
+					size={100}
+					direction="right"
+				/>
 			</Fragment>
 		);
 	}
