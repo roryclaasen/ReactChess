@@ -7,3 +7,11 @@ cache:
 script:
   - npm run lint
   - npm run build:js
+deploy:
+  provider: heroku
+  api_key:
+    secure: $HEROKU_TOKEN
+  app: 
+    master: chessreact
+    develop: chessreact-dev
+  skip_cleanup: true
