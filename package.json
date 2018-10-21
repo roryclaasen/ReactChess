@@ -31,6 +31,7 @@
 		"sass-lint": "^1.12.1"
 	},
 	"scripts": {
+		"start": "npm run start:js",
 		"start:js": "react-app-rewired start",
 		"build:js": "react-app-rewired build",
 		"lint:sass": "sass-lint -v",
