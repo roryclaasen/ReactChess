@@ -36,7 +36,7 @@ export default class MainApp extends Component {
 				</Grid>
 				<GithubCorner
 					href="https://github.com/roryclaasen/ReactChess"
-					bannerColor="#000"
+					bannerColor="rgba(0, 0, 0, 0.5)"
 					octoColor="#fff"
 					size={100}
 					direction="right"

@@ -48,32 +48,26 @@ $border: 2px solid $color-border;
 			}
 		}
 
-		.square,
 		.piece {
-			height: 100%;
-			position: relative;
-			width: 100%;
-		}
-
-		.piece {
-			border: 1px solid;
-			border-radius: 50%;
 			cursor: move;
 
-			&.black {
-				background-color: $color-piece-black;
-				border-color: $color-piece-white;
-				color: $color-piece-white;
-			}
+			height: $cell-size;
+			width: $cell-size;
 
-			&.white {
-				background-color: $color-piece-white;
-				border-color: $color-piece-black;
-				color: $color-piece-black;
+			img {
+				left: 50%;
+				margin: 0;
+				position: absolute;
+				top: 50%;
+				transform: translate(-50%, -50%);
 			}
 		}
 
 		.square {
+			height: 100%;
+			position: relative;
+			width: 100%;
+
 			.available {
 				height: 100%;
 				left: 0;

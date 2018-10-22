@@ -5,6 +5,8 @@ import { DragSource } from 'react-dnd';
 
 import Piece from '../../../shared/piece/piece';
 
+import { makeImage as PieceImage, getUrl as GetPieceUrl } from '../../pieces';
+
 const pieceSource = {
 	beginDrag(props) {
 		return {
@@ -23,24 +25,29 @@ function collect(connect, monitor) {
 	};
 }
 
+
 class PieceComponent extends Component {
-	// TODO Still picks up the background with this, need to fix
-	// componentDidMount() {
-	// 	const { connectDragPreview } = this.props;
-	// 	connectDragPreview(this.pieceDOM());
-	// }
+	componentDidMount() {
+		const { connectDragPreview, piece } = this.props;
+		const image = PieceImage(piece.itemType, piece.pieceType, 0.5);
+		image.onload = () => connectDragPreview(image);
+	}
 
 	pieceDOM = () => {
 		const { piece, isDragging } = this.props;
 		const className = `piece ${piece.itemType}`;
+
 		return (
 			<div
 				className={className}
 				style={{
-					opacity: isDragging ? 0.5 : 1
+					opacity: isDragging ? 0.3 : 1
 				}}
 			>
-				{piece.pieceType}
+				<img
+					src={GetPieceUrl(piece.itemType, piece.pieceType, 0.5)}
+					alt="gamePiece"
+				/>
 			</div>
 		);
 	};
@@ -57,7 +64,7 @@ PieceComponent.propTypes = {
 	piece: PropTypes.instanceOf(Piece).isRequired,
 	isDragging: PropTypes.bool.isRequired,
 	connectDragSource: PropTypes.func.isRequired,
-	// connectDragPreview: PropTypes.func.isRequired
+	connectDragPreview: PropTypes.func.isRequired
 };
 
 export default DragSource('piece', pieceSource, collect)(PieceComponent);

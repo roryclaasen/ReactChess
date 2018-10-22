@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Board from '../../../shared/board';
 import BoardComponent from './board.table';
+import { WinnerState } from '../../../shared/constants';
 
 export default class BoardRenderer extends Component {
 	constructor(props) {
@@ -31,8 +32,12 @@ export default class BoardRenderer extends Component {
 
 	currentMessage = () => {
 		const { board } = this.props;
-		const message = `It's ${board.current}'s turn`;
-		// TODO change message to reflect board state
+		let message = `It's ${board.current}'s turn`;
+
+		if (board.winner) {
+			if (board.winner === WinnerState.STALEMATE) message = 'Stalemate!';
+			else message = `Checkmate! ${board.winner} wins!`;
+		}
 		return message;
 	}
 

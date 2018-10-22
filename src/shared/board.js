@@ -1,6 +1,6 @@
 import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn } from './pieces';
 
-import { ItemTypes, PieceTypes, BoardSize } from './constants';
+import { ItemTypes, PieceTypes, BoardSize, WinnerState } from './constants';
 
 
 export default class Board {
@@ -115,15 +115,18 @@ export default class Board {
 		this.grid[x2][y2] = this.grid[x1][y1];
 		this.grid[x1][y1] = undefined;
 
-		// eslint-disable-next-line
-		if (this.isCheckMate(ItemTypes.WHITE, this.grid)) console.log('Checkmate', ItemTypes.WHITE);
-		// eslint-disable-next-line
-		if (this.isCheckMate(ItemTypes.BLACK, this.grid)) console.log('Checkmate', ItemTypes.BLACK);
-
-		this.current = this.current === ItemTypes.WHITE ? ItemTypes.BLACK : ItemTypes.WHITE;
+		if (this.isCheckMate(ItemTypes.WHITE, this.grid)) {
+			this.winner = WinnerState.BLACK;
+		}
+		if (this.isCheckMate(ItemTypes.BLACK, this.grid)) {
+			if (this.winner === WinnerState.BLACK) this.winner = WinnerState.STALEMATE;
+			else this.winner = WinnerState.WHITE;
+		}
+		if (this.winner === undefined) this.current = this.current === ItemTypes.WHITE ? ItemTypes.BLACK : ItemTypes.WHITE;
 	}
 
 	isTurn = (x, y) => {
+		if (this.winner) return false;
 		const piece = this.grid[x][y];
 		if (piece === undefined) return false;
 		return piece.itemType === this.current;

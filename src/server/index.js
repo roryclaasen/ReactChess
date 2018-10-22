@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/license', (req, res) => {
-	res.sendFile(path.join(root, 'LICENSE.md'));
+	res.sendFile(path.join(root, 'LICENSE'));
 });
 
 server.listen(port, () => {
