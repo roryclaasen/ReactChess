@@ -26,6 +26,7 @@
 		"operator-linebreak": ["error", "none"],
 		"object-curly-newline": "off",
 		"prefer-destructuring": ["error", {"object": true, "array": false}],
+		"import/extensions": ["off", "never"],
 		"react/jsx-filename-extension": "off",
 		"react/jsx-indent": ["error", "tab"],
 		"react/jsx-indent-props": ["error", "tab"],
