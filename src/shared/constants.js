@@ -1,15 +1,24 @@
 export const PieceColors = {
-	BLACK: 'black',
-	WHITE: 'white'
+	BLACK: 'BLACK',
+	WHITE: 'WHITE'
 };
 
 export const PieceTypes = {
-	KING: 'king',
-	QUEEN: 'queen',
-	BISHOP: 'bishop',
-	KNIGHT: 'knight',
-	ROOK: 'rook',
-	PAWN: 'pawn'
+	KING: 'KING',
+	QUEEN: 'QUEEN',
+	BISHOP: 'BISHOP',
+	KNIGHT: 'KNIGHT',
+	ROOK: 'ROOK',
+	PAWN: 'PAWN'
+};
+
+export const PieceNotation = {
+	KING: 'K',
+	QUEEN: 'Q',
+	BISHOP: 'B',
+	KNIGHT: 'N',
+	ROOK: 'R',
+	CAPTURE: 'x'
 };
 
 export const WinnerState = {
@@ -23,5 +32,6 @@ export const BoardSize = 8;
 export default {
 	PieceColors,
 	PieceTypes,
+	PieceNotation,
 	BoardSize
 };

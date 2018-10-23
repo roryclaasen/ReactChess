@@ -34,7 +34,7 @@ const Source = {
 export default Source;
 
 export function getUrl(color, type) {
-	return Source[color.toUpperCase()][type.toUpperCase()];
+	return Source[color][type];
 }
 
 export function makeImage(color, type) {

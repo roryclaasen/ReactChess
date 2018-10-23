@@ -1,6 +1,7 @@
 import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn } from './pieces';
 
 import { PieceColors, PieceTypes, BoardSize, WinnerState } from './constants';
+import Move from './move';
 
 
 export default class Board {
@@ -8,6 +9,7 @@ export default class Board {
 		this.grid = this.blankGrid();
 		this.current = PieceColors.WHITE;
 		this.winner = undefined;
+		this.moves = [];
 	}
 
 	blankGrid = () => {
@@ -112,6 +114,13 @@ export default class Board {
 
 	move = (x1, y1, x2, y2) => {
 		if (!this.isTurn(x1, y1) || !this.canMove(x1, y1, x2, y2, this.grid, true)) return;
+
+		const piece = this.grid[x1][y1];
+		const capture = this.grid[x2][y2];
+
+		if (piece.color === PieceColors.WHITE) this.moves.push(new Move());
+		this.moves[this.moves.length - 1].add(piece, { x: x1, y: y1 }, { x: x2, y: y2 }, capture);
+
 		this.grid[x2][y2] = this.grid[x1][y1];
 		this.grid[x1][y1] = undefined;
 

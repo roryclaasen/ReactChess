@@ -11,38 +11,19 @@ import BoardComponent from './board.table';
 import { WinnerState } from '../../../shared/constants';
 
 export default class BoardRenderer extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			update: 0
-		};
-	}
-
-	move = (x1, y1, x2, y2) => {
-		const { board } = this.props;
-		const { update } = this.state;
-
-		board.move(x1, y1, x2, y2);
-
-		this.setState({
-			update: update + 1
-		});
-	}
-
 	currentMessage = () => {
 		const { board } = this.props;
-		let message = `It's ${board.current}'s turn`;
+		let message = `It's ${board.current.toLowerCase()}'s turn`;
 
 		if (board.winner) {
 			if (board.winner === WinnerState.STALEMATE) message = 'Stalemate!';
-			else message = `Checkmate! ${board.winner} wins!`;
+			else message = `Checkmate! ${board.winner.toLowerCase()} wins!`;
 		}
 		return message;
 	}
 
 	render() {
-		const { board } = this.props;
+		const { board, move } = this.props;
 
 		return (
 			<Grid
@@ -68,7 +49,7 @@ export default class BoardRenderer extends Component {
 					<Card>
 						<BoardComponent
 							board={board}
-							move={this.move}
+							move={move}
 						/>
 					</Card>
 				</Grid>
@@ -78,5 +59,6 @@ export default class BoardRenderer extends Component {
 }
 
 BoardRenderer.propTypes = {
-	board: PropTypes.instanceOf(Board).isRequired
+	board: PropTypes.instanceOf(Board).isRequired,
+	move: PropTypes.func.isRequired
 };
