@@ -61,7 +61,7 @@ export default class GameBoard extends Component {
 	}
 
 	render() {
-		const { board } = this.props;
+		const { board, newGame } = this.props;
 		const { update } = this.state;
 		return (
 			<Grid
@@ -96,6 +96,7 @@ export default class GameBoard extends Component {
 								size="small"
 								color="secondary"
 								variant="outlined"
+								onClick={newGame}
 							>
 								New Game
 							</Button>
@@ -103,6 +104,7 @@ export default class GameBoard extends Component {
 								size="small"
 								color="primary"
 								variant="outlined"
+								disabled
 							>
 								Main Menu
 							</Button>
@@ -122,5 +124,10 @@ export default class GameBoard extends Component {
 }
 
 GameBoard.propTypes = {
-	board: PropTypes.instanceOf(Board).isRequired
+	board: PropTypes.instanceOf(Board).isRequired,
+	newGame: PropTypes.func
+};
+
+GameBoard.defaultProps = {
+	newGame: undefined
 };

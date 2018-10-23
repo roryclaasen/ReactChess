@@ -31,6 +31,7 @@ export default class MainApp extends Component {
 					<Grid item>
 						<GameBoard
 							board={board}
+							newGame={() => this.setState({ board: new Board() })}
 						/>
 					</Grid>
 				</Grid>
