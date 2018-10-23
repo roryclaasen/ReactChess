@@ -1,12 +1,6 @@
-export const ItemTypes = {
+export const PieceColors = {
 	BLACK: 'black',
 	WHITE: 'white'
-};
-
-export const WinnerState = {
-	BLACK: ItemTypes.BLACK,
-	WHITE: ItemTypes.WHITE,
-	STALEMATE: 'stalemate'
 };
 
 export const PieceTypes = {
@@ -18,10 +12,16 @@ export const PieceTypes = {
 	PAWN: 'pawn'
 };
 
+export const WinnerState = {
+	BLACK: PieceColors.BLACK,
+	WHITE: PieceColors.WHITE,
+	STALEMATE: 'stalemate'
+};
+
 export const BoardSize = 8;
 
 export default {
-	ItemTypes,
+	PieceColors,
 	PieceTypes,
 	BoardSize
 };

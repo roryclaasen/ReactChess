@@ -1,107 +1,19 @@
-$color-grid: rgb(255, 255, 255);
-$color-grid-alternate: rgb(0, 0, 0);
+@import 'vars';
+@import 'table';
 
-$color-unplaceable: rgb(255, 0, 0);
-$color-placeable: rgb(255, 255, 0);
-$color-place: rgb(0, 255, 0);
+.game-info-panel {
+	height: 100%;
+	position: relative;
+	width: $panel-width;
 
-$color-piece-white: rgb(255, 255, 255);
-$color-piece-black: rgb(0, 0, 0);
+	.panel-actions {
+		bottom: 16px;
+		position: absolute;
+		width: 100%;
 
-$color-border: rgb(0, 0, 0);
-
-$cell-size: 50px;
-
-$border: 2px solid $color-border;
-
-.chessboard {
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	// border: $border;
-	border-collapse: collapse;
-	font-family: 'Noto Serif', serif;
-	// margin: 1em;
-	user-select: none;
-
-	.cell {
-		cursor: default;
-		height: $cell-size;
-		line-height: $cell-size;
-		text-align: center;
-		width: $cell-size;
-
-		&.label { font-weight: bold; }
-
-		&.grid {
-			padding: 0;
-
-			&.white {
-				background-color: $color-grid;
-				color: $color-grid-alternate;
-			}
-
-			&.black {
-				background-color: $color-grid-alternate;
-				color: $color-grid;
-			}
-		}
-
-		.piece {
-			cursor: move;
-
-			height: $cell-size;
-			width: $cell-size;
-
-			img {
-				left: 50%;
-				margin: 0;
-				position: absolute;
-				top: 50%;
-				transform: translate(-50%, -50%);
-			}
-		}
-
-		.square {
-			height: 100%;
-			position: relative;
-			width: 100%;
-
-			.available {
-				height: 100%;
-				left: 0;
-				opacity: .5;
-				position: absolute;
-				top: 0;
-				width: 100%;
-				z-index: 1;
-
-				&.unplaceable { background-color: $color-unplaceable; }
-				&.place { background-color: $color-place; }
-				&.placeable { background-color: $color-placeable; }
-			}
-		}
-	}
-
-	.row {
-		&:not(:first-child):not(:last-child) {
-			.cell {
-				&:first-child { border-right: $border; }
-				&:last-child { border-left: $border; }
-			}
-		}
-
-		&:first-child {
-			.cell:not(:first-child):not(:last-child) {
-				border-bottom: $border;
-			}
-		}
-
-		&:last-child {
-			.cell:not(:first-child):not(:last-child) {
-				border-top: $border;
-			}
+		button {
+			margin: auto;
 		}
 	}
 }
+

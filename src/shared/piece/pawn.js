@@ -3,11 +3,11 @@ import { Pawn as moveLogic } from '../piece.logic';
 import { PieceTypes } from '../constants';
 
 class PiecePawn extends Piece {
-	constructor(itemType) {
-		super(itemType, PieceTypes.PAWN);
+	constructor(color) {
+		super(color, PieceTypes.PAWN);
 	}
 
-	canMove = (x, y, toX, toY, grid) => moveLogic(x, y, toX, toY, grid, this.itemType);
+	canMove = (x, y, toX, toY, grid) => moveLogic(x, y, toX, toY, grid, this.color);
 }
 
 export default PiecePawn;

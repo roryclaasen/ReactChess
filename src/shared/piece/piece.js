@@ -1,7 +1,7 @@
 export default class Piece {
-	constructor(itemType, pieceType) {
-		this.itemType = itemType;
-		this.pieceType = pieceType;
+	constructor(color, type) {
+		this.color = color;
+		this.type = type;
 	}
 
 	/* eslint-disable no-unused-vars */

@@ -29,23 +29,23 @@ function collect(connect, monitor) {
 class PieceComponent extends Component {
 	componentDidMount() {
 		const { connectDragPreview, piece } = this.props;
-		const image = PieceImage(piece.itemType, piece.pieceType, 0.5);
+		const image = PieceImage(piece.color, piece.type, 0.5);
 		image.onload = () => connectDragPreview(image);
 	}
 
 	pieceDOM = () => {
 		const { piece, isDragging } = this.props;
-		const className = `piece ${piece.itemType}`;
+		const className = `piece ${piece.type}`;
 
 		return (
 			<div
 				className={className}
 				style={{
-					opacity: isDragging ? 0.3 : 1
+					opacity: isDragging ? 0.25 : 1
 				}}
 			>
 				<img
-					src={GetPieceUrl(piece.itemType, piece.pieceType, 0.5)}
+					src={GetPieceUrl(piece.color, piece.type)}
 					alt="gamePiece"
 				/>
 			</div>

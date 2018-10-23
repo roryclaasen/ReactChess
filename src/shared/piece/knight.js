@@ -3,8 +3,8 @@ import { Knight as moveLogic } from '../piece.logic';
 import { PieceTypes } from '../constants';
 
 class PieceKnight extends Piece {
-	constructor(itemType) {
-		super(itemType, PieceTypes.KNIGHT);
+	constructor(color) {
+		super(color, PieceTypes.KNIGHT);
 	}
 
 	canMove = (x, y, toX, toY) => moveLogic(x, y, toX, toY);

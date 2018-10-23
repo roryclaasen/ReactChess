@@ -1,4 +1,4 @@
-import { ItemTypes } from './constants';
+import { PieceColors } from './constants';
 
 export function Bishop(x, y, toX, toY, grid) {
 	const dx = toX - x;
@@ -32,19 +32,21 @@ export function Knight(x, y, toX, toY) {
 	return (Math.abs(dx) === 2 && Math.abs(dy) === 1) || (Math.abs(dx) === 1 && Math.abs(dy) === 2);
 }
 
-export function Pawn(x, y, toX, toY, grid, itemType) {
+export function Pawn(x, y, toX, toY, grid, color) {
 	const dx = toX - x;
 	const dy = toY - y;
 
-	if (itemType === ItemTypes.WHITE && dy < 0) return false;
-	if (itemType === ItemTypes.BLACK && dy > 0) return false;
+	if (color === PieceColors.WHITE && dy < 0) return false;
+	if (color === PieceColors.BLACK && dy > 0) return false;
 
 	const moveTwo = y === 1 || y === 6;
 
 	const path = (Math.abs(dy) === 1 || (moveTwo && Math.abs(dy) === 2)) && Math.abs(dx) === 0;
 	if (grid === undefined) return path;
 	if (path) {
-		// TODO Fix jump over piece on start
+		if (Math.abs(dy) === 2) {
+			if (grid[toX][toY + (dy < 0 ? 1 : -1)] !== undefined) return false;
+		}
 		return grid[toX][toY] === undefined;
 	}
 	if (Math.abs(dx) === 1 && Math.abs(dy) === 1) {

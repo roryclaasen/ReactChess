@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import GithubCorner from 'react-github-corner';
 
 import Board from '../../shared/board';
-import BoardRenderer from './board/board.renderer';
+import GameBoard from './board';
 
 export default class MainApp extends Component {
 	constructor(props) {
@@ -29,7 +29,7 @@ export default class MainApp extends Component {
 					className="grid-main"
 				>
 					<Grid item>
-						<BoardRenderer
+						<GameBoard
 							board={board}
 						/>
 					</Grid>
