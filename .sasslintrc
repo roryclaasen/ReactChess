@@ -1,0 +1,11 @@
+{
+	"files": {
+		"include": "src/**/*.scss"
+	},
+	"rules": {
+		"indentation": [2, { "size": "tab" }],
+		"no-vendor-prefixes": [0],
+		"force-pseudo-nesting": [0],
+		"nesting-depth": [0]
+	}
+}

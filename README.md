@@ -4,8 +4,8 @@
 
 | Branch | Travis CI | Server |
 |:-------|:----------|:-------|
-| [Production](https://github.com/roryclaasen/ReactChess/tree/master) | [![Build Status][CI-MASTER]](https://travis-ci.com/roryclaasen/ReactChess) | N/A |
-| [Develop](https://github.com/roryclaasen/ReactChess/tree/develop) | [![Build Status][CI-DEVELOP]](https://travis-ci.com/roryclaasen/ReactChess) | N/A |
+| [Production](https://github.com/roryclaasen/ReactChess/tree/master) | [![Build Status][CI-MASTER]](https://travis-ci.com/roryclaasen/ReactChess) | [Heroku](https://chessreact.herokuapp.com) |
+| [Develop](https://github.com/roryclaasen/ReactChess/tree/develop) | [![Build Status][CI-DEVELOP]](https://travis-ci.com/roryclaasen/ReactChess) | [Heroku](https://chessreact-dev.herokuapp.com) |
 
 ## License
 

@@ -1,0 +1,39 @@
+@import 'vars';
+@import 'table';
+
+.game-info-panel {
+	height: 100%;
+	position: relative;
+	width: $panel-width;
+
+	.panel-actions {
+		bottom: 0;
+		margin-bottom: 4px;
+		position: absolute;
+		width: 100%;
+
+		@media (min-width: 600px) {
+			margin-bottom: 12px;
+		}
+
+		button {
+			margin: auto;
+		}
+	}
+
+	.list {
+		max-height: $panel-width;
+		overflow-y: auto;
+
+		.item {
+			padding-bottom: 4px;
+			padding-left: 0;
+			padding-top: 4px;
+
+			.text {
+				width: 50%;
+			}
+		}
+	}
+}
+
