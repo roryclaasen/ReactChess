@@ -1,3 +1,19 @@
+@mixin grid($color, $alternate) {
+	.cell {
+		&.grid {
+			&.white {
+				background-color: $color;
+				color: $alternate;
+			}
+
+			&.black {
+				background-color: $alternate;
+				color: $color;
+			}
+		}
+	}
+}
+
 .chessboard {
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -8,6 +24,10 @@
 	font-family: 'Noto Serif', serif;
 	// margin: 1em;
 	user-select: none;
+
+	&.default { @include grid($color-grid, $color-grid-alternate); }
+	&.brown { @include grid($color-grid-brown, $color-grid-brown-alternate); }
+	&.gray { @include grid($color-grid-gray, $color-grid-gray-alternate); }
 
 	.cell {
 		cursor: default;
@@ -20,16 +40,6 @@
 
 		&.grid {
 			padding: 0;
-
-			&.white {
-				background-color: $color-grid;
-				color: $color-grid-alternate;
-			}
-
-			&.black {
-				background-color: $color-grid-alternate;
-				color: $color-grid;
-			}
 		}
 
 		.piece {

@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Board from '../../../shared/board';
 import BoardComponent from './board.table';
 import { WinnerState } from '../../../shared/constants';
+import Options from '../../options.client';
 
 export default class BoardRenderer extends Component {
 	currentMessage = () => {
@@ -23,7 +24,7 @@ export default class BoardRenderer extends Component {
 	}
 
 	render() {
-		const { board, move } = this.props;
+		const { board, move, options } = this.props;
 
 		return (
 			<Grid
@@ -50,6 +51,7 @@ export default class BoardRenderer extends Component {
 						<BoardComponent
 							board={board}
 							move={move}
+							options={options}
 						/>
 					</Card>
 				</Grid>
@@ -60,5 +62,6 @@ export default class BoardRenderer extends Component {
 
 BoardRenderer.propTypes = {
 	board: PropTypes.instanceOf(Board).isRequired,
-	move: PropTypes.func.isRequired
+	move: PropTypes.func.isRequired,
+	options: PropTypes.instanceOf(Options).isRequired
 };

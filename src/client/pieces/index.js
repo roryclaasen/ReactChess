@@ -1,40 +1,50 @@
-import BlackBishop from './b_bishop.png';
-import BlackKing from './b_king.png';
-import BlackKnight from './b_knight.png';
-import BlackQueen from './b_queen.png';
-import BlackPawn from './b_pawn.png';
-import BlackRook from './b_rook.png';
+import DefaultBlackBishop from './default/b_bishop.png';
+import DefaultBlackKing from './default/b_king.png';
+import DefaultBlackKnight from './default/b_knight.png';
+import DefaultBlackQueen from './default/b_queen.png';
+import DefaultBlackPawn from './default/b_pawn.png';
+import DefaultBlackRook from './default/b_rook.png';
 
-import WhiteBishop from './w_bishop.png';
-import WhiteKing from './w_king.png';
-import WhiteKnight from './w_knight.png';
-import WhiteQueen from './w_queen.png';
-import WhitePawn from './w_pawn.png';
-import WhiteRook from './w_rook.png';
+import DefaultWhiteBishop from './default/w_bishop.png';
+import DefaultWhiteKing from './default/w_king.png';
+import DefaultWhiteKnight from './default/w_knight.png';
+import DefaultWhiteQueen from './default/w_queen.png';
+import DefaultWhitePawn from './default/w_pawn.png';
+import DefaultWhiteRook from './default/w_rook.png';
 
-const Source = {
+const Default = {
 	BLACK: {
-		BISHOP: BlackBishop,
-		KING: BlackKing,
-		KNIGHT: BlackKnight,
-		QUEEN: BlackQueen,
-		PAWN: BlackPawn,
-		ROOK: BlackRook
+		BISHOP: DefaultBlackBishop,
+		KING: DefaultBlackKing,
+		KNIGHT: DefaultBlackKnight,
+		QUEEN: DefaultBlackQueen,
+		PAWN: DefaultBlackPawn,
+		ROOK: DefaultBlackRook
 	},
 	WHITE: {
-		BISHOP: WhiteBishop,
-		KING: WhiteKing,
-		KNIGHT: WhiteKnight,
-		QUEEN: WhiteQueen,
-		PAWN: WhitePawn,
-		ROOK: WhiteRook
+		BISHOP: DefaultWhiteBishop,
+		KING: DefaultWhiteKing,
+		KNIGHT: DefaultWhiteKnight,
+		QUEEN: DefaultWhiteQueen,
+		PAWN: DefaultWhitePawn,
+		ROOK: DefaultWhiteRook
 	}
 };
 
+const Source = {
+	Default
+};
+
+let current = Source.Default;
+
 export default Source;
 
+export function ChangeCurrent(style) {
+	if (style in Source) current = Source[style];
+}
+
 export function getUrl(color, type) {
-	return Source[color][type];
+	return current[color][type];
 }
 
 export function makeImage(color, type) {

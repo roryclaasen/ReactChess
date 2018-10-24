@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,6 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import BoardRenderer from './board.renderer';
 import Board from '../../../shared/board';
+import Options from '../../options.client';
 
 export default class GameBoard extends Component {
 	constructor(props) {
@@ -61,7 +61,7 @@ export default class GameBoard extends Component {
 	}
 
 	render() {
-		const { board, newGame } = this.props;
+		const { board, children, options } = this.props;
 		const { update } = this.state;
 		return (
 			<Grid
@@ -92,22 +92,7 @@ export default class GameBoard extends Component {
 						<CardActions
 							className="panel-actions"
 						>
-							<Button
-								size="small"
-								color="secondary"
-								variant="outlined"
-								onClick={newGame}
-							>
-								New Game
-							</Button>
-							<Button
-								size="small"
-								color="primary"
-								variant="outlined"
-								disabled
-							>
-								Main Menu
-							</Button>
+							{children}
 						</CardActions>
 					</Card>
 				</Grid>
@@ -116,6 +101,7 @@ export default class GameBoard extends Component {
 						board={board}
 						move={this.move}
 						key={`board ${update}`}
+						options={options}
 					/>
 				</Grid>
 			</Grid>
@@ -125,9 +111,10 @@ export default class GameBoard extends Component {
 
 GameBoard.propTypes = {
 	board: PropTypes.instanceOf(Board).isRequired,
-	newGame: PropTypes.func
+	children: PropTypes.node,
+	options: PropTypes.instanceOf(Options).isRequired
 };
 
 GameBoard.defaultProps = {
-	newGame: undefined
+	children: <Fragment />
 };

@@ -10,6 +10,7 @@ import Board from '../../../shared/board';
 import { BoardSize } from '../../../shared/constants';
 
 import './board.scss';
+import Options from '../../options.client';
 
 class BoardComponent extends Component {
 	makeItem(x, y) {
@@ -88,7 +89,7 @@ class BoardComponent extends Component {
 	}
 
 	render() {
-		const { fliped } = this.props;
+		const { fliped, options } = this.props;
 		const rows = [];
 		if (fliped) {
 			for (let y = BoardSize; y >= -1; y -= 1) {
@@ -99,8 +100,9 @@ class BoardComponent extends Component {
 				rows.push(this.makeRow(y));
 			}
 		}
+		const className = ['chessboard', options.Board()];
 		return (
-			<table className="chessboard">
+			<table className={className.join(' ')}>
 				<tbody>
 					{rows}
 				</tbody>
@@ -112,7 +114,8 @@ class BoardComponent extends Component {
 BoardComponent.propTypes = {
 	fliped: PropTypes.bool,
 	board: PropTypes.instanceOf(Board).isRequired,
-	move: PropTypes.func.isRequired
+	move: PropTypes.func.isRequired,
+	options: PropTypes.instanceOf(Options).isRequired
 };
 
 BoardComponent.defaultProps = {
