@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
-import { DragSource } from 'react-dnd';
+import { ConnectDragPreview, ConnectDragSource, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
 
-import Piece from '../../../shared/piece/piece';
+import piece from '../../../shared/piece/piece';
 
 import { makeImage as PieceImage, getUrl as GetPieceUrl } from '../../pieces';
 
+export interface PieceProps {
+	x: number;
+	y: number;
+	piece: piece;
+	isDragging?: boolean;
+	connectDragSource?: ConnectDragSource;
+	connectDragPreview?: ConnectDragPreview;
+}
+
 const pieceSource = {
-	beginDrag(props) {
+	beginDrag(props: PieceProps) {
 		return {
 			x: props.x,
 			y: props.y,
@@ -17,7 +25,7 @@ const pieceSource = {
 	}
 };
 
-function collect(connect, monitor) {
+function collect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
 	return {
 		connectDragSource: connect.dragSource(),
 		connectDragPreview: connect.dragPreview(),
@@ -25,11 +33,11 @@ function collect(connect, monitor) {
 	};
 }
 
-
-class PieceComponent extends Component {
+@DragSource('piece', pieceSource, collect)
+export default class PieceComponent extends React.Component<PieceProps, {}> {
 	componentDidMount() {
 		const { connectDragPreview, piece } = this.props;
-		const image = PieceImage(piece.color, piece.type, 0.5);
+		const image = PieceImage(piece.color, piece.type);
 		image.onload = () => connectDragPreview(image);
 	}
 
@@ -50,7 +58,7 @@ class PieceComponent extends Component {
 				/>
 			</div>
 		);
-	};
+	}
 
 	render() {
 		const { connectDragSource } = this.props;
@@ -58,13 +66,4 @@ class PieceComponent extends Component {
 	}
 }
 
-PieceComponent.propTypes = {
-	// x: PropTypes.number.isRequired,
-	// y: PropTypes.number.isRequired,
-	piece: PropTypes.instanceOf(Piece).isRequired,
-	isDragging: PropTypes.bool.isRequired,
-	connectDragSource: PropTypes.func.isRequired,
-	connectDragPreview: PropTypes.func.isRequired
-};
-
-export default DragSource('piece', pieceSource, collect)(PieceComponent);
+// export default DragSource('piece', pieceSource, collect)(PieceComponent);

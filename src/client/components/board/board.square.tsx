@@ -1,9 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
-import { DropTarget } from 'react-dnd';
+import { DropTarget, DropTargetCollector, DropTargetSpec, ConnectDropTarget, DropTargetMonitor } from 'react-dnd';
 
-const squareTarget = {
+export interface SquareProps {
+	connectDropTarget?: ConnectDropTarget;
+	isOver?: boolean;
+	canDrop?: boolean;
+	canMove: (x1: number, y1: number, x2: number, y2: number) => boolean;
+	move: (x1: number, y1: number, x2: number, y2: number) => void;
+	x: number;
+	y: number;
+}
+
+const squareTarget: DropTargetSpec<SquareProps> = {
 	canDrop(props, monitor) {
 		const item = monitor.getItem();
 		return props.canMove(item.x, item.y, props.x, props.y);
@@ -14,16 +23,17 @@ const squareTarget = {
 	}
 };
 
-function collect(connect, monitor) {
+const collect: DropTargetCollector<any> = (connect, monitor) => {
 	return {
 		connectDropTarget: connect.dropTarget(),
 		isOver: monitor.isOver(),
 		canDrop: monitor.canDrop()
 	};
-}
+};
 
-class SquareComponent extends Component {
-	renderOverlay = (type) => {
+@DropTarget('piece', squareTarget, collect)
+export default class SquareComponent extends React.Component<SquareProps, {}> {
+	renderOverlay = (type: string) => {
 		const className = `available ${type}`;
 		return <div className={className} />;
 	}
@@ -41,12 +51,3 @@ class SquareComponent extends Component {
 		);
 	}
 }
-
-SquareComponent.propTypes = {
-	connectDropTarget: PropTypes.func.isRequired,
-	isOver: PropTypes.bool.isRequired,
-	canDrop: PropTypes.bool.isRequired,
-	children: PropTypes.any.isRequired
-};
-
-export default DropTarget('piece', squareTarget, collect)(SquareComponent);

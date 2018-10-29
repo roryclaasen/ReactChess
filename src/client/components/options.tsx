@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -18,14 +17,21 @@ import Grid from '@material-ui/core/Grid';
 import Options from '../options.client';
 import { ChangeCurrent } from '../pieces';
 
-export default class OptionsModal extends Component {
-	handleChangeCheckbox = (name) => (event) => {
+export interface OptionsModalProps {
+	open: boolean;
+	close: () => void;
+	options: Options;
+	updateOptions?: (options: Options) => void;
+}
+
+export default class OptionsModal extends React.Component<OptionsModalProps, {}> {
+	handleChangeCheckbox = (name: string) => (event: any) => {
 		const { options, updateOptions } = this.props;
 		options.changeOption(name, event.target.checked);
 		updateOptions(options);
 	}
 
-	handleChangeSelect = (name) => (event) => {
+	handleChangeSelect = (name: string) => (event: any) => {
 		const { options, updateOptions } = this.props;
 		options.changeOption(name, event.target.value);
 		updateOptions(options);
@@ -41,20 +47,19 @@ export default class OptionsModal extends Component {
 	render() {
 		const { open, close, options } = this.props;
 
-		const PieceOptions = [];
+		const pieceOptions: JSX.Element[] = [];
 		options.PiecesList().forEach((piece) => {
-			PieceOptions.push(
+			pieceOptions.push(
 				<MenuItem value={piece} key={piece}>{piece}</MenuItem>
 			);
 		});
 
-		const BoardOptions = [];
+		const boardOptions: JSX.Element[] = [];
 		options.BoardList().forEach((style) => {
-			BoardOptions.push(
+			boardOptions.push(
 				<MenuItem value={style} key={style}>{style}</MenuItem>
 			);
 		});
-
 
 		const width100 = {
 			width: '100%'
@@ -72,11 +77,11 @@ export default class OptionsModal extends Component {
 						Customise the user interface to your liking
 					</DialogContentText>
 					<Grid
-						container
+						container={true}
 						direction="column"
 						spacing={16}
 					>
-						<Grid item>
+						<Grid item={true}>
 							<FormControlLabel
 								control={(
 									<Checkbox
@@ -89,7 +94,7 @@ export default class OptionsModal extends Component {
 								style={width100}
 							/>
 						</Grid>
-						<Grid item>
+						<Grid item={true}>
 							<FormControl
 								style={width100}
 							>
@@ -99,14 +104,14 @@ export default class OptionsModal extends Component {
 									onChange={this.handleChangeSelect('Pieces')}
 									inputProps={{
 										name: 'PieceStyle',
-										id: 'pieceStyle',
+										id: 'pieceStyle'
 									}}
 								>
-									{PieceOptions}
+									{pieceOptions}
 								</Select>
 							</FormControl>
 						</Grid>
-						<Grid item>
+						<Grid item={true}>
 							<FormControl
 								style={width100}
 							>
@@ -116,20 +121,20 @@ export default class OptionsModal extends Component {
 									onChange={this.handleChangeSelect('Board')}
 									inputProps={{
 										name: 'BoardStyle',
-										id: 'BoardStyle',
+										id: 'BoardStyle'
 									}}
 								>
-									{BoardOptions}
+									{boardOptions}
 								</Select>
 							</FormControl>
 						</Grid>
 					</Grid>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={this.reset} color="secondary" autoFocus>
+					<Button onClick={this.reset} color="secondary" autoFocus={true}>
 						Reset
 					</Button>
-					<Button onClick={close} color="primary" autoFocus>
+					<Button onClick={close} color="primary" autoFocus={true}>
 						Close
 					</Button>
 				</DialogActions>
@@ -137,14 +142,3 @@ export default class OptionsModal extends Component {
 		);
 	}
 }
-
-OptionsModal.propTypes = {
-	open: PropTypes.bool.isRequired,
-	close: PropTypes.func.isRequired,
-	options: PropTypes.instanceOf(Options).isRequired,
-	updateOptions: PropTypes.func
-};
-
-OptionsModal.defaultProps = {
-	updateOptions: undefined
-};

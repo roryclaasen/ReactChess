@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,7 +10,13 @@ import BoardComponent from './board.table';
 import { WinnerState } from '../../../shared/constants';
 import Options from '../../options.client';
 
-export default class BoardRenderer extends Component {
+export interface BoardRendererProps {
+	board: Board;
+	move: (x1: number, y1: number, x2: number, y2: number) => void;
+	options: Options;
+}
+
+export default class BoardRenderer extends React.Component<BoardRendererProps, {}> {
 	currentMessage = () => {
 		const { board } = this.props;
 		let message = `It's ${board.current.toLowerCase()}'s turn`;
@@ -28,11 +33,11 @@ export default class BoardRenderer extends Component {
 
 		return (
 			<Grid
-				container
+				container={true}
 				direction="column"
 				spacing={16}
 			>
-				<Grid item>
+				<Grid item={true}>
 					<Card>
 						<CardContent
 							style={{
@@ -46,7 +51,7 @@ export default class BoardRenderer extends Component {
 						</CardContent>
 					</Card>
 				</Grid>
-				<Grid item>
+				<Grid item={true}>
 					<Card>
 						<BoardComponent
 							board={board}
@@ -59,9 +64,3 @@ export default class BoardRenderer extends Component {
 		);
 	}
 }
-
-BoardRenderer.propTypes = {
-	board: PropTypes.instanceOf(Board).isRequired,
-	move: PropTypes.func.isRequired,
-	options: PropTypes.instanceOf(Options).isRequired
-};

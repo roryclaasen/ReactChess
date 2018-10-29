@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -12,8 +11,27 @@ import { BoardSize } from '../../../shared/constants';
 import './board.scss';
 import Options from '../../options.client';
 
-class BoardComponent extends Component {
-	makeItem(x, y) {
+export interface BoardComponentProps {
+	fliped?: Boolean;
+	board: Board;
+	move: (x1: number, y1: number, x2: number, y2: number) => void;
+	options: Options;
+}
+
+@DragDropContext(HTML5Backend)
+export default class BoardComponent extends React.Component<BoardComponentProps, {}> {
+
+	public static defaultProps: Partial<BoardComponentProps> = {
+		fliped: true
+	};
+
+	private canMove(x1: number, y1: number, x2: number, y2: number): boolean {
+		const { board } = this.props;
+		if (board.isTurn(x1, y1)) return board.canMove(x1, y1, x2, y2);
+		return false;
+	}
+
+	private makeItem(x: number, y: number) {
 		const { board, move } = this.props;
 		const itemKey = `${x},${y}`;
 		if ((y === -1 && (x === -1 || x === BoardSize)) || (y === BoardSize && (x === -1 || x === BoardSize))) {
@@ -53,10 +71,7 @@ class BoardComponent extends Component {
 			>
 				<SquareComponent
 					move={move}
-					canMove={(x1, y1, x2, y2) => {
-						if (board.isTurn(x1, y1)) return board.canMove(x1, y1, x2, y2);
-						return false;
-					}}
+					canMove={this.canMove}
 					x={x}
 					y={y}
 				>
@@ -72,7 +87,7 @@ class BoardComponent extends Component {
 		);
 	}
 
-	makeRow(y) {
+	private makeRow(y: number) {
 		const items = [];
 		const rowKey = `row${y}`;
 		for (let x = -1; x < BoardSize + 1; x += 1) {
@@ -88,7 +103,7 @@ class BoardComponent extends Component {
 		);
 	}
 
-	render() {
+	public render() {
 		const { fliped, options } = this.props;
 		const rows = [];
 		if (fliped) {
@@ -110,16 +125,3 @@ class BoardComponent extends Component {
 		);
 	}
 }
-
-BoardComponent.propTypes = {
-	fliped: PropTypes.bool,
-	board: PropTypes.instanceOf(Board).isRequired,
-	move: PropTypes.func.isRequired,
-	options: PropTypes.instanceOf(Options).isRequired
-};
-
-BoardComponent.defaultProps = {
-	fliped: true
-};
-
-export default DragDropContext(HTML5Backend)(BoardComponent);

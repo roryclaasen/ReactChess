@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -14,8 +13,17 @@ import BoardRenderer from './board.renderer';
 import Board from '../../../shared/board';
 import Options from '../../options.client';
 
-export default class GameBoard extends Component {
-	constructor(props) {
+export interface GameBoardProps {
+	board: Board;
+	options: Options;
+}
+
+export interface GameBoardState {
+	update: number;
+}
+
+export default class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
+	constructor(props: GameBoardProps) {
 		super(props);
 
 		this.state = {
@@ -23,7 +31,7 @@ export default class GameBoard extends Component {
 		};
 	}
 
-	move = (x1, y1, x2, y2) => {
+	move = (x1: number, y1: number, x2: number, y2: number) => {
 		const { board } = this.props;
 		const { update } = this.state;
 
@@ -44,7 +52,7 @@ export default class GameBoard extends Component {
 				<ListItem
 					key={`move${i}`}
 					className="item"
-					dense
+					dense={true}
 				>
 					<ListItemText
 						primary={move[0]}
@@ -65,11 +73,11 @@ export default class GameBoard extends Component {
 		const { update } = this.state;
 		return (
 			<Grid
-				container
+				container={true}
 				direction="row"
 				spacing={32}
 			>
-				<Grid item>
+				<Grid item={true}>
 					<Card
 						className="game-info-panel"
 					>
@@ -96,7 +104,7 @@ export default class GameBoard extends Component {
 						</CardActions>
 					</Card>
 				</Grid>
-				<Grid item>
+				<Grid item={true}>
 					<BoardRenderer
 						board={board}
 						move={this.move}
@@ -108,13 +116,3 @@ export default class GameBoard extends Component {
 		);
 	}
 }
-
-GameBoard.propTypes = {
-	board: PropTypes.instanceOf(Board).isRequired,
-	children: PropTypes.node,
-	options: PropTypes.instanceOf(Options).isRequired
-};
-
-GameBoard.defaultProps = {
-	children: <Fragment />
-};

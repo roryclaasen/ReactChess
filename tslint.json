@@ -1,0 +1,27 @@
+{
+	"extends": [
+		"tslint-eslint-rules",
+		"tslint-react",
+		"tslint-config-airbnb"
+	],
+	"rules": {
+		"indent": [
+			true,
+			"tabs"
+		],
+		"ter-indent": [
+			true,
+			"tab"
+		],
+		"trailing-comma": [
+			true,
+			{
+				"multiline": "never",
+				"singleline": "never"
+			}
+		],
+		"import-name": false,
+		"max-line-length": false,
+		"jsx-no-multiline-js": false
+	}
+}

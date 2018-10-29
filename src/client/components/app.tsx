@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import * as React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -10,8 +10,15 @@ import GameBoard from './board/board.game';
 import Options from '../options.client';
 import OptionsModal from './options';
 
-export default class MainApp extends Component {
-	constructor(props) {
+export interface MainAppState {
+	options: Options;
+	optionsOpen: boolean;
+	board: Board;
+	update: number;
+}
+
+export default class MainApp extends React.Component<{}, MainAppState> {
+	constructor(props: any) {
 		super(props);
 
 		this.state = {
@@ -22,12 +29,24 @@ export default class MainApp extends Component {
 		};
 	}
 
-	updateOptions = (options) => {
+	updateOptions = (options: Options) => {
 		const { update } = this.state;
 		this.setState({
 			options,
 			update: update + 1
 		});
+	}
+
+	showOptions = () => {
+		this.setState({ optionsOpen: true });
+	}
+
+	closeOptions = () => {
+		this.setState({ optionsOpen: false });
+	}
+
+	newGanme = () => {
+		this.setState({ board: new Board() });
 	}
 
 	render() {
@@ -36,48 +55,46 @@ export default class MainApp extends Component {
 		const gridClass = ['grid-main'];
 		if (options.ShowBackground()) gridClass.push('background');
 		return (
-			<Fragment>
+			<React.Fragment>
 				<Grid
-					container
+					container={true}
 					direction="column"
 					justify="center"
 					alignItems="center"
 					className={gridClass.join(' ')}
 				>
-					<Grid item>
+					<Grid item={true}>
 						<GameBoard
 							board={board}
 							options={options}
 							key={`board ${update}`}
 						>
-							<Grid container spacing={8}>
-								<Grid item xs={12}>
+							<Grid container={true} spacing={8}>
+								<Grid item={true} xs={12}>
 									<Button
 										size="small"
 										variant="outlined"
-										onClick={() => {
-											this.setState({ optionsOpen: true });
-										}}
+										onClick={this.showOptions}
 									>
 										Options
 									</Button>
 								</Grid>
-								<Grid item xs={6}>
+								<Grid item={true} xs={6}>
 									<Button
 										size="small"
 										color="secondary"
 										variant="outlined"
-										onClick={() => this.setState({ board: new Board() })}
+										onClick={this.newGanme}
 									>
 										New Game
 									</Button>
 								</Grid>
-								<Grid item xs={6}>
+								<Grid item={true} xs={6}>
 									<Button
 										size="small"
 										color="primary"
 										variant="outlined"
-										disabled
+										disabled={true}
 									>
 										Main Menu
 									</Button>
@@ -89,7 +106,7 @@ export default class MainApp extends Component {
 				<OptionsModal
 					options={options}
 					open={optionsOpen}
-					close={() => this.setState({ optionsOpen: false })}
+					close={this.closeOptions}
 					updateOptions={this.updateOptions}
 				/>
 				<GithubCorner
@@ -99,7 +116,7 @@ export default class MainApp extends Component {
 					size={100}
 					direction="right"
 				/>
-			</Fragment>
+			</React.Fragment>
 		);
 	}
 }

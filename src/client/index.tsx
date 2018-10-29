@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import 'normalize.css';
 import './index.scss';
@@ -11,21 +11,21 @@ import MainApp from './components/app';
 
 const theme = createMuiTheme({
 	typography: {
-		useNextVariants: true,
-		fontFamily: '\'Roboto Slab\', serif'
+		useNextVariants: true
+		// fontFamily: '\'Roboto Slab\', serif'
 	},
 	palette: {
 		primary: {
 			light: '#757de8',
 			main: '#3f51b5',
 			dark: '#002984',
-			contrastText: '#fff',
+			contrastText: '#fff'
 		},
 		secondary: {
 			light: '#fff350',
 			main: '#ffc107',
 			dark: '#c79100',
-			contrastText: '#000',
+			contrastText: '#000'
 		}
 	}
 });
