@@ -115,7 +115,7 @@ export default class BoardComponent extends React.Component<BoardComponentProps,
 				rows.push(this.makeRow(y));
 			}
 		}
-		const className = ['chessboard', options.Board()];
+		const className = ['chessboard', options.board];
 		return (
 			<table className={className.join(' ')}>
 				<tbody>

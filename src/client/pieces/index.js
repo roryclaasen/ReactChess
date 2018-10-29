@@ -12,27 +12,25 @@ import DefaultWhiteQueen from './default/w_queen.png';
 import DefaultWhitePawn from './default/w_pawn.png';
 import DefaultWhiteRook from './default/w_rook.png';
 
-const Default = {
-	BLACK: {
-		BISHOP: DefaultBlackBishop,
-		KING: DefaultBlackKing,
-		KNIGHT: DefaultBlackKnight,
-		QUEEN: DefaultBlackQueen,
-		PAWN: DefaultBlackPawn,
-		ROOK: DefaultBlackRook
-	},
-	WHITE: {
-		BISHOP: DefaultWhiteBishop,
-		KING: DefaultWhiteKing,
-		KNIGHT: DefaultWhiteKnight,
-		QUEEN: DefaultWhiteQueen,
-		PAWN: DefaultWhitePawn,
-		ROOK: DefaultWhiteRook
-	}
-};
-
 const Source = {
-	Default
+	Default: {
+		BLACK: {
+			BISHOP: DefaultBlackBishop,
+			KING: DefaultBlackKing,
+			KNIGHT: DefaultBlackKnight,
+			QUEEN: DefaultBlackQueen,
+			PAWN: DefaultBlackPawn,
+			ROOK: DefaultBlackRook
+		},
+		WHITE: {
+			BISHOP: DefaultWhiteBishop,
+			KING: DefaultWhiteKing,
+			KNIGHT: DefaultWhiteKnight,
+			QUEEN: DefaultWhiteQueen,
+			PAWN: DefaultWhitePawn,
+			ROOK: DefaultWhiteRook
+		}
+	}
 };
 
 let current = Source.Default;

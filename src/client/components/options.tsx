@@ -35,7 +35,7 @@ export default class OptionsModal extends React.Component<OptionsModalProps, {}>
 		const { options, updateOptions } = this.props;
 		options.changeOption(name, event.target.value);
 		updateOptions(options);
-		if (name === 'Pieces') ChangeCurrent(options.Pieces());
+		if (name === 'Pieces') ChangeCurrent(options.pieces);
 	}
 
 	private reset = () => {
@@ -48,14 +48,14 @@ export default class OptionsModal extends React.Component<OptionsModalProps, {}>
 		const { open, close, options } = this.props;
 
 		const pieceOptions: JSX.Element[] = [];
-		options.PiecesList().forEach((piece) => {
+		options.piecesList.forEach((piece) => {
 			pieceOptions.push(
 				<MenuItem value={piece} key={piece}>{piece}</MenuItem>
 			);
 		});
 
 		const boardOptions: JSX.Element[] = [];
-		options.BoardList().forEach((style) => {
+		options.boardList.forEach((style) => {
 			boardOptions.push(
 				<MenuItem value={style} key={style}>{style}</MenuItem>
 			);
@@ -85,7 +85,7 @@ export default class OptionsModal extends React.Component<OptionsModalProps, {}>
 							<FormControlLabel
 								control={(
 									<Checkbox
-										checked={options.ShowBackground()}
+										checked={options.showBackground}
 										onChange={this.handleChangeCheckbox('ShowBackground')}
 										color="primary"
 									/>
@@ -100,7 +100,7 @@ export default class OptionsModal extends React.Component<OptionsModalProps, {}>
 							>
 								<InputLabel htmlFor="pieceStyle">Piece Style</InputLabel>
 								<Select
-									value={options.Pieces()}
+									value={options.pieces}
 									onChange={this.handleChangeSelect('Pieces')}
 									inputProps={{
 										name: 'PieceStyle',
@@ -117,7 +117,7 @@ export default class OptionsModal extends React.Component<OptionsModalProps, {}>
 							>
 								<InputLabel htmlFor="pieceStyle">Board Style</InputLabel>
 								<Select
-									value={options.Board()}
+									value={options.board}
 									onChange={this.handleChangeSelect('Board')}
 									inputProps={{
 										name: 'BoardStyle',

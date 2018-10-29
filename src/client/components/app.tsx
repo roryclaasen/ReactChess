@@ -53,7 +53,7 @@ export default class MainApp extends React.Component<{}, MainAppState> {
 		const { board, options, optionsOpen, update } = this.state;
 		// TODO Menu & UI
 		const gridClass = ['grid-main'];
-		if (options.ShowBackground()) gridClass.push('background');
+		if (options.showBackground) gridClass.push('background');
 		return (
 			<React.Fragment>
 				<Grid
