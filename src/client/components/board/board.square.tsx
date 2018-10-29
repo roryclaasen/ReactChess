@@ -33,12 +33,12 @@ const collect: DropTargetCollector<any> = (connect, monitor) => {
 
 @DropTarget('piece', squareTarget, collect)
 export default class SquareComponent extends React.Component<SquareProps, {}> {
-	renderOverlay = (type: string) => {
+	private renderOverlay = (type: string) => {
 		const className = `available ${type}`;
 		return <div className={className} />;
 	}
 
-	render() {
+	public render() {
 		const { connectDropTarget, isOver, canDrop, children } = this.props;
 
 		return connectDropTarget(

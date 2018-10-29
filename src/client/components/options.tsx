@@ -25,26 +25,26 @@ export interface OptionsModalProps {
 }
 
 export default class OptionsModal extends React.Component<OptionsModalProps, {}> {
-	handleChangeCheckbox = (name: string) => (event: any) => {
+	private handleChangeCheckbox = (name: string) => (event: any) => {
 		const { options, updateOptions } = this.props;
 		options.changeOption(name, event.target.checked);
 		updateOptions(options);
 	}
 
-	handleChangeSelect = (name: string) => (event: any) => {
+	private handleChangeSelect = (name: string) => (event: any) => {
 		const { options, updateOptions } = this.props;
 		options.changeOption(name, event.target.value);
 		updateOptions(options);
 		if (name === 'Pieces') ChangeCurrent(options.Pieces());
 	}
 
-	reset = () => {
+	private reset = () => {
 		const { options, updateOptions } = this.props;
 		options.reset();
 		updateOptions(options);
 	}
 
-	render() {
+	public render() {
 		const { open, close, options } = this.props;
 
 		const pieceOptions: JSX.Element[] = [];

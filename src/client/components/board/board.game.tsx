@@ -31,7 +31,7 @@ export default class GameBoard extends React.Component<GameBoardProps, GameBoard
 		};
 	}
 
-	move = (x1: number, y1: number, x2: number, y2: number) => {
+	private move = (x1: number, y1: number, x2: number, y2: number) => {
 		const { board } = this.props;
 		const { update } = this.state;
 
@@ -42,7 +42,7 @@ export default class GameBoard extends React.Component<GameBoardProps, GameBoard
 		});
 	}
 
-	generateMove() {
+	private generateMove() {
 		const { board } = this.props;
 
 		const moves = [];
@@ -68,7 +68,7 @@ export default class GameBoard extends React.Component<GameBoardProps, GameBoard
 		return moves;
 	}
 
-	render() {
+	public render() {
 		const { board, children, options } = this.props;
 		const { update } = this.state;
 		return (

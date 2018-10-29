@@ -17,7 +17,7 @@ export interface BoardRendererProps {
 }
 
 export default class BoardRenderer extends React.Component<BoardRendererProps, {}> {
-	currentMessage = () => {
+	protected currentMessage = () => {
 		const { board } = this.props;
 		let message = `It's ${board.current.toLowerCase()}'s turn`;
 
@@ -28,7 +28,7 @@ export default class BoardRenderer extends React.Component<BoardRendererProps, {
 		return message;
 	}
 
-	render() {
+	public render() {
 		const { board, move, options } = this.props;
 
 		return (

@@ -35,13 +35,13 @@ function collect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
 
 @DragSource('piece', pieceSource, collect)
 export default class PieceComponent extends React.Component<PieceProps, {}> {
-	componentDidMount() {
+	public componentDidMount() {
 		const { connectDragPreview, piece } = this.props;
 		const image = PieceImage(piece.color, piece.type);
 		image.onload = () => connectDragPreview(image);
 	}
 
-	pieceDOM = () => {
+	private pieceDOM = () => {
 		const { piece, isDragging } = this.props;
 		const className = `piece ${piece.type}`;
 
@@ -60,10 +60,8 @@ export default class PieceComponent extends React.Component<PieceProps, {}> {
 		);
 	}
 
-	render() {
+	public render() {
 		const { connectDragSource } = this.props;
 		return connectDragSource(this.pieceDOM());
 	}
 }
-
-// export default DragSource('piece', pieceSource, collect)(PieceComponent);

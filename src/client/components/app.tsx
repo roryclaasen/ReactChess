@@ -29,7 +29,7 @@ export default class MainApp extends React.Component<{}, MainAppState> {
 		};
 	}
 
-	updateOptions = (options: Options) => {
+	private updateOptions = (options: Options) => {
 		const { update } = this.state;
 		this.setState({
 			options,
@@ -37,19 +37,19 @@ export default class MainApp extends React.Component<{}, MainAppState> {
 		});
 	}
 
-	showOptions = () => {
+	private showOptions = () => {
 		this.setState({ optionsOpen: true });
 	}
 
-	closeOptions = () => {
+	private closeOptions = () => {
 		this.setState({ optionsOpen: false });
 	}
 
-	newGanme = () => {
+	private newGanme = () => {
 		this.setState({ board: new Board() });
 	}
 
-	render() {
+	public render() {
 		const { board, options, optionsOpen, update } = this.state;
 		// TODO Menu & UI
 		const gridClass = ['grid-main'];
