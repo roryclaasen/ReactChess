@@ -1,16 +1,37 @@
-@mixin grid($color, $alternate) {
+@mixin grid-white {
 	.cell {
 		&.grid {
 			&.white {
-				background-color: $color;
-				color: $alternate;
-			}
-
-			&.black {
-				background-color: $alternate;
-				color: $color;
+				@content;
 			}
 		}
+	}
+}
+@mixin grid-black {
+	.cell {
+		&.grid {
+			&.black {
+				@content;
+			}
+		}
+	}
+}
+@mixin grid-color($color, $alternate) {
+	@include grid-white {
+		background-color: $color;
+		color: $alternate;
+	}
+	@include grid-black {
+		background-color: $alternate;
+		color: $color;
+	}
+}
+@mixin grid-img($default, $alternate) {
+	@include grid-white {
+		background-image: $default;
+	}
+	@include grid-black {
+		background-image: $alternate;
 	}
 }
 
@@ -25,9 +46,10 @@
 	// margin: 1em;
 	user-select: none;
 
-	&.default { @include grid($color-grid, $color-grid-alternate); }
-	&.brown { @include grid($color-grid-brown, $color-grid-brown-alternate); }
-	&.gray { @include grid($color-grid-gray, $color-grid-gray-alternate); }
+	&.default { @include grid-color($color-grid, $color-grid-alternate); }
+	&.brown { @include grid-color($color-grid-brown, $color-grid-brown-alternate); }
+	&.gray { @include grid-color($color-grid-gray, $color-grid-gray-alternate); }
+	&.wood { @include grid-img(url('wood1.png'), url('wood2.png')); }
 
 	.cell {
 		cursor: default;

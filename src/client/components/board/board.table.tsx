@@ -25,7 +25,7 @@ export default class BoardComponent extends React.Component<BoardComponentProps,
 		fliped: true
 	};
 
-	private canMove(x1: number, y1: number, x2: number, y2: number): boolean {
+	private canMove = (x1: number, y1: number, x2: number, y2: number): boolean => {
 		const { board } = this.props;
 		if (board.isTurn(x1, y1)) return board.canMove(x1, y1, x2, y2);
 		return false;

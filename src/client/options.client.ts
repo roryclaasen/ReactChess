@@ -39,7 +39,7 @@ export default class Options {
 	}
 
 	public get boardList() {
-		return ['default', 'brown', 'gray'];
+		return ['default', 'brown', 'gray', 'wood'];
 	}
 
 	// Background
