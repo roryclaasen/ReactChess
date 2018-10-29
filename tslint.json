@@ -11,7 +11,10 @@
 		],
 		"ter-indent": [
 			true,
-			"tab"
+			"tab",
+			{
+				"SwitchCase": 1
+			}
 		],
 		"trailing-comma": [
 			true,

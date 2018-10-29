@@ -9,12 +9,18 @@ import Board from '../../shared/board';
 import GameBoard from './board/board.game';
 import Options from '../options.client';
 import OptionsModal from './options';
+import MainMenu from './home';
+
+export enum MainAppStage {
+	MENU, ONLINE, LOCAL
+}
 
 export interface MainAppState {
 	options: Options;
 	optionsOpen: boolean;
 	board: Board;
 	update: number;
+	stage: MainAppStage;
 }
 
 export default class MainApp extends React.Component<{}, MainAppState> {
@@ -25,7 +31,8 @@ export default class MainApp extends React.Component<{}, MainAppState> {
 			options: new Options(),
 			optionsOpen: false,
 			board: new Board(),
-			update: 0
+			update: 0,
+			stage: MainAppStage.MENU
 		};
 	}
 
@@ -45,15 +52,99 @@ export default class MainApp extends React.Component<{}, MainAppState> {
 		this.setState({ optionsOpen: false });
 	}
 
+	private mainMenu = () => {
+		this.setState({ stage: MainAppStage.MENU });
+	}
+
+	private playLocal = () => {
+		this.setState({ stage: MainAppStage.LOCAL, board: new Board() });
+	}
+
 	private newGanme = () => {
 		this.setState({ board: new Board() });
 	}
 
 	public render() {
-		const { board, options, optionsOpen, update } = this.state;
+		const { board, options, optionsOpen, update, stage } = this.state;
 		// TODO Menu & UI
 		const gridClass = ['grid-main'];
 		if (options.showBackground) gridClass.push('background');
+
+		let currentStage;
+		switch (stage) {
+			case MainAppStage.MENU: {
+				currentStage = (
+					<MainMenu>
+						<Button
+							variant="outlined"
+							onClick={this.showOptions}
+						>
+							Options
+						</Button>
+						<Button
+							variant="outlined"
+							onClick={this.playLocal}
+						>
+							Pass and Play
+						</Button>
+						<Button
+							disabled={true}
+							variant="outlined"
+						>
+							Play Online
+						</Button>
+					</MainMenu>
+				);
+				break;
+			}
+			case MainAppStage.LOCAL: {
+				currentStage = (
+					<GameBoard
+						board={board}
+						options={options}
+						key={`board ${update}`}
+					>
+						<Grid container={true} spacing={8}>
+							<Grid item={true} xs={12}>
+								<Button
+									size="small"
+									variant="outlined"
+									onClick={this.showOptions}
+								>
+									Options
+								</Button>
+							</Grid>
+							<Grid item={true} xs={6}>
+								<Button
+									size="small"
+									color="secondary"
+									variant="outlined"
+									onClick={this.newGanme}
+								>
+									New Game
+								</Button>
+							</Grid>
+							<Grid item={true} xs={6}>
+								<Button
+									size="small"
+									color="primary"
+									variant="outlined"
+									onClick={this.mainMenu}
+								>
+									Main Menu
+								</Button>
+							</Grid>
+						</Grid>
+					</GameBoard>
+				);
+				break;
+			}
+			default: {
+				currentStage = <React.Fragment />;
+				break;
+			}
+		}
+
 		return (
 			<React.Fragment>
 				<Grid
@@ -64,43 +155,7 @@ export default class MainApp extends React.Component<{}, MainAppState> {
 					className={gridClass.join(' ')}
 				>
 					<Grid item={true}>
-						<GameBoard
-							board={board}
-							options={options}
-							key={`board ${update}`}
-						>
-							<Grid container={true} spacing={8}>
-								<Grid item={true} xs={12}>
-									<Button
-										size="small"
-										variant="outlined"
-										onClick={this.showOptions}
-									>
-										Options
-									</Button>
-								</Grid>
-								<Grid item={true} xs={6}>
-									<Button
-										size="small"
-										color="secondary"
-										variant="outlined"
-										onClick={this.newGanme}
-									>
-										New Game
-									</Button>
-								</Grid>
-								<Grid item={true} xs={6}>
-									<Button
-										size="small"
-										color="primary"
-										variant="outlined"
-										disabled={true}
-									>
-										Main Menu
-									</Button>
-								</Grid>
-							</Grid>
-						</GameBoard>
+						{currentStage}
 					</Grid>
 				</Grid>
 				<OptionsModal
