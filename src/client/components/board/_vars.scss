@@ -1,6 +1,12 @@
 $color-grid: rgb(255, 255, 255);
 $color-grid-alternate: rgb(0, 0, 0);
 
+$color-grid-brown: rgb(81, 42, 42);
+$color-grid-brown-alternate: rgb(124, 76, 62);
+
+$color-grid-gray: rgb(54, 54, 54);
+$color-grid-gray-alternate: rgb(89, 89, 89);
+
 $color-unplaceable: rgb(255, 0, 0);
 $color-placeable: rgb(255, 255, 0);
 $color-place: rgb(0, 255, 0);
@@ -15,3 +21,10 @@ $cell-size: 50px;
 $border: 2px solid $color-border;
 
 $panel-width: 250px;
+
+$img-grid-wood: url('imgs/wood1.png');
+$img-grid-wood-alternate: url('imgs/wood2.png');
+
+$img-unplaceable: url('imgs/unplaceable.png');
+$img-placeable: url('imgs/placeable.png');
+$img-place: url('imgs/place.png');

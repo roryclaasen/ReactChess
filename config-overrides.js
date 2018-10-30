@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 
 const rewireSass = require('react-app-rewire-scss');
-const rewireSvgReactLoader = require('react-app-rewire-svg-react-loader');
+const rewireTypescript = require('react-app-rewire-typescript');
 
 module.exports = function override(config, env) {
 	config = rewireSass(config, env);
-	config = rewireSvgReactLoader(config, env);
+	config = rewireTypescript(config, env);
 	return config;
 };

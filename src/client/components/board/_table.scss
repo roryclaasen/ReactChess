@@ -1,3 +1,40 @@
+@mixin grid-white {
+	.cell {
+		&.grid {
+			&.white {
+				@content;
+			}
+		}
+	}
+}
+@mixin grid-black {
+	.cell {
+		&.grid {
+			&.black {
+				@content;
+			}
+		}
+	}
+}
+@mixin grid-color($color, $alternate) {
+	@include grid-white {
+		background-color: $color;
+		color: $alternate;
+	}
+	@include grid-black {
+		background-color: $alternate;
+		color: $color;
+	}
+}
+@mixin grid-img($default, $alternate) {
+	@include grid-white {
+		background-image: $default;
+	}
+	@include grid-black {
+		background-image: $alternate;
+	}
+}
+
 .chessboard {
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -8,6 +45,11 @@
 	font-family: 'Noto Serif', serif;
 	// margin: 1em;
 	user-select: none;
+
+	&.default { @include grid-color($color-grid, $color-grid-alternate); }
+	&.brown { @include grid-color($color-grid-brown, $color-grid-brown-alternate); }
+	&.gray { @include grid-color($color-grid-gray, $color-grid-gray-alternate); }
+	&.wood { @include grid-img($img-grid-wood, $img-grid-wood-alternate); }
 
 	.cell {
 		cursor: default;
@@ -20,16 +62,6 @@
 
 		&.grid {
 			padding: 0;
-
-			&.white {
-				background-color: $color-grid;
-				color: $color-grid-alternate;
-			}
-
-			&.black {
-				background-color: $color-grid-alternate;
-				color: $color-grid;
-			}
 		}
 
 		.piece {
@@ -66,9 +98,9 @@
 				width: 100%;
 				z-index: 1;
 
-				&.unplaceable { background-color: $color-unplaceable; }
-				&.place { background-color: $color-place; }
-				&.placeable { background-color: $color-placeable; }
+				&.unplaceable { background-image: $img-unplaceable; }
+				&.place { background-image: $img-place; }
+				&.placeable { background-image: $img-placeable; }
 			}
 		}
 	}
