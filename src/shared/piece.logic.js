@@ -41,6 +41,9 @@ export function Pawn(x, y, toX, toY, grid, color) {
 
 	const moveTwo = y === 1 || y === 6;
 
+	// TODO En Passant
+	// TODO Promotion
+
 	const path = (Math.abs(dy) === 1 || (moveTwo && Math.abs(dy) === 2)) && Math.abs(dx) === 0;
 	if (grid === undefined) return path;
 	if (path) {

@@ -76,18 +76,21 @@ export default class MainApp extends React.Component<{}, MainAppState> {
 				currentStage = (
 					<MainMenu>
 						<Button
+							size="small"
 							variant="outlined"
 							onClick={this.showOptions}
 						>
 							Options
 						</Button>
 						<Button
+							size="small"
 							variant="outlined"
 							onClick={this.playLocal}
 						>
 							Pass and Play
 						</Button>
 						<Button
+							size="small"
 							disabled={true}
 							variant="outlined"
 						>

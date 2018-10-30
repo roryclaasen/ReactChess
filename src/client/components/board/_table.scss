@@ -49,7 +49,7 @@
 	&.default { @include grid-color($color-grid, $color-grid-alternate); }
 	&.brown { @include grid-color($color-grid-brown, $color-grid-brown-alternate); }
 	&.gray { @include grid-color($color-grid-gray, $color-grid-gray-alternate); }
-	&.wood { @include grid-img(url('wood1.png'), url('wood2.png')); }
+	&.wood { @include grid-img($img-grid-wood, $img-grid-wood-alternate); }
 
 	.cell {
 		cursor: default;
@@ -98,9 +98,9 @@
 				width: 100%;
 				z-index: 1;
 
-				&.unplaceable { background-color: $color-unplaceable; }
-				&.place { background-color: $color-place; }
-				&.placeable { background-color: $color-placeable; }
+				&.unplaceable { background-image: $img-unplaceable; }
+				&.place { background-image: $img-place; }
+				&.placeable { background-image: $img-placeable; }
 			}
 		}
 	}

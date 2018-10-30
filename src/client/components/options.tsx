@@ -15,7 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 
 import Options from '../options.client';
-import { ChangeCurrent } from '../pieces';
+import PieceManager from '../pieces/manager';
 
 export interface OptionsModalProps {
 	open: boolean;
@@ -35,7 +35,7 @@ export default class OptionsModal extends React.Component<OptionsModalProps, {}>
 		const { options, updateOptions } = this.props;
 		options.changeOption(name, event.target.value);
 		updateOptions(options);
-		if (name === 'Pieces') ChangeCurrent(options.pieces);
+		if (name === 'Pieces') PieceManager.changeCurrent(options.pieces);
 	}
 
 	private reset = () => {

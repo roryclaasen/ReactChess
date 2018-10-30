@@ -1,4 +1,4 @@
-import Sources from './pieces';
+import PieceManager from './pieces/manager';
 
 export interface AvalibleOptions {
 	[key: string]: any;
@@ -12,6 +12,7 @@ export default class Options {
 
 	private defaultOptions: AvalibleOptions;
 	private options: AvalibleOptions;
+
 	constructor() {
 		this.defaultOptions = {
 			ShowBackground: true,
@@ -20,6 +21,9 @@ export default class Options {
 		};
 
 		this.options = this.copyOptions();
+
+		this.load();
+		this.save();
 	}
 
 	// Pieces
@@ -29,7 +33,7 @@ export default class Options {
 	}
 
 	public get piecesList() {
-		return Object.keys(Sources);
+		return PieceManager.keys;
 	}
 
 	// Board Colors
@@ -55,7 +59,30 @@ export default class Options {
 	public changeOption(name: string, value: any) {
 		if (!(name in this.options)) return;
 		this.options[name] = value;
+		this.save();
 	}
 
-	public reset = () => { this.options = this.copyOptions(); };
+	public reset = () => {
+		this.options = this.copyOptions();
+		this.save();
+	}
+
+	public save(): void {
+		if (window.localStorage) {
+			Object.keys(this.options).forEach((key) => {
+				window.localStorage.setItem(key, this.options[key]);
+			});
+		}
+	}
+
+	public load(): void {
+		if (window.localStorage) {
+			Object.keys(this.options).forEach((key) => {
+				const data = window.localStorage.getItem(key);
+				if (data !== null) {
+					this.options[key] = data;
+				}
+			});
+		}
+	}
 }

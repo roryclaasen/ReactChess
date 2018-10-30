@@ -80,6 +80,7 @@ export default class BoardComponent extends React.Component<BoardComponentProps,
 							piece={piece}
 							x={x}
 							y={y}
+							isTurn={board.isTurn(x, y)}
 						/>
 					)}
 				</SquareComponent>

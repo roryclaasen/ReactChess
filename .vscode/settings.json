@@ -1,4 +1,12 @@
 {
 	"files.eol": "\n",
-	"editor.insertSpaces": false
+	"editor.insertSpaces": false,
+	"spellright.language": [
+		"en"
+	],
+	"spellright.documentTypes": [
+		"markdown",
+		"latex",
+		"plaintext"
+	]
 }

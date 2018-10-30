@@ -1,18 +1,23 @@
 import * as React from 'react';
 
-import { ConnectDragPreview, ConnectDragSource, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
+import { ConnectDragPreview, ConnectDragSource, DragSourceSpec, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
 
 import piece from '../../../shared/piece/piece';
 
-import { makeImage as PieceImage, getUrl as GetPieceUrl } from '../../pieces';
+import PieceManager from '../../pieces/manager';
 
 export interface PieceProps {
 	x: number;
 	y: number;
 	piece: piece;
+	isTurn: boolean;
 	isDragging?: boolean;
 	connectDragSource?: ConnectDragSource;
 	connectDragPreview?: ConnectDragPreview;
+}
+
+export interface PieceState {
+	image: HTMLImageElement;
 }
 
 const pieceSource = {
@@ -22,6 +27,9 @@ const pieceSource = {
 			y: props.y,
 			piece: props.piece
 		};
+	},
+	canDrag(props: PieceProps) {
+		return props.isTurn;
 	}
 };
 
@@ -34,15 +42,26 @@ function collect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
 }
 
 @DragSource('piece', pieceSource, collect)
-export default class PieceComponent extends React.Component<PieceProps, {}> {
+export default class PieceComponent extends React.Component<PieceProps, PieceState> {
+
+	constructor(props: PieceProps) {
+		super(props);
+
+		const { piece } = this.props;
+		this.state = {
+			image: PieceManager.getImageElement(piece.color, piece.type)
+		};
+	}
+
 	public componentDidMount() {
-		const { connectDragPreview, piece } = this.props;
-		const image = PieceImage(piece.color, piece.type);
+		const { connectDragPreview } = this.props;
+		const { image } = this.state;
 		image.onload = () => connectDragPreview(image);
 	}
 
 	private pieceDOM = () => {
 		const { piece, isDragging } = this.props;
+		const { image } = this.state;
 		const className = `piece ${piece.type}`;
 
 		return (
@@ -53,7 +72,7 @@ export default class PieceComponent extends React.Component<PieceProps, {}> {
 				}}
 			>
 				<img
-					src={GetPieceUrl(piece.color, piece.type)}
+					src={image.src}
 					alt="gamePiece"
 				/>
 			</div>
