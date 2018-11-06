@@ -1,7 +1,9 @@
 import Board from '../../shared/board';
 
 export default class OnlineBoard {
-	constructor() {
+	constructor(token) {
+		this.token = token;
+
 		this.board = new Board();
 
 		this.players = [];

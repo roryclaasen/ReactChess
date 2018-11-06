@@ -14,7 +14,7 @@ export default class GameManager {
 	}
 
 	newGame = (token = this.newToken()) => {
-		this.games[token] = new OnlineBoard();
+		this.games[token] = new OnlineBoard(token);
 		return this.getGame(token);
 	}
 
