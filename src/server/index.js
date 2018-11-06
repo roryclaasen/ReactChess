@@ -1,28 +1,15 @@
 /* eslint no-console: 0 */
 
-const express = require('express');
 const path = require('path');
-const http = require('http');
-
-const port = process.env.PORT || 3000;
-
-const app = express();
-const server = http.Server(app);
+const fs = require('fs');
 
 const root = path.join(__dirname, '..', '..');
 
-app.use(express.static(path.join(root, 'build')));
+if (!fs.existsSync(path.join(root, 'build'))) {
+	console.error('No build files found, run \'npm build:js\' first');
+	process.exit(1);
+}
 
-app.get('/', (req, res) => {
-	res.sendFile(path.join(root, 'build', 'index.html'));
-});
+require('@babel/register');
 
-app.get('/license', (req, res) => {
-	res.sendFile(path.join(root, 'LICENSE'));
-});
-
-server.listen(port, () => {
-	console.log('Serve listening on *:%d', port);
-});
-
-module.exports = app;
+module.exports = require('./app.js');
