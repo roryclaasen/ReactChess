@@ -1,0 +1,10 @@
+{
+	"extends": "./tsconfig",
+	"include": [
+		"src/server/**/*"
+	],
+	"compilerOptions": {
+		"removeComments": false,
+		"outDir": "./dist/"
+	}
+}

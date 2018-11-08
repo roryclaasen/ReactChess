@@ -1,17 +1,28 @@
 import { PieceColors, PieceNotation, PieceTypes } from './constants';
+import Piece from './piece/piece';
+
+interface ColorMove {
+	piece: Piece;
+	from: Cords;
+	to: Cords;
+	capture?: Piece;
+}
+
+interface Cords {
+	x: number;
+	y: number;
+}
 
 export default class Move {
-	constructor() {
-		this.white = undefined;
-		this.black = undefined;
-	}
+	private white: ColorMove;
+	private black: ColorMove;
 
-	add(piece, from, to, capture) {
+	public add(piece: Piece, from: Cords, to: Cords, capture?: Piece): void {
 		if (piece.color === PieceColors.WHITE) this.addWhite(piece, from, to, capture);
 		if (piece.color === PieceColors.BLACK) this.addBlack(piece, from, to, capture);
 	}
 
-	addWhite = (piece, from, to, capture) => {
+	public addWhite(piece: Piece, from: Cords, to: Cords, capture?: Piece): void {
 		this.white = {
 			piece,
 			from,
@@ -20,7 +31,7 @@ export default class Move {
 		};
 	}
 
-	addBlack = (piece, from, to, capture) => {
+	public addBlack(piece: Piece, from: Cords, to: Cords, capture?: Piece): void {
 		this.black = {
 			piece,
 			from,
@@ -29,7 +40,7 @@ export default class Move {
 		};
 	}
 
-	format = (color) => {
+	private format(color: PieceColors): string {
 		const data = color === PieceColors.WHITE ? this.white : this.black;
 		if (data === undefined) return '';
 		let notation = PieceNotation[data.piece.type];
@@ -39,5 +50,7 @@ export default class Move {
 		return `${notation}${capture}${String.fromCharCode(65 + data.to.x)}${data.to.y}`;
 	}
 
-	notation = () => [this.format(PieceColors.WHITE), this.format(PieceColors.BLACK)];
+	public get notation() {
+		return [this.format(PieceColors.WHITE), this.format(PieceColors.BLACK)];
+	}
 }

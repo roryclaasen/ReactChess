@@ -1,11 +1,18 @@
 import OnlineBoard from './onlineBoard';
 
+interface Games {
+	[key: string]: OnlineBoard;
+}
+
 export default class GameManager {
+
+	private games: Games;
+
 	constructor() {
 		this.games = {};
 	}
 
-	newToken = () => {
+	public newToken(): string {
 		let token;
 		do {
 			token = (Math.floor(Math.random() * 900000) + 100000).toString();
@@ -13,19 +20,23 @@ export default class GameManager {
 		return token;
 	}
 
-	newGame = (token = this.newToken()) => {
+	public newGame(token: string = this.newToken()): OnlineBoard {
 		this.games[token] = new OnlineBoard(token);
 		return this.getGame(token);
 	}
 
-	hasGame = (token) => token in this.games;
+	public hasGame(token: string): boolean {
+		return token in this.games;
+	}
 
-	getGame = (token) => {
+	public getGame(token: string): OnlineBoard {
 		if (this.hasGame(token)) {
 			return this.games[token];
 		}
 		return undefined;
 	}
 
-	removeGame = (token) => delete this.games[token];
+	public removeGame(token: string) {
+		delete this.games[token];
+	}
 }

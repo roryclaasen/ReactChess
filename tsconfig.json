@@ -2,20 +2,20 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "es5",
+		"esModuleInterop": true,
 		"sourceMap": true,
 		"removeComments": true,
-		"outDir": "./build/",
 		"noImplicitAny": true,
-		"jsx": "react",
 		"allowJs": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true
 	},
 	"include": [
-		"src/**/*"
-		
+		"src/shared/**/*"
 	],
 	"exclude": [
-		"node_modules"
+		"node_modules",
+		"build",
+		"dist"
 	]
 }

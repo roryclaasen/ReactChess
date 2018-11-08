@@ -1,6 +1,7 @@
 import { PieceColors } from './constants';
+import Piece from './piece/piece';
 
-export function Bishop(x, y, toX, toY, grid) {
+export function bishop(x: number, y: number, toX: number, toY: number, grid: Piece[][]) {
 	const dx = toX - x;
 	const dy = toY - y;
 	const path = (Math.abs(dx) === Math.abs(dy));
@@ -18,21 +19,21 @@ export function Bishop(x, y, toX, toY, grid) {
 	return clear;
 }
 
-export function King(x, y, toX, toY) {
+export function king(x: number, y: number, toX: number, toY: number) {
 	const dx = toX - x;
 	const dy = toY - y;
 
 	return !(Math.abs(dx) > 1 || Math.abs(dy) > 1);
 }
 
-export function Knight(x, y, toX, toY) {
+export function knight(x: number, y: number, toX: number, toY: number) {
 	const dx = toX - x;
 	const dy = toY - y;
 
 	return (Math.abs(dx) === 2 && Math.abs(dy) === 1) || (Math.abs(dx) === 1 && Math.abs(dy) === 2);
 }
 
-export function Pawn(x, y, toX, toY, grid, color) {
+export function pawn(x: number, y: number, toX: number, toY: number, grid: Piece[][], color: PieceColors) {
 	const dx = toX - x;
 	const dy = toY - y;
 
@@ -58,7 +59,7 @@ export function Pawn(x, y, toX, toY, grid, color) {
 	return false;
 }
 
-export function Rook(x, y, toX, toY, grid) {
+export function rook(x: number, y: number, toX: number, toY: number, grid: Piece[][]) {
 	const path = !(x !== toX && y !== toY);
 	if (grid === undefined || !path) return path;
 	const dx = toX - x;
@@ -80,15 +81,15 @@ export function Rook(x, y, toX, toY, grid) {
 	return clear;
 }
 
-export function Queen(x, y, toX, toY, grid) {
-	return Rook(x, y, toX, toY, grid) || Bishop(x, y, toX, toY, grid);
+export function queen(x: number, y: number, toX: number, toY: number, grid: Piece[][]) {
+	return rook(x, y, toX, toY, grid) || bishop(x, y, toX, toY, grid);
 }
 
 export default {
-	Bishop,
-	King,
-	Knight,
-	Pawn,
-	Rook,
-	Queen
+	bishop,
+	king,
+	knight,
+	pawn,
+	rook,
+	queen
 };

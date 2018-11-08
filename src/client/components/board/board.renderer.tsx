@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Board from '../../../shared/board';
 import BoardComponent from './board.table';
-import { WinnerState } from '../../../shared/constants';
+import { PieceColors, WinnerState } from '../../../shared/constants';
 import Options from '../../options.client';
 
 export interface BoardRendererProps {
@@ -19,11 +19,11 @@ export interface BoardRendererProps {
 export default class BoardRenderer extends React.Component<BoardRendererProps, {}> {
 	protected currentMessage = () => {
 		const { board } = this.props;
-		let message = `It's ${board.current.toLowerCase()}'s turn`;
+		let message = `It's ${PieceColors[board.current]}'s turn`;
 
 		if (board.winner) {
 			if (board.winner === WinnerState.STALEMATE) message = 'Stalemate!';
-			else message = `Checkmate! ${board.winner.toLowerCase()} wins!`;
+			else message = `Checkmate! ${board.winner} wins!`;
 		}
 		return message;
 	}

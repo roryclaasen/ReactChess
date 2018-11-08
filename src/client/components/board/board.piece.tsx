@@ -71,6 +71,7 @@ export default class PieceComponent extends React.Component<PieceProps, PieceSta
 					opacity: isDragging ? 0.25 : 1
 				}}
 			>
+				{/* {piece.type} */}
 				<img
 					src={image.src}
 					alt="gamePiece"

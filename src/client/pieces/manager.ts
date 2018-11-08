@@ -1,16 +1,21 @@
-import * as DefaultBlackBishop from './default/b_bishop.png';
-import * as DefaultBlackKing from './default/b_king.png';
-import * as DefaultBlackKnight from './default/b_knight.png';
-import * as DefaultBlackQueen from './default/b_queen.png';
-import * as DefaultBlackPawn from './default/b_pawn.png';
-import * as DefaultBlackRook from './default/b_rook.png';
+import DefaultBlackBishop from './default/b_bishop.png';
+import DefaultBlackKing from './default/b_king.png';
+import DefaultBlackKnight from './default/b_knight.png';
+import DefaultBlackQueen from './default/b_queen.png';
+import DefaultBlackPawn from './default/b_pawn.png';
+import DefaultBlackRook from './default/b_rook.png';
 
-import * as DefaultWhiteBishop from './default/w_bishop.png';
-import * as DefaultWhiteKing from './default/w_king.png';
-import * as DefaultWhiteKnight from './default/w_knight.png';
-import * as DefaultWhiteQueen from './default/w_queen.png';
-import * as DefaultWhitePawn from './default/w_pawn.png';
-import * as DefaultWhiteRook from './default/w_rook.png';
+import DefaultWhiteBishop from './default/w_bishop.png';
+import DefaultWhiteKing from './default/w_king.png';
+import DefaultWhiteKnight from './default/w_knight.png';
+import DefaultWhiteQueen from './default/w_queen.png';
+import DefaultWhitePawn from './default/w_pawn.png';
+import DefaultWhiteRook from './default/w_rook.png';
+
+// FIXME Not the correct way to pull images
+// IMAGES NOT WORKING NEED TO FIX
+
+import { PieceColors, PieceTypes } from '../../shared/constants';
 
 interface PieceList {
 	[key: string]: string;
@@ -30,10 +35,6 @@ interface PieceSet {
 	WHITE: PieceList;
 }
 
-function str(src: any): string {
-	return src as string;
-}
-
 class PieceManager {
 	private source: { [key: string]: PieceSet };
 	private currentKey: string;
@@ -43,20 +44,20 @@ class PieceManager {
 
 		this.addSet('Default', {
 			BLACK: {
-				BISHOP: str(DefaultBlackBishop),
-				KING: str(DefaultBlackKing),
-				KNIGHT: str(DefaultBlackKnight),
-				QUEEN: str(DefaultBlackQueen),
-				PAWN: str(DefaultBlackPawn),
-				ROOK: str(DefaultBlackRook)
+				BISHOP: DefaultBlackBishop,
+				KING: DefaultBlackKing,
+				KNIGHT: DefaultBlackKnight,
+				QUEEN: DefaultBlackQueen,
+				PAWN: DefaultBlackPawn,
+				ROOK: DefaultBlackRook
 			},
 			WHITE: {
-				BISHOP: str(DefaultWhiteBishop),
-				KING: str(DefaultWhiteKing),
-				KNIGHT: str(DefaultWhiteKnight),
-				QUEEN: str(DefaultWhiteQueen),
-				PAWN: str(DefaultWhitePawn),
-				ROOK: str(DefaultWhiteRook)
+				BISHOP: DefaultWhiteBishop,
+				KING: DefaultWhiteKing,
+				KNIGHT: DefaultWhiteKnight,
+				QUEEN: DefaultWhiteQueen,
+				PAWN: DefaultWhitePawn,
+				ROOK: DefaultWhiteRook
 			}
 		});
 
@@ -76,11 +77,11 @@ class PieceManager {
 		this.currentKey = key;
 	}
 
-	public getImageDataString(color: string, type: string): string {
-		return this.current[color][type];
+	public getImageDataString(color: PieceColors, type: PieceTypes): string {
+		return this.current[PieceColors[color]][PieceTypes[type]];
 	}
 
-	public getImageElement(color: string, type: string): HTMLImageElement {
+	public getImageElement(color: PieceColors, type: PieceTypes): HTMLImageElement {
 		const image = new Image();
 		image.src = this.getImageDataString(color, type);
 		return image;

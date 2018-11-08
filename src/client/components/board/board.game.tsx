@@ -47,7 +47,7 @@ export default class GameBoard extends React.Component<GameBoardProps, GameBoard
 
 		const moves = [];
 		for (let i = 0; i < board.moves.length; i += 1) {
-			const move = board.moves[i].notation();
+			const move = board.moves[i].notation;
 			moves.push(
 				<ListItem
 					key={`move${i}`}

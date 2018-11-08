@@ -1,7 +1,12 @@
 import Board from '../../shared/board';
 
 export default class OnlineBoard {
-	constructor(token) {
+	public readonly token: string;
+	public readonly board: Board;
+	public readonly players: any[];
+	public readonly spectators: any[];
+
+	constructor(token: string) {
 		this.token = token;
 
 		this.board = new Board();
@@ -10,10 +15,12 @@ export default class OnlineBoard {
 		this.spectators = [];
 	}
 
-	addPlayer = (player) => {
+	public addPlayer(player: any): void {
 		if (this.players.length >= 2) this.spectators.push(player);
 		else this.players.push(player);
 	}
 
-	canPlay = () => this.players.length === 2;
+	public get playable(): boolean {
+		return this.players.length === 2;
+	}
 }

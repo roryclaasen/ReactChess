@@ -1,0 +1,13 @@
+{
+	"extends": "./tsconfig",
+	"include": [
+		"src/index.ts",
+		"src/typings.d.ts",
+		"src/client/**/*"
+	],
+	"compilerOptions": {
+		"removeComments": true,
+		"outDir": "./build/",
+		"jsx": "react"
+	}
+}

@@ -6,7 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import PieceComponent from './board.piece';
 import SquareComponent from './board.square';
 import Board from '../../../shared/board';
-import { BoardSize } from '../../../shared/constants';
+import { BOARD_SIZE } from '../../../shared/constants';
 
 import './board.scss';
 import Options from '../../options.client';
@@ -20,7 +20,6 @@ export interface BoardComponentProps {
 
 @DragDropContext(HTML5Backend)
 export default class BoardComponent extends React.Component<BoardComponentProps, {}> {
-
 	public static defaultProps: Partial<BoardComponentProps> = {
 		fliped: true
 	};
@@ -34,7 +33,7 @@ export default class BoardComponent extends React.Component<BoardComponentProps,
 	private makeItem(x: number, y: number) {
 		const { board, move } = this.props;
 		const itemKey = `${x},${y}`;
-		if ((y === -1 && (x === -1 || x === BoardSize)) || (y === BoardSize && (x === -1 || x === BoardSize))) {
+		if ((y === -1 && (x === -1 || x === BOARD_SIZE)) || (y === BOARD_SIZE && (x === -1 || x === BOARD_SIZE))) {
 			return (
 				<td
 					className="cell"
@@ -42,7 +41,7 @@ export default class BoardComponent extends React.Component<BoardComponentProps,
 				/>
 			);
 		}
-		if (y === -1 || y === BoardSize) {
+		if (y === -1 || y === BOARD_SIZE) {
 			return (
 				<td
 					className="cell label"
@@ -52,7 +51,7 @@ export default class BoardComponent extends React.Component<BoardComponentProps,
 				</td>
 			);
 		}
-		if (x === -1 || x === BoardSize) {
+		if (x === -1 || x === BOARD_SIZE) {
 			return (
 				<td
 					className="cell label"
@@ -91,7 +90,7 @@ export default class BoardComponent extends React.Component<BoardComponentProps,
 	private makeRow(y: number) {
 		const items = [];
 		const rowKey = `row${y}`;
-		for (let x = -1; x < BoardSize + 1; x += 1) {
+		for (let x = -1; x < BOARD_SIZE + 1; x += 1) {
 			items.push(this.makeItem(x, y));
 		}
 		return (
@@ -108,11 +107,11 @@ export default class BoardComponent extends React.Component<BoardComponentProps,
 		const { fliped, options } = this.props;
 		const rows = [];
 		if (fliped) {
-			for (let y = BoardSize; y >= -1; y -= 1) {
+			for (let y = BOARD_SIZE; y >= -1; y -= 1) {
 				rows.push(this.makeRow(y));
 			}
 		} else {
-			for (let y = -1; y < BoardSize + 1; y += 1) {
+			for (let y = -1; y < BOARD_SIZE + 1; y += 1) {
 				rows.push(this.makeRow(y));
 			}
 		}

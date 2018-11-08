@@ -1,28 +1,32 @@
 import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn } from './pieces';
 
-import { PieceColors, PieceTypes, BoardSize, WinnerState } from './constants';
+import { PieceColors, PieceTypes, BOARD_SIZE, WinnerState } from './constants';
 import Move from './move';
-
+import Piece from './piece/piece';
 
 export default class Board {
+	public readonly grid: Piece[][];
+	private _current: PieceColors;
+	private _winner: WinnerState;
+	public readonly moves: Move[];
+
 	constructor() {
 		this.grid = this.blankGrid();
-		this.current = PieceColors.WHITE;
-		this.winner = undefined;
+		this._current = PieceColors.WHITE;
 		this.moves = [];
 	}
 
-	blankGrid = () => {
-		const grid = [];
-		for (let i = 0; i < BoardSize; i += 1) {
+	private blankGrid(): Piece[][] {
+		const grid: Piece[][] = [];
+		for (let i = 0; i < BOARD_SIZE; i += 1) {
 			grid[i] = [];
-			for (let j = 0; j < BoardSize; j += 1) {
+			for (let j = 0; j < BOARD_SIZE; j += 1) {
 				grid[i][j] = undefined;
 			}
 		}
 
 		// Pawns
-		for (let x = 0; x < BoardSize; x += 1) {
+		for (let x = 0; x < BOARD_SIZE; x += 1) {
 			grid[x][1] = new PiecePawn(PieceColors.WHITE);
 			grid[x][6] = new PiecePawn(PieceColors.BLACK);
 		}
@@ -56,16 +60,16 @@ export default class Board {
 		return grid;
 	}
 
-	pieceAt(x, y) {
+	public pieceAt(x: number, y: number) {
 		const piece = this.grid[x][y];
 		if (piece !== undefined) return piece;
 		return undefined;
 	}
 
-	getPiece = (color, type, grid) => {
+	public getPiece(color: PieceColors, type: PieceTypes, grid: Piece[][]) {
 		const list = [];
-		for (let y = 0; y < BoardSize; y += 1) {
-			for (let x = 0; x < BoardSize; x += 1) {
+		for (let y = 0; y < BOARD_SIZE; y += 1) {
+			for (let x = 0; x < BOARD_SIZE; x += 1) {
 				const piece = grid[x][y];
 				if (piece === undefined) continue;
 				if (color !== undefined && piece.color !== color) continue;
@@ -78,7 +82,7 @@ export default class Board {
 		return list;
 	}
 
-	isCheck = (color, grid) => {
+	public isCheck(color: PieceColors, grid: Piece[][]): boolean {
 		if (color === undefined) {
 			const white = this.isCheck(PieceColors.WHITE, grid);
 			const black = this.isCheck(PieceColors.BLACK, grid);
@@ -94,13 +98,13 @@ export default class Board {
 		return canBeTaken;
 	}
 
-	isCheckMate = (color, grid) => {
+	public isCheckMate(color: PieceColors, grid: Piece[][]): boolean {
 		let canMove = false;
 		const pieces = this.getPiece(color, undefined, grid);
 		pieces.some((piece) => {
-			for (let x = 0; x < BoardSize; x += 1) {
+			for (let x = 0; x < BOARD_SIZE; x += 1) {
 				if (canMove) break;
-				for (let y = 0; y < BoardSize; y += 1) {
+				for (let y = 0; y < BOARD_SIZE; y += 1) {
 					if (canMove) break;
 					if (this.canMove(piece.x, piece.y, x, y, grid)) {
 						canMove = true;
@@ -112,8 +116,8 @@ export default class Board {
 		return !canMove;
 	}
 
-	move = (x1, y1, x2, y2) => {
-		if (!this.isTurn(x1, y1) || !this.canMove(x1, y1, x2, y2, this.grid, true)) return;
+	public move(x1: number, y1: number, x2: number, y2: number): void {
+		if (!this.isTurn(x1, y1) || !this.canMove(x1, y1, x2, y2, this.grid)) return;
 
 		const piece = this.grid[x1][y1];
 		const capture = this.grid[x2][y2];
@@ -125,25 +129,25 @@ export default class Board {
 		this.grid[x1][y1] = undefined;
 
 		if (this.isCheckMate(PieceColors.WHITE, this.grid)) {
-			this.winner = WinnerState.BLACK;
+			this._winner = WinnerState.BLACK;
 		}
 		if (this.isCheckMate(PieceColors.BLACK, this.grid)) {
-			if (this.winner === WinnerState.BLACK) this.winner = WinnerState.STALEMATE;
-			else this.winner = WinnerState.WHITE;
+			if (this.winner === WinnerState.BLACK) this._winner = WinnerState.STALEMATE;
+			else this._winner = WinnerState.WHITE;
 		}
-		if (this.winner === undefined) this.current = this.current === PieceColors.WHITE ? PieceColors.BLACK : PieceColors.WHITE;
+		if (this.winner === undefined) this._current = this.current === PieceColors.WHITE ? PieceColors.BLACK : PieceColors.WHITE;
 	}
 
-	isTurn = (x, y) => {
+	public isTurn(x: number, y: number): boolean {
 		if (this.winner) return false;
 		const piece = this.grid[x][y];
 		if (piece === undefined) return false;
 		return piece.color === this.current;
 	}
 
-	canMove = (x1, y1, x2, y2, grid) => {
-		if (Number(x1) === Number(x2) && Number(y1) === Number(y2)) return false;
-		const testGrid = this.makeGridCopy((grid === undefined) ? this.grid : grid);
+	public canMove(x1: number, y1: number, x2: number, y2: number, grid?: Piece[][]): boolean {
+		if (x1 === x2 && y1 === y2) return false;
+		const testGrid = this.copyGrid((grid === undefined) ? this.grid : grid);
 		const piece = testGrid[x1][y1];
 		if (piece === undefined) return false;
 
@@ -157,5 +161,15 @@ export default class Board {
 		return checl;
 	}
 
-	makeGridCopy = (grid) => grid.map((arr) => arr.slice());
+	public copyGrid(grid: Piece[][]): Piece[][] {
+		return grid.map((arr: any) => arr.slice());
+	}
+
+	public get winner() {
+		return this._winner;
+	}
+
+	public get current() {
+		return this._current;
+	}
 }
