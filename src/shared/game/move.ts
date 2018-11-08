@@ -1,4 +1,4 @@
-import { PieceColors, PieceNotation, PieceTypes } from './constants';
+import { PieceColors, PieceNotation, PieceTypes } from '../constants';
 import Piece from './piece/piece';
 
 interface ColorMove {

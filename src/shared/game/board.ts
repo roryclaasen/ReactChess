@@ -1,6 +1,6 @@
 import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn } from './pieces';
 
-import { PieceColors, PieceTypes, BOARD_SIZE, WinnerState } from './constants';
+import { PieceColors, PieceTypes, BOARD_SIZE, WinnerState } from '../constants';
 import Move from './move';
 import Piece from './piece/piece';
 

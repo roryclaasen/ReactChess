@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { ConnectDragPreview, ConnectDragSource, DragSourceSpec, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
 
-import piece from '../../../shared/piece/piece';
+import piece from '../../../shared/game/piece/piece';
 
 import PieceManager from '../../pieces/manager';
 

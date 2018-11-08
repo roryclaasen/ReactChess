@@ -1,6 +1,6 @@
 import Piece from './piece';
 import { knight as moveLogic } from '../piece.logic';
-import { PieceTypes, PieceColors } from '../constants';
+import { PieceTypes, PieceColors } from '../../constants';
 
 class PieceKnight extends Piece {
 	constructor(color: PieceColors) {

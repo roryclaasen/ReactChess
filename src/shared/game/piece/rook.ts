@@ -1,6 +1,6 @@
 import Piece from './piece';
 import { rook as moveLogic } from '../piece.logic';
-import { PieceTypes, PieceColors } from '../constants';
+import { PieceTypes, PieceColors } from '../../constants';
 
 class PieceRook extends Piece {
 	constructor(color: PieceColors) {

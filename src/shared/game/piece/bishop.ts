@@ -1,6 +1,6 @@
 import Piece from './piece';
 import { bishop as moveLogic } from '../piece.logic';
-import { PieceTypes, PieceColors } from '../constants';
+import { PieceTypes, PieceColors } from '../../constants';
 
 class PieceBishop extends Piece {
 	constructor(color: PieceColors) {

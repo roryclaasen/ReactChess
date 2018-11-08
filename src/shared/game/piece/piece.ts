@@ -1,4 +1,4 @@
-import { PieceColors, PieceTypes } from '../constants';
+import { PieceColors, PieceTypes } from '../../constants';
 
 export default abstract class Piece {
 	public readonly color: PieceColors;

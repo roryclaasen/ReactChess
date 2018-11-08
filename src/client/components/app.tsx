@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 
 import GithubCorner from 'react-github-corner';
 
-import Board from '../../shared/board';
+import Board from '../../shared/game/board';
 import GameBoard from './board/board.game';
 import Options from '../options.client';
 import OptionsModal from './options';

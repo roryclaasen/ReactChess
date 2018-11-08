@@ -1,4 +1,4 @@
-import { PieceColors } from './constants';
+import { PieceColors } from '../constants';
 import Piece from './piece/piece';
 
 export function bishop(x: number, y: number, toX: number, toY: number, grid: Piece[][]) {

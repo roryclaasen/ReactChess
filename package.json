@@ -52,7 +52,7 @@
 		"build": "run-s build:client build:server",
 		"build:client": "react-app-rewired build",
 		"build:server": "tsc -p tsconfig.server.json",
-		"lint": "run-s lint:sass lint:js lint:ts",
+		"lint": "run-s lint:sass lint:ts",
 		"lint:sass": "sass-lint -v",
 		"lint:js": "eslint src/**/*.js",
 		"lint:ts": "run-s lint:ts:shared lint:ts:client lint:ts:server",
