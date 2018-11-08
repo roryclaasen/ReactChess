@@ -20,9 +20,7 @@ app.get('/', (req, res) => {
 	res.sendFile(path.join(root, 'build', 'index.html'));
 });
 
-app.get('/license', (req, res) => {
-	res.sendFile(path.join(root, 'LICENSE'));
-});
+app.get('/license', (req, res) => res.sendFile(path.join(root, 'LICENSE')));
 
 io.on(global.connection, socketHandler);
 

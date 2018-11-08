@@ -1,6 +1,6 @@
 import Board from '../../shared/game/board';
 
-export interface Player {
+export interface IPlayer {
 	id: string;
 	name?: string;
 }
@@ -8,10 +8,10 @@ export interface Player {
 export default class OnlineBoard {
 	public readonly token: string;
 	public readonly board: Board;
-	public readonly players: Player[];
-	public readonly spectators: Player[];
+	public readonly players: IPlayer[];
+	public readonly spectators: IPlayer[];
 
-	constructor(token: string, player?: Player) {
+	constructor(token: string, player?: IPlayer) {
 		this.token = token;
 
 		this.board = new Board();
@@ -22,7 +22,7 @@ export default class OnlineBoard {
 		if (player) this.addPlayer(player);
 	}
 
-	public addPlayer(player: Player): void {
+	public addPlayer(player: IPlayer): void {
 		if (this.players.length >= 2) this.spectators.push(player);
 		else this.players.push(player);
 	}

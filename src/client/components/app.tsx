@@ -15,7 +15,7 @@ export enum MainAppStage {
 	MENU, ONLINE, LOCAL
 }
 
-export interface MainAppState {
+export interface IMainAppState {
 	options: Options;
 	optionsOpen: boolean;
 	board: Board;
@@ -23,7 +23,7 @@ export interface MainAppState {
 	stage: MainAppStage;
 }
 
-export default class MainApp extends React.Component<{}, MainAppState> {
+export default class MainApp extends React.Component<{}, IMainAppState> {
 	constructor(props: any) {
 		super(props);
 

@@ -17,7 +17,7 @@ import DefaultWhiteRook from './default/w_rook.png';
 
 import { PieceColors, PieceTypes } from '../../shared/constants';
 
-interface PieceList {
+interface IPieceList {
 	[key: string]: string;
 
 	BISHOP: string;
@@ -28,15 +28,15 @@ interface PieceList {
 	ROOK: string;
 }
 
-interface PieceSet {
-	[key: string]: PieceList;
+interface IPieceSet {
+	[key: string]: IPieceList;
 
-	BLACK: PieceList;
-	WHITE: PieceList;
+	BLACK: IPieceList;
+	WHITE: IPieceList;
 }
 
 class PieceManager {
-	private source: { [key: string]: PieceSet };
+	private source: { [key: string]: IPieceSet };
 	private currentKey: string;
 
 	constructor() {
@@ -64,7 +64,7 @@ class PieceManager {
 		this.currentKey = this.keys[0];
 	}
 
-	public get current(): PieceSet {
+	public get current(): IPieceSet {
 		return this.source[this.currentKey];
 	}
 
@@ -87,7 +87,7 @@ class PieceManager {
 		return image;
 	}
 
-	private addSet(key: string, set: PieceSet): void {
+	private addSet(key: string, set: IPieceSet): void {
 		this.source[key] = set;
 	}
 }

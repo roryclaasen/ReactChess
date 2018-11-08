@@ -13,17 +13,17 @@ import BoardRenderer from './board.renderer';
 import Board from '../../../shared/game/board';
 import Options from '../../options.client';
 
-export interface GameBoardProps {
+export interface IGameBoardProps {
 	board: Board;
 	options: Options;
 }
 
-export interface GameBoardState {
+export interface IGameBoardState {
 	update: number;
 }
 
-export default class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
-	constructor(props: GameBoardProps) {
+export default class GameBoard extends React.Component<IGameBoardProps, IGameBoardState> {
+	constructor(props: IGameBoardProps) {
 		super(props);
 
 		this.state = {

@@ -3,17 +3,18 @@ import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn }
 import { PieceColors, PieceTypes, BOARD_SIZE, WinnerState } from '../constants';
 import Move from './move';
 import Piece from './piece/piece';
+import { IBoard } from './interface';
 
-export default class Board {
-	public readonly grid: Piece[][];
+export default class Board implements IBoard {
+	private _grid: Piece[][];
 	private _current: PieceColors;
 	private _winner: WinnerState;
-	public readonly moves: Move[];
+	private _moves: Move[];
 
 	constructor() {
-		this.grid = this.blankGrid();
+		this._grid = this.blankGrid();
 		this._current = PieceColors.WHITE;
-		this.moves = [];
+		this._moves = [];
 	}
 
 	private blankGrid(): Piece[][] {
@@ -58,12 +59,6 @@ export default class Board {
 		grid[4][7] = new PieceKing(PieceColors.BLACK);
 
 		return grid;
-	}
-
-	public pieceAt(x: number, y: number) {
-		const piece = this.grid[x][y];
-		if (piece !== undefined) return piece;
-		return undefined;
 	}
 
 	public getPiece(color: PieceColors, type: PieceTypes, grid: Piece[][]) {
@@ -135,6 +130,7 @@ export default class Board {
 			if (this.winner === WinnerState.BLACK) this._winner = WinnerState.STALEMATE;
 			else this._winner = WinnerState.WHITE;
 		}
+		// TODO Propper stalemate
 		if (this.winner === undefined) this._current = this.current === PieceColors.WHITE ? PieceColors.BLACK : PieceColors.WHITE;
 	}
 
@@ -165,11 +161,26 @@ export default class Board {
 		return grid.map((arr: any) => arr.slice());
 	}
 
+	public get grid() {
+		return this._grid;
+	}
+
+	public get moves() {
+		return this._moves;
+	}
+
 	public get winner() {
 		return this._winner;
 	}
 
 	public get current() {
 		return this._current;
+	}
+
+	public update(board: Board): void {
+		this._grid = board.grid;
+		this._moves = board.moves;
+		this._current = board.current;
+		this._winner = board.winner;
 	}
 }

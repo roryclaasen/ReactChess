@@ -1,6 +1,7 @@
 import { PieceColors, PieceTypes } from '../../constants';
+import { IPiece } from '../interface';
 
-export default abstract class Piece {
+export default abstract class Piece implements IPiece {
 	public readonly color: PieceColors;
 	public readonly type: PieceTypes;
 
@@ -9,5 +10,5 @@ export default abstract class Piece {
 		this.type = type;
 	}
 
-	public abstract canMove(x: number, yx: number, toXx: number, toYx: number, grid?: Piece[][]): boolean;
+	public abstract canMove(x: number, y: number, toX: number, toY: number, grid?: Piece[][]): boolean;
 }

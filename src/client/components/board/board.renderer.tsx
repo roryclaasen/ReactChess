@@ -10,13 +10,13 @@ import BoardComponent from './board.table';
 import { PieceColors, WinnerState } from '../../../shared/constants';
 import Options from '../../options.client';
 
-export interface BoardRendererProps {
+export interface IBoardRendererProps {
 	board: Board;
 	move: (x1: number, y1: number, x2: number, y2: number) => void;
 	options: Options;
 }
 
-export default class BoardRenderer extends React.Component<BoardRendererProps, {}> {
+export default class BoardRenderer extends React.Component<IBoardRendererProps, {}> {
 	protected currentMessage = () => {
 		const { board } = this.props;
 		let message = `It's ${PieceColors[board.current]}'s turn`;

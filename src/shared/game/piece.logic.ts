@@ -1,7 +1,7 @@
 import { PieceColors } from '../constants';
 import Piece from './piece/piece';
 
-export function bishop(x: number, y: number, toX: number, toY: number, grid: Piece[][]) {
+export function bishop(x: number, y: number, toX: number, toY: number, grid: Piece[][]): boolean {
 	const dx = toX - x;
 	const dy = toY - y;
 	const path = (Math.abs(dx) === Math.abs(dy));
@@ -19,21 +19,21 @@ export function bishop(x: number, y: number, toX: number, toY: number, grid: Pie
 	return clear;
 }
 
-export function king(x: number, y: number, toX: number, toY: number) {
+export function king(x: number, y: number, toX: number, toY: number): boolean {
 	const dx = toX - x;
 	const dy = toY - y;
 
 	return !(Math.abs(dx) > 1 || Math.abs(dy) > 1);
 }
 
-export function knight(x: number, y: number, toX: number, toY: number) {
+export function knight(x: number, y: number, toX: number, toY: number): boolean {
 	const dx = toX - x;
 	const dy = toY - y;
 
 	return (Math.abs(dx) === 2 && Math.abs(dy) === 1) || (Math.abs(dx) === 1 && Math.abs(dy) === 2);
 }
 
-export function pawn(x: number, y: number, toX: number, toY: number, grid: Piece[][], color: PieceColors) {
+export function pawn(x: number, y: number, toX: number, toY: number, grid: Piece[][], color: PieceColors): boolean {
 	const dx = toX - x;
 	const dy = toY - y;
 
@@ -59,7 +59,7 @@ export function pawn(x: number, y: number, toX: number, toY: number, grid: Piece
 	return false;
 }
 
-export function rook(x: number, y: number, toX: number, toY: number, grid: Piece[][]) {
+export function rook(x: number, y: number, toX: number, toY: number, grid: Piece[][]): boolean {
 	const path = !(x !== toX && y !== toY);
 	if (grid === undefined || !path) return path;
 	const dx = toX - x;
@@ -81,7 +81,7 @@ export function rook(x: number, y: number, toX: number, toY: number, grid: Piece
 	return clear;
 }
 
-export function queen(x: number, y: number, toX: number, toY: number, grid: Piece[][]) {
+export function queen(x: number, y: number, toX: number, toY: number, grid: Piece[][]): boolean {
 	return rook(x, y, toX, toY, grid) || bishop(x, y, toX, toY, grid);
 }
 

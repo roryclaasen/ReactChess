@@ -6,7 +6,7 @@ import piece from '../../../shared/game/piece/piece';
 
 import PieceManager from '../../pieces/manager';
 
-export interface PieceProps {
+export interface IPieceProps {
 	x: number;
 	y: number;
 	piece: piece;
@@ -16,19 +16,19 @@ export interface PieceProps {
 	connectDragPreview?: ConnectDragPreview;
 }
 
-export interface PieceState {
+export interface IPieceState {
 	image: HTMLImageElement;
 }
 
 const pieceSource = {
-	beginDrag(props: PieceProps) {
+	beginDrag(props: IPieceProps) {
 		return {
 			x: props.x,
 			y: props.y,
 			piece: props.piece
 		};
 	},
-	canDrag(props: PieceProps) {
+	canDrag(props: IPieceProps) {
 		return props.isTurn;
 	}
 };
@@ -42,9 +42,9 @@ function collect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
 }
 
 @DragSource('piece', pieceSource, collect)
-export default class PieceComponent extends React.Component<PieceProps, PieceState> {
+export default class PieceComponent extends React.Component<IPieceProps, IPieceState> {
 
-	constructor(props: PieceProps) {
+	constructor(props: IPieceProps) {
 		super(props);
 
 		const { piece } = this.props;

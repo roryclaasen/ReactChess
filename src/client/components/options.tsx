@@ -17,14 +17,14 @@ import Grid from '@material-ui/core/Grid';
 import Options from '../options.client';
 import PieceManager from '../pieces/manager';
 
-export interface OptionsModalProps {
+export interface IOptionsModalProps {
 	open: boolean;
 	close: () => void;
 	options: Options;
 	updateOptions?: (options: Options) => void;
 }
 
-export default class OptionsModal extends React.Component<OptionsModalProps, {}> {
+export default class OptionsModal extends React.Component<IOptionsModalProps, {}> {
 	private handleChangeCheckbox = (name: string) => (event: any) => {
 		const { options, updateOptions } = this.props;
 		options.changeOption(name, event.target.checked);

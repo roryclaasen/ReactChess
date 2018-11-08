@@ -11,7 +11,7 @@ import { BOARD_SIZE } from '../../../shared/constants';
 import './board.scss';
 import Options from '../../options.client';
 
-export interface BoardComponentProps {
+export interface IBoardComponentProps {
 	fliped?: Boolean;
 	board: Board;
 	move: (x1: number, y1: number, x2: number, y2: number) => void;
@@ -19,8 +19,8 @@ export interface BoardComponentProps {
 }
 
 @DragDropContext(HTML5Backend)
-export default class BoardComponent extends React.Component<BoardComponentProps, {}> {
-	public static defaultProps: Partial<BoardComponentProps> = {
+export default class BoardComponent extends React.Component<IBoardComponentProps, {}> {
+	public static defaultProps: Partial<IBoardComponentProps> = {
 		fliped: true
 	};
 
@@ -61,7 +61,7 @@ export default class BoardComponent extends React.Component<BoardComponentProps,
 				</td>
 			);
 		}
-		const piece = board.pieceAt(x, y);
+		const piece = board.grid[x][y];
 		const cellClassName = `cell grid ${((x + y) % 2 === 1) ? 'black' : 'white'}`;
 		return (
 			<td

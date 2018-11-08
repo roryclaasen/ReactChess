@@ -1,28 +1,17 @@
 import { PieceColors, PieceNotation, PieceTypes } from '../constants';
 import Piece from './piece/piece';
+import { IMove, IColorMove, ICords } from './interface';
 
-interface ColorMove {
-	piece: Piece;
-	from: Cords;
-	to: Cords;
-	capture?: Piece;
-}
+export default class Move implements IMove {
+	public white: IColorMove;
+	public black: IColorMove;
 
-interface Cords {
-	x: number;
-	y: number;
-}
-
-export default class Move {
-	private white: ColorMove;
-	private black: ColorMove;
-
-	public add(piece: Piece, from: Cords, to: Cords, capture?: Piece): void {
+	public add(piece: Piece, from: ICords, to: ICords, capture?: Piece): void {
 		if (piece.color === PieceColors.WHITE) this.addWhite(piece, from, to, capture);
 		if (piece.color === PieceColors.BLACK) this.addBlack(piece, from, to, capture);
 	}
 
-	public addWhite(piece: Piece, from: Cords, to: Cords, capture?: Piece): void {
+	public addWhite(piece: Piece, from: ICords, to: ICords, capture?: Piece): void {
 		this.white = {
 			piece,
 			from,
@@ -31,7 +20,7 @@ export default class Move {
 		};
 	}
 
-	public addBlack(piece: Piece, from: Cords, to: Cords, capture?: Piece): void {
+	public addBlack(piece: Piece, from: ICords, to: ICords, capture?: Piece): void {
 		this.black = {
 			piece,
 			from,
@@ -50,7 +39,7 @@ export default class Move {
 		return `${notation}${capture}${String.fromCharCode(65 + data.to.x)}${data.to.y}`;
 	}
 
-	public get notation() {
+	public get notation(): string[] {
 		return [this.format(PieceColors.WHITE), this.format(PieceColors.BLACK)];
 	}
 }
