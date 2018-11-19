@@ -17,9 +17,9 @@ const game = {
 };
 
 const commands = {
-	global,
-	lobby,
-	game
+	...global,
+	...lobby,
+	...game
 };
 
 export default commands;

@@ -12,9 +12,6 @@ import DefaultWhiteQueen from './default/w_queen.png';
 import DefaultWhitePawn from './default/w_pawn.png';
 import DefaultWhiteRook from './default/w_rook.png';
 
-// FIXME Not the correct way to pull images
-// IMAGES NOT WORKING NEED TO FIX
-
 import { PieceColors, PieceTypes } from '../../shared/constants';
 
 interface IPieceList {

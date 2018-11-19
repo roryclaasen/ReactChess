@@ -1,4 +1,4 @@
-import { PieceColors } from '../constants';
+import { PieceColors, BOARD_SIZE } from '../constants';
 import Piece from './piece/piece';
 
 export function bishop(x: number, y: number, toX: number, toY: number, grid: Piece[][]): boolean {
@@ -40,10 +40,13 @@ export function pawn(x: number, y: number, toX: number, toY: number, grid: Piece
 	if (color === PieceColors.WHITE && dy < 0) return false;
 	if (color === PieceColors.BLACK && dy > 0) return false;
 
-	const moveTwo = y === 1 || y === 6;
+	const moveTwo = y === 1 || y === BOARD_SIZE - 2;
 
 	// TODO En Passant
-	// TODO Promotion
+	if (y === 0 || y === BOARD_SIZE - 1) {
+		// TODO Promotion
+		// Might need to move this logic
+	}
 
 	const path = (Math.abs(dy) === 1 || (moveTwo && Math.abs(dy) === 2)) && Math.abs(dx) === 0;
 	if (grid === undefined) return path;
@@ -84,12 +87,3 @@ export function rook(x: number, y: number, toX: number, toY: number, grid: Piece
 export function queen(x: number, y: number, toX: number, toY: number, grid: Piece[][]): boolean {
 	return rook(x, y, toX, toY, grid) || bishop(x, y, toX, toY, grid);
 }
-
-export default {
-	bishop,
-	king,
-	knight,
-	pawn,
-	rook,
-	queen
-};

@@ -4,7 +4,13 @@ import GameManager from './games/manager';
 import { global, lobby } from '../shared/socket.commands';
 
 const gameManager = new GameManager();
-
+/**
+ * Socket.io on event handler
+ *
+ * @param {Socket} socket Current instance of Socket.io
+ * @param {string} event The event to listen on
+ * @param {(data?: any, fn?: Function) => void} method Method to carry out code
+ */
 const request = (
 	socket: Socket,
 	event: string,

@@ -32,6 +32,14 @@ export default class Connection {
 		return this.process(lobby.leave);
 	}
 
+	/**
+	 * Helper function to turn Socket.io emit into a Promise
+	 * @private
+	 * @param {string} event The Event to emit
+	 * @param {*} [options={}] Any data that wants to get passed with the web socket
+	 * @returns {Promise<any | ISocketError>} Returns the result of the packet or an error
+	 * @memberof Connection
+	 */
 	private process(event: string, options: any = {}): Promise<any | ISocketError> {
 		return new Promise<any | ISocketError>((resolve, reject) => {
 			this.socket.emit(event, options, (data: any) => {
