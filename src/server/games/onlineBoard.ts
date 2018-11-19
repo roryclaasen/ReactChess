@@ -1,12 +1,7 @@
 import Board from '../../shared/game/board';
-import { IBoard } from '../../shared/game/interface';
+import { IOnlineBoard, IBoard, IPlayer } from '../../shared/interface';
 
-export interface IPlayer {
-	id: string;
-	name?: string;
-}
-
-export default class OnlineBoard {
+export default class OnlineBoard implements IOnlineBoard {
 	public readonly token: string;
 	public readonly board: Board;
 	public readonly players: IPlayer[];
@@ -44,8 +39,14 @@ export default class OnlineBoard {
 		}
 	}
 
-	public write(): IBoard {
-		return this.board.write();
+	public write(): IBoard & IOnlineBoard {
+		return {
+			token: this.token,
+			players: this.players,
+			spectators: this.spectators,
+			playable: this.playable,
+			...this.board.write()
+		};
 	}
 
 	public addPlayer(player: IPlayer): void {

@@ -1,4 +1,5 @@
-import OnlineBoard, { IPlayer } from './onlineBoard';
+import OnlineBoard from './onlineBoard';
+import { IPlayer } from '../../shared/interface';
 
 export default class GameManager {
 

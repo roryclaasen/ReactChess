@@ -1,4 +1,4 @@
-import { PieceColors, PieceTypes, WinnerState } from '../constants';
+import { PieceColors, PieceTypes, WinnerState } from './constants';
 
 export interface IPiece {
 	color: PieceColors;
@@ -29,4 +29,23 @@ export interface IBoard {
 	grid: IPiece[][];
 
 	moves: IMove[];
+}
+
+export interface IPlayer {
+	id: string;
+	name?: string;
+}
+
+export interface IOnlineBoard {
+	token: string;
+	playable: boolean;
+
+	players: IPlayer[];
+	spectators: IPlayer[];
+}
+
+export interface ISocketError {
+	data: any;
+	error: string;
+	stack: Error;
 }

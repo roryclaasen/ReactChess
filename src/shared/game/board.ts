@@ -3,7 +3,7 @@ import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn }
 import { PieceColors, PieceTypes, BOARD_SIZE, WinnerState } from '../constants';
 import Move from './move';
 import Piece from './piece/piece';
-import { IBoard, IPiece, IMove } from './interface';
+import { IBoard, IPiece, IMove } from '../interface';
 
 export default class Board implements IBoard {
 	private _grid: Piece[][];

@@ -5,21 +5,24 @@ import { global, lobby } from '../shared/socket.commands';
 
 const gameManager = new GameManager();
 
-function request(socket: Socket, event: string, method: (data?: any, fn?: Function) => void) {
-	socket.on(event, (data, fn) => {
-		try {
-			method(data, fn);
-		} catch (e) {
-			console.error(`Error processing request '${event}'`);
-			console.error(e);
-			fn({
-				data,
-				error: `Error processing request '${event}'`,
-				stack: e
-			});
-		}
-	});
-}
+const request = (
+	socket: Socket,
+	event: string,
+	method: (data?: any, fn?: Function) => void
+) => socket.on(event, (data, fn) => {
+	try {
+		method(data, fn);
+	} catch (e) {
+		console.error(`Error processing request '${event}'`);
+		console.error(e);
+		fn({
+			data,
+			event,
+			error: 'Error processing request',
+			stack: e
+		});
+	}
+});
 
 export function handler(socket: Socket) {
 	let token: string;
@@ -64,6 +67,7 @@ export function handler(socket: Socket) {
 		}
 		fn({
 			data,
+			event: lobby.join,
 			error: 'No Game exists with this token'
 		});
 	});

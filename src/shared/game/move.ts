@@ -1,6 +1,6 @@
 import { PieceColors, PieceNotation, PieceTypes } from '../constants';
 import Piece from './piece/piece';
-import { IMove, IColorMove, ICords } from './interface';
+import { IMove, IColorMove, ICords } from '../interface';
 
 export default class Move implements IMove {
 	public white: IColorMove;

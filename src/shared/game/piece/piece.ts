@@ -1,5 +1,5 @@
 import { PieceColors, PieceTypes } from '../../constants';
-import { IPiece } from '../interface';
+import { IPiece } from '../../interface';
 
 export default abstract class Piece implements IPiece {
 	public readonly color: PieceColors;

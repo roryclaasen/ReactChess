@@ -2,13 +2,7 @@ import { Promise } from 'es6-promise';
 import io from 'socket.io-client';
 
 import { lobby } from '../shared/socket.commands';
-import { IBoard } from '../shared/game/interface';
-
-export interface ISocketError {
-	data: any;
-	error: string;
-	stack: Error;
-}
+import { IOnlineBoard, IBoard, ISocketError } from '../shared/interface';
 
 export default class Connection {
 
@@ -18,16 +12,16 @@ export default class Connection {
 		this.socket = io();
 	}
 
-	public makeGame(): Promise<IBoard | ISocketError> {
-		return this.process(lobby.make).then((data: IBoard) => {
+	public makeGame(): Promise<(IBoard & IOnlineBoard) | ISocketError> {
+		return this.process(lobby.make).then((data: IBoard & IOnlineBoard) => {
 			// TODO Update Board
 			// ~board.read(data);
 			return data;
 		});
 	}
 
-	public joinGame(token: string): Promise<IBoard | ISocketError> {
-		return this.process(lobby.join, { token }).then((data: IBoard) => {
+	public joinGame(token: string): Promise<(IBoard & IOnlineBoard) | ISocketError> {
+		return this.process(lobby.join, { token }).then((data: IBoard & IOnlineBoard) => {
 			// TODO Update Board
 			// ~board.read(data);
 			return data;
@@ -42,7 +36,7 @@ export default class Connection {
 		return new Promise<any | ISocketError>((resolve, reject) => {
 			this.socket.emit(event, options, (data: any) => {
 				if (data.error) {
-					console.error(data.error);
+					console.error(data.event, data.error);
 					reject(data);
 				} else resolve(data);
 			});
