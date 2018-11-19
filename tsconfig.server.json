@@ -5,6 +5,10 @@
 	],
 	"compilerOptions": {
 		"removeComments": false,
-		"outDir": "./dist/"
+		"outDir": "./dist/",
+		"target": "es6",
+		"lib": [
+			"es2015"
+		]
 	}
 }

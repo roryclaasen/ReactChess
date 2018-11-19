@@ -5,58 +5,73 @@ import { global, lobby } from '../shared/socket.commands';
 
 const gameManager = new GameManager();
 
+function request(socket: Socket, event: string, method: (data?: any, fn?: Function) => void) {
+	socket.on(event, (data, fn) => {
+		try {
+			method(data, fn);
+		} catch (e) {
+			console.error(`Error processing request '${event}'`);
+			console.error(e);
+			fn({
+				data,
+				error: `Error processing request '${event}'`,
+				stack: e
+			});
+		}
+	});
+}
+
 export function handler(socket: Socket) {
 	let token: string;
-	socket.on(global.disconnect, () => {
-		// TODO Handle game removed
+	request(socket, global.disconnect, () => {
+		if (gameManager.isInGame(socket.id) || token) {
+			gameManager.getGame(token).removePlayer(socket.id);
+		}
+		if (!gameManager.getGame(token).playable) {
+			// TODO Send notification to other players
+		}
+		if (gameManager.getGame(token).players.length === 0) {
+			gameManager.removeGame(token);
+		}
 	});
 
-	socket.on(lobby.make, (fn: Function) => {
-		try {
-			if (token) {
-				// TODO Leave old game
-				// something like this
-				// gameManager.leaveGame(token, socket.io);
+	request(socket, lobby.make, (data, fn) => {
+		if (token) {
+			if (gameManager.isInGame(socket.id)) {
+				gameManager.getGame(token).removePlayer(socket.id);
 			}
-			const game = gameManager.newGame({
+		}
+		const game = gameManager.newGame({
+			id: socket.id
+		});
+		token = game.token;
+		fn(game.write());
+	});
+
+	request(socket, lobby.join, (data, fn) => {
+		if (token) {
+			if (gameManager.isInGame(socket.id)) {
+				gameManager.getGame(token).removePlayer(socket.id);
+			}
+		}
+
+		if (gameManager.hasGame(data.token)) {
+			const game = gameManager.joinGame(data.token, {
 				id: socket.id
 			});
 			token = game.token;
-			fn(game);
-		} catch (e) {
-			console.error(e);
-			fn({
-				error: 'Error processing request'
-			});
+			fn(game.write());
 		}
+		fn({
+			data,
+			error: 'No Game exists with this token'
+		});
 	});
 
-	socket.on(lobby.join, (options, fn: Function) => {
-		try {
-			if (token) {
-				// TODO Leave old game
-				// something like this
-				// gameManager.leaveGame(token, socket.io);
-			}
-
-			if (gameManager.hasGame(options.token)) {
-				const game = gameManager.joinGame(options.token, {
-					id: socket.id
-				});
-				token = game.token;
-				fn(game);
-			}
-			fn({
-				options,
-				error: 'No Game exists with this token'
-			});
-		} catch (e) {
-			console.error(e);
-			fn({
-				options,
-				error: 'Error processing request'
-			});
-		}
+	request(socket, lobby.leave, (data, fn) => {
+		gameManager.getGame(token).removePlayer(socket.id);
+		// TODO Update all other players in the game
+		token = undefined;
 	});
 
 	// TODO Implement server stuff

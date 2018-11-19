@@ -1,15 +1,11 @@
-import OnlineBoard, { Player } from './onlineBoard';
-
-interface Games {
-	[key: string]: OnlineBoard;
-}
+import OnlineBoard, { IPlayer } from './onlineBoard';
 
 export default class GameManager {
 
-	private games: Games;
+	private games: Map<string, OnlineBoard>;
 
 	constructor() {
-		this.games = {};
+		this.games = new Map<string, OnlineBoard>();
 	}
 
 	private newToken(): string {
@@ -20,28 +16,37 @@ export default class GameManager {
 		return token;
 	}
 
-	public newGame(player: Player, token: string = this.newToken()): OnlineBoard {
-		this.games[token] = new OnlineBoard(token, player);
+	public newGame(player: IPlayer, token: string = this.newToken()): OnlineBoard {
+		this.games.set(token, new OnlineBoard(token, player));
 		return this.getGame(token);
 	}
 
-	public joinGame(token: string, player: Player): OnlineBoard {
-		this.games[token].addPlayer(player);
+	public joinGame(token: string, player: IPlayer): OnlineBoard {
+		this.games.get(token).addPlayer(player);
 		return this.getGame(token);
 	}
 
 	public hasGame(token: string): boolean {
-		return token in this.games;
+		return this.games.has(token);
 	}
 
 	public getGame(token: string): OnlineBoard {
 		if (this.hasGame(token)) {
-			return this.games[token];
+			return this.games.get(token);
 		}
 		return undefined;
 	}
 
 	public removeGame(token: string) {
-		delete this.games[token];
+		this.games.delete(token);
+	}
+
+	public isInGame(id: string) {
+		this.games.forEach((game) => {
+			const player = game.getPlayer(id);
+			const spec = game.getSpectator(id);
+			if (player || spec) return true;
+		});
+		return false;
 	}
 }

@@ -1,4 +1,5 @@
 import Board from '../../shared/game/board';
+import { IBoard } from '../../shared/game/interface';
 
 export interface IPlayer {
 	id: string;
@@ -20,6 +21,31 @@ export default class OnlineBoard {
 		this.spectators = [];
 
 		if (player) this.addPlayer(player);
+	}
+
+	public getPlayer(id: string): IPlayer {
+		return this.players.find(p => p.id === id);
+	}
+
+	public getSpectator(id: string): IPlayer {
+		return this.spectators.find(p => p.id === id);
+	}
+
+	public removePlayer(id: string): void {
+		const player = this.getPlayer(id);
+		if (player) {
+			const index = this.players.indexOf(player);
+			this.players.splice(index);
+		}
+		const spectator = this.getSpectator(id);
+		if (spectator) {
+			const index = this.spectators.indexOf(player);
+			this.spectators.splice(index);
+		}
+	}
+
+	public write(): IBoard {
+		return this.board.write();
 	}
 
 	public addPlayer(player: IPlayer): void {

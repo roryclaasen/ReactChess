@@ -3,7 +3,7 @@ import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn }
 import { PieceColors, PieceTypes, BOARD_SIZE, WinnerState } from '../constants';
 import Move from './move';
 import Piece from './piece/piece';
-import { IBoard } from './interface';
+import { IBoard, IPiece, IMove } from './interface';
 
 export default class Board implements IBoard {
 	private _grid: Piece[][];
@@ -17,7 +17,7 @@ export default class Board implements IBoard {
 		this._moves = [];
 	}
 
-	private blankGrid(): Piece[][] {
+	private emptyGrid(): Piece[][] {
 		const grid: Piece[][] = [];
 		for (let i = 0; i < BOARD_SIZE; i += 1) {
 			grid[i] = [];
@@ -25,6 +25,11 @@ export default class Board implements IBoard {
 				grid[i][j] = undefined;
 			}
 		}
+		return grid;
+	}
+
+	private blankGrid(): Piece[][] {
+		const grid: Piece[][] = this.emptyGrid();
 
 		// Pawns
 		for (let x = 0; x < BOARD_SIZE; x += 1) {
@@ -177,10 +182,63 @@ export default class Board implements IBoard {
 		return this._current;
 	}
 
-	public update(board: Board): void {
-		this._grid = board.grid;
-		this._moves = board.moves;
-		this._current = board.current;
-		this._winner = board.winner;
+	private newPiece(data: IPiece): Piece {
+		switch (data.type) {
+			case PieceTypes.BISHOP: return new PieceBishop(data.color);
+			case PieceTypes.KING: return new PieceKing(data.color);
+			case PieceTypes.QUEEN: return new PieceQueen(data.color);
+			case PieceTypes.KNIGHT: return new PieceKnight(data.color);
+			case PieceTypes.ROOK: return new PieceRook(data.color);
+			default: return new PiecePawn(data.color);
+		}
+	}
+
+	public write(): IBoard {
+		const simpleGrid: IPiece[][] = [];
+		for (let x = 0; x < BOARD_SIZE; x += 1) {
+			for (let y = 0; y < BOARD_SIZE; y += 1) {
+				const cell = this.grid[x][y];
+				if (cell !== undefined) {
+					simpleGrid[x][y] = {
+						color: cell.color,
+						type: cell.type
+					};
+				} else simpleGrid[x][y] = undefined;
+			}
+		}
+
+		const simpleMoves: IMove[] = [];
+		this.moves.forEach((m) => {
+			simpleMoves.push({
+				black: m.black,
+				white: m.white
+			});
+		});
+		return {
+			winner: this.winner,
+			current: this.current,
+			grid: simpleGrid,
+			moves: simpleMoves
+		};
+	}
+
+	public read(data: IBoard): void {
+		this._grid = this.emptyGrid();
+		for (let x = 0; x < BOARD_SIZE; x += 1) {
+			for (let y = 0; y < BOARD_SIZE; y += 1) {
+				const cell = data.grid[x][y];
+				if (cell === undefined) continue;
+				this._grid[x][y] = this.newPiece(cell);
+			}
+		}
+		this._moves = [];
+		data.moves.forEach((m) => {
+			const move = new Move();
+			move.white = m.white;
+			move.black = m.black;
+			this._moves.push(move);
+		});
+		this._current = data.current;
+		this._winner = data.winner;
 	}
 }

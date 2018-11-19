@@ -50,10 +50,10 @@
 	"scripts": {
 		"start": "node dist/server",
 		"start:client": "react-app-rewired start",
-		"start:server": "ts-node src/server",
+		"start:server": "ts-node --project tsconfig.server.json src/server",
 		"build": "run-s build:client build:server",
 		"build:client": "react-app-rewired build",
-		"build:server": "tsc -p tsconfig.server.json",
+		"build:server": "tsc --project tsconfig.server.json",
 		"lint": "run-s lint:sass lint:ts",
 		"lint:sass": "sass-lint -v",
 		"lint:js": "eslint src/**/*.js",
