@@ -10,7 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import BoardRenderer from './board.renderer';
-import Board from '../../../shared/game/board';
+import Board from '../../../game/board';
 import Options from '../../options.client';
 
 export interface IGameBoardProps {

@@ -5,8 +5,8 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import PieceComponent from './board.piece';
 import SquareComponent from './board.square';
-import Board from '../../../shared/game/board';
-import { BOARD_SIZE } from '../../../shared/constants';
+import Board from '../../../game/board';
+import { BOARD_SIZE } from '../../../constants';
 
 import './board.scss';
 import Options from '../../options.client';

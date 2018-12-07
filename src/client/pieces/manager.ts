@@ -12,7 +12,7 @@ import DefaultWhiteQueen from './default/w_queen.png';
 import DefaultWhitePawn from './default/w_pawn.png';
 import DefaultWhiteRook from './default/w_rook.png';
 
-import { PieceColors, PieceTypes } from '../../shared/constants';
+import { PieceColors, PieceTypes } from '../../constants';
 
 interface IPieceList {
 	[key: string]: string;

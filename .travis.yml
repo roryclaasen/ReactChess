@@ -8,10 +8,10 @@ script:
   - npm run lint
   - npm run build
 deploy:
-  provider: heroku
-  api_key:
-    secure: $HEROKU_TOKEN
-  app: 
-    master: chessreact
-    develop: chessreact-dev
-  skip_cleanup: true
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  local-dir: build
+  committer-from-gh: true
+  on:
+    branch: master

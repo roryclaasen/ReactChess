@@ -30,22 +30,3 @@ export interface IBoard {
 
 	moves: IMove[];
 }
-
-export interface IPlayer {
-	id: string;
-	name?: string;
-}
-
-export interface IOnlineBoard {
-	token: string;
-	playable: boolean;
-
-	players: IPlayer[];
-	spectators: IPlayer[];
-}
-
-export interface ISocketError {
-	data: any;
-	error: string;
-	stack: Error;
-}

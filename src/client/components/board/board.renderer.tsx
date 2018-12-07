@@ -5,9 +5,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import Board from '../../../shared/game/board';
+import Board from '../../../game/board';
 import BoardComponent from './board.table';
-import { PieceColors, WinnerState } from '../../../shared/constants';
+import { PieceColors, WinnerState } from '../../../constants';
 import Options from '../../options.client';
 
 export interface IBoardRendererProps {
