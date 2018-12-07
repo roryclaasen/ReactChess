@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { DropTarget, DropTargetCollector, DropTargetSpec, ConnectDropTarget, DropTargetMonitor } from 'react-dnd';
 
-export interface SquareProps {
+export interface ISquareProps {
 	connectDropTarget?: ConnectDropTarget;
 	isOver?: boolean;
 	canDrop?: boolean;
@@ -12,7 +12,7 @@ export interface SquareProps {
 	y: number;
 }
 
-const squareTarget: DropTargetSpec<SquareProps> = {
+const squareTarget: DropTargetSpec<ISquareProps> = {
 	canDrop(props, monitor) {
 		const item = monitor.getItem();
 		return props.canMove(item.x, item.y, props.x, props.y);
@@ -32,7 +32,7 @@ const collect: DropTargetCollector<any> = (connect, monitor) => {
 };
 
 @DropTarget('piece', squareTarget, collect)
-export default class SquareComponent extends React.Component<SquareProps, {}> {
+export default class SquareComponent extends React.Component<ISquareProps, {}> {
 	private renderOverlay = (type: string) => {
 		const className = `available ${type}`;
 		return <div className={className} />;

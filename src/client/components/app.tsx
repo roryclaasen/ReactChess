@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 
 import GithubCorner from 'react-github-corner';
 
-import Board from '../../shared/board';
+import Board from '../../game/board';
 import GameBoard from './board/board.game';
 import Options from '../options.client';
 import OptionsModal from './options';
@@ -15,7 +15,7 @@ export enum MainAppStage {
 	MENU, ONLINE, LOCAL
 }
 
-export interface MainAppState {
+export interface IMainAppState {
 	options: Options;
 	optionsOpen: boolean;
 	board: Board;
@@ -23,7 +23,7 @@ export interface MainAppState {
 	stage: MainAppStage;
 }
 
-export default class MainApp extends React.Component<{}, MainAppState> {
+export default class MainApp extends React.Component<{}, IMainAppState> {
 	constructor(props: any) {
 		super(props);
 

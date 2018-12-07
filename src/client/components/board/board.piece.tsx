@@ -2,11 +2,11 @@ import * as React from 'react';
 
 import { ConnectDragPreview, ConnectDragSource, DragSourceSpec, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
 
-import piece from '../../../shared/piece/piece';
+import piece from '../../../game/piece/piece';
 
 import PieceManager from '../../pieces/manager';
 
-export interface PieceProps {
+export interface IPieceProps {
 	x: number;
 	y: number;
 	piece: piece;
@@ -16,19 +16,19 @@ export interface PieceProps {
 	connectDragPreview?: ConnectDragPreview;
 }
 
-export interface PieceState {
+export interface IPieceState {
 	image: HTMLImageElement;
 }
 
 const pieceSource = {
-	beginDrag(props: PieceProps) {
+	beginDrag(props: IPieceProps) {
 		return {
 			x: props.x,
 			y: props.y,
 			piece: props.piece
 		};
 	},
-	canDrag(props: PieceProps) {
+	canDrag(props: IPieceProps) {
 		return props.isTurn;
 	}
 };
@@ -42,9 +42,9 @@ function collect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
 }
 
 @DragSource('piece', pieceSource, collect)
-export default class PieceComponent extends React.Component<PieceProps, PieceState> {
+export default class PieceComponent extends React.Component<IPieceProps, IPieceState> {
 
-	constructor(props: PieceProps) {
+	constructor(props: IPieceProps) {
 		super(props);
 
 		const { piece } = this.props;
@@ -71,6 +71,7 @@ export default class PieceComponent extends React.Component<PieceProps, PieceSta
 					opacity: isDragging ? 0.25 : 1
 				}}
 			>
+				{/* {piece.type} */}
 				<img
 					src={image.src}
 					alt="gamePiece"

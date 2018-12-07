@@ -10,20 +10,20 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import BoardRenderer from './board.renderer';
-import Board from '../../../shared/board';
+import Board from '../../../game/board';
 import Options from '../../options.client';
 
-export interface GameBoardProps {
+export interface IGameBoardProps {
 	board: Board;
 	options: Options;
 }
 
-export interface GameBoardState {
+export interface IGameBoardState {
 	update: number;
 }
 
-export default class GameBoard extends React.Component<GameBoardProps, GameBoardState> {
-	constructor(props: GameBoardProps) {
+export default class GameBoard extends React.Component<IGameBoardProps, IGameBoardState> {
+	constructor(props: IGameBoardProps) {
 		super(props);
 
 		this.state = {
@@ -47,7 +47,7 @@ export default class GameBoard extends React.Component<GameBoardProps, GameBoard
 
 		const moves = [];
 		for (let i = 0; i < board.moves.length; i += 1) {
-			const move = board.moves[i].notation();
+			const move = board.moves[i].notation;
 			moves.push(
 				<ListItem
 					key={`move${i}`}

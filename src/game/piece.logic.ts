@@ -1,6 +1,7 @@
-import { PieceColors } from './constants';
+import { PieceColors, BOARD_SIZE } from '../constants';
+import Piece from './piece/piece';
 
-export function Bishop(x, y, toX, toY, grid) {
+export function bishop(x: number, y: number, toX: number, toY: number, grid: Piece[][]): boolean {
 	const dx = toX - x;
 	const dy = toY - y;
 	const path = (Math.abs(dx) === Math.abs(dy));
@@ -18,31 +19,34 @@ export function Bishop(x, y, toX, toY, grid) {
 	return clear;
 }
 
-export function King(x, y, toX, toY) {
+export function king(x: number, y: number, toX: number, toY: number): boolean {
 	const dx = toX - x;
 	const dy = toY - y;
 
 	return !(Math.abs(dx) > 1 || Math.abs(dy) > 1);
 }
 
-export function Knight(x, y, toX, toY) {
+export function knight(x: number, y: number, toX: number, toY: number): boolean {
 	const dx = toX - x;
 	const dy = toY - y;
 
 	return (Math.abs(dx) === 2 && Math.abs(dy) === 1) || (Math.abs(dx) === 1 && Math.abs(dy) === 2);
 }
 
-export function Pawn(x, y, toX, toY, grid, color) {
+export function pawn(x: number, y: number, toX: number, toY: number, grid: Piece[][], color: PieceColors): boolean {
 	const dx = toX - x;
 	const dy = toY - y;
 
 	if (color === PieceColors.WHITE && dy < 0) return false;
 	if (color === PieceColors.BLACK && dy > 0) return false;
 
-	const moveTwo = y === 1 || y === 6;
+	const moveTwo = y === 1 || y === BOARD_SIZE - 2;
 
 	// TODO En Passant
-	// TODO Promotion
+	if (y === 0 || y === BOARD_SIZE - 1) {
+		// TODO Promotion
+		// Might need to move this logic
+	}
 
 	const path = (Math.abs(dy) === 1 || (moveTwo && Math.abs(dy) === 2)) && Math.abs(dx) === 0;
 	if (grid === undefined) return path;
@@ -58,7 +62,7 @@ export function Pawn(x, y, toX, toY, grid, color) {
 	return false;
 }
 
-export function Rook(x, y, toX, toY, grid) {
+export function rook(x: number, y: number, toX: number, toY: number, grid: Piece[][]): boolean {
 	const path = !(x !== toX && y !== toY);
 	if (grid === undefined || !path) return path;
 	const dx = toX - x;
@@ -80,15 +84,6 @@ export function Rook(x, y, toX, toY, grid) {
 	return clear;
 }
 
-export function Queen(x, y, toX, toY, grid) {
-	return Rook(x, y, toX, toY, grid) || Bishop(x, y, toX, toY, grid);
+export function queen(x: number, y: number, toX: number, toY: number, grid: Piece[][]): boolean {
+	return rook(x, y, toX, toY, grid) || bishop(x, y, toX, toY, grid);
 }
-
-export default {
-	Bishop,
-	King,
-	Knight,
-	Pawn,
-	Rook,
-	Queen
-};

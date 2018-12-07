@@ -5,25 +5,25 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import Board from '../../../shared/board';
+import Board from '../../../game/board';
 import BoardComponent from './board.table';
-import { WinnerState } from '../../../shared/constants';
+import { PieceColors, WinnerState } from '../../../constants';
 import Options from '../../options.client';
 
-export interface BoardRendererProps {
+export interface IBoardRendererProps {
 	board: Board;
 	move: (x1: number, y1: number, x2: number, y2: number) => void;
 	options: Options;
 }
 
-export default class BoardRenderer extends React.Component<BoardRendererProps, {}> {
+export default class BoardRenderer extends React.Component<IBoardRendererProps, {}> {
 	protected currentMessage = () => {
 		const { board } = this.props;
-		let message = `It's ${board.current.toLowerCase()}'s turn`;
+		let message = `It's ${PieceColors[board.current]}'s turn`;
 
 		if (board.winner) {
 			if (board.winner === WinnerState.STALEMATE) message = 'Stalemate!';
-			else message = `Checkmate! ${board.winner.toLowerCase()} wins!`;
+			else message = `Checkmate! ${board.winner} wins!`;
 		}
 		return message;
 	}

@@ -1,6 +1,6 @@
 import PieceManager from './pieces/manager';
 
-export interface AvalibleOptions {
+export interface IAvalibleOptions {
 	[key: string]: any;
 
 	ShowBackground: boolean;
@@ -10,8 +10,8 @@ export interface AvalibleOptions {
 
 export default class Options {
 
-	private defaultOptions: AvalibleOptions;
-	private options: AvalibleOptions;
+	private defaultOptions: IAvalibleOptions;
+	private options: IAvalibleOptions;
 
 	constructor() {
 		this.defaultOptions = {

@@ -5,6 +5,9 @@ const rewireTypescript = require('react-app-rewire-typescript');
 
 module.exports = function override(config, env) {
 	config = rewireSass(config, env);
-	config = rewireTypescript(config, env);
+	config = rewireTypescript(config, env, {
+		configFile: 'tsconfig.json'
+	});
+
 	return config;
 };
