@@ -10,6 +10,10 @@ class PieceKing extends Piece {
 	public canMove(x: number, y: number, toX: number, toY: number): boolean {
 		return moveLogic(x, y, toX, toY);
 	}
+
+	public copy(): Piece {
+		return new PieceKing(this.color);
+	}
 }
 
 export default PieceKing;

@@ -117,13 +117,11 @@ export default class Board implements IBoard {
 	}
 
 	public move(x1: number, y1: number, x2: number, y2: number): void {
-		// if (!this.isTurn(x1, y1) || !this.canMove(x1, y1, x2, y2, this.grid)) return;
+		if (!this.isTurn(x1, y1) || !this.canMove(x1, y1, x2, y2, this.grid)) return;
 
 		const piece = this.grid[x1][y1];
-		const capture = this.grid[x2][y2];
-
-		if (piece.color === PieceColors.WHITE) this.moves.push(new Move());
-		this.moves[this.moves.length - 1].add(piece, { x: x1, y: y1 }, { x: x2, y: y2 }, capture);
+		let capture = this.grid[x2][y2];
+		if (capture) capture = capture.copy();
 
 		this.grid[x2][y2] = this.grid[x1][y1];
 		this.grid[x1][y1] = undefined;
@@ -137,10 +135,27 @@ export default class Board implements IBoard {
 		}
 
 		// TODO: Propper stalemate
-		if (this.winner === undefined) this._current = this.current === PieceColors.WHITE ? PieceColors.BLACK : PieceColors.WHITE;
 
-		if (!this.winner) {
+		if (this.winner === undefined) {
+			this._current = this.current === PieceColors.WHITE ? PieceColors.BLACK : PieceColors.WHITE;
+
+			this.getPiece(undefined, PieceTypes.PAWN, this.grid).forEach((l) => {
+				(this.grid[l.x][l.y] as PiecePawn).allowEnPassant = false;
+			});
+
 			if (piece.type === PieceTypes.PAWN) {
+				const dY = y2 - y1;
+				if (Math.abs(dY) === 2) {
+					(this.grid[x2][y2] as PiecePawn).allowEnPassant = true;
+				}
+				const enPassantPiece = this.grid[x2][y2 + (dY < 0 ? 1 : -1)];
+				if (enPassantPiece) {
+					if (enPassantPiece.type === PieceTypes.PAWN && enPassantPiece.color !== piece.color) {
+						capture = this.grid[x2][y2 + (dY < 0 ? 1 : -1)].copy();
+						this.grid[x2][y2 + (dY < 0 ? 1 : -1)] = undefined;
+					}
+				}
+
 				if (y2 === 0 || y2 === BOARD_SIZE - 1) {
 					// TODO: Make the user choose what to promote to
 					this.grid[x2][y2] = new PieceQueen(piece.color);
@@ -148,6 +163,9 @@ export default class Board implements IBoard {
 				}
 			}
 		}
+
+		if (piece.color === PieceColors.WHITE) this.moves.push(new Move());
+		this.moves[this.moves.length - 1].add(piece, { x: x1, y: y1 }, { x: x2, y: y2 }, capture);
 	}
 
 	public isTurn(x: number, y: number): boolean {
