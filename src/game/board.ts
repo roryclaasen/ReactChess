@@ -117,7 +117,7 @@ export default class Board implements IBoard {
 	}
 
 	public move(x1: number, y1: number, x2: number, y2: number): void {
-		if (!this.isTurn(x1, y1) || !this.canMove(x1, y1, x2, y2, this.grid)) return;
+		// if (!this.isTurn(x1, y1) || !this.canMove(x1, y1, x2, y2, this.grid)) return;
 
 		const piece = this.grid[x1][y1];
 		const capture = this.grid[x2][y2];
@@ -135,8 +135,19 @@ export default class Board implements IBoard {
 			if (this.winner === WinnerState.BLACK) this._winner = WinnerState.STALEMATE;
 			else this._winner = WinnerState.WHITE;
 		}
-		// TODO Propper stalemate
+
+		// TODO: Propper stalemate
 		if (this.winner === undefined) this._current = this.current === PieceColors.WHITE ? PieceColors.BLACK : PieceColors.WHITE;
+
+		if (!this.winner) {
+			if (piece.type === PieceTypes.PAWN) {
+				if (y2 === 0 || y2 === BOARD_SIZE - 1) {
+					// TODO: Make the user choose what to promote to
+					this.grid[x2][y2] = new PieceQueen(piece.color);
+					console.log('PROMOTION');
+				}
+			}
+		}
 	}
 
 	public isTurn(x: number, y: number): boolean {

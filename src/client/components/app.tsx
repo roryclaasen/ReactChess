@@ -12,7 +12,7 @@ import OptionsModal from './options';
 import MainMenu from './home';
 
 export enum MainAppStage {
-	MENU, ONLINE, LOCAL
+	MENU, LOCAL, AI
 }
 
 export interface IMainAppState {
@@ -66,7 +66,7 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 
 	public render() {
 		const { board, options, optionsOpen, update, stage } = this.state;
-		// TODO Menu & UI
+		// TODO: Menu & UI
 		const gridClass = ['grid-main'];
 		if (options.showBackground) gridClass.push('background');
 
@@ -88,13 +88,6 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 							onClick={this.playLocal}
 						>
 							Pass and Play
-						</Button>
-						<Button
-							size="small"
-							disabled={true}
-							variant="outlined"
-						>
-							Play Online
 						</Button>
 					</MainMenu>
 				);
@@ -169,7 +162,8 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 				/>
 				<GithubCorner
 					href="https://github.com/roryclaasen/ReactChess"
-					bannerColor="rgba(0, 0, 0, 0.5)"
+					bannerColor="rgba(0, 0, 0, 0.75)"
+					svgStyle={{ mixBlendMode: 'darken' }}
 					octoColor="#fff"
 					size={100}
 					direction="right"

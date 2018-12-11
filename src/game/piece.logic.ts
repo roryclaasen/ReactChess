@@ -42,11 +42,7 @@ export function pawn(x: number, y: number, toX: number, toY: number, grid: Piece
 
 	const moveTwo = y === 1 || y === BOARD_SIZE - 2;
 
-	// TODO En Passant
-	if (y === 0 || y === BOARD_SIZE - 1) {
-		// TODO Promotion
-		// Might need to move this logic
-	}
+	// TODO: En Passant
 
 	const path = (Math.abs(dy) === 1 || (moveTwo && Math.abs(dy) === 2)) && Math.abs(dx) === 0;
 	if (grid === undefined) return path;
