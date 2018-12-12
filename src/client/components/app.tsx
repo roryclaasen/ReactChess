@@ -66,7 +66,7 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 
 	public render() {
 		const { board, options, optionsOpen, update, stage } = this.state;
-		// TODO: Menu & UI
+		// TODO: Better menu & user interface infomation
 		const gridClass = ['grid-main'];
 		if (options.showBackground) gridClass.push('background');
 
