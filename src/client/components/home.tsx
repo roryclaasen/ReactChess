@@ -34,12 +34,6 @@ export default class MainMenu extends React.Component<{}, {}> {
 						<Typography component="p" gutterBottom={true}>
 							Take turns playing chess on this device
 						</Typography>
-						<Typography variant="h5">
-							Play Online
-						</Typography>
-						<Typography component="p" gutterBottom={true}>
-							Play online against an opponent
-						</Typography>
 					</CardContent>
 					<CardActions>
 						{children}
