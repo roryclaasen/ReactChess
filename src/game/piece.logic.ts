@@ -52,13 +52,14 @@ export function pawn(x: number, y: number, toX: number, toY: number, grid: Piece
 		return grid[toX][toY] === undefined;
 	}
 	if (Math.abs(dx) === 1 && Math.abs(dy) === 1) {
-		const piece = grid[toX][toY + (dy < 0 ? 1 : -1)];
-		if (piece) {
-			if (piece.type === PieceTypes.PAWN) {
-				return (piece as PiecePawn).allowEnPassant;
+		if (grid[toX][toY] === undefined) {
+			const piece = grid[toX][toY + (dy < 0 ? 1 : -1)];
+			if (piece) {
+				if (piece.type === PieceTypes.PAWN) {
+					return (piece as PiecePawn).allowEnPassant;
+				}
 			}
-		}
-		return grid[toX][toY] !== undefined;
+		} else return true;
 	}
 	return false;
 }

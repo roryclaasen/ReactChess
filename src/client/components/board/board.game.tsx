@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Chip from '@material-ui/core/Chip';
 
 import BoardRenderer from './board.renderer';
 import Board from '../../../game/board';
@@ -59,14 +60,21 @@ export default class GameBoard extends React.Component<IGameBoardProps, IGameBoa
 		const { board } = this.props;
 
 		const moves = [];
-		for (let i = 0; i < board.moves.length; i += 1) {
+		for (let i = board.moves.length - 1; i >= 0; i -= 1) {
 			const move = board.moves[i].notation;
 			moves.push(
 				<ListItem
 					key={`move${i}`}
 					className="item"
 					dense={true}
+					button={true}
 				>
+					<ListItemText
+						primary={(
+							<Chip label={`${i + 1}`} />
+						)}
+						className="text index"
+					/>
 					<ListItemText
 						primary={move[0]}
 						className="text left"
