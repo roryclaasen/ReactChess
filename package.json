@@ -11,6 +11,7 @@
 	"bugs": {
 		"url": "https://github.com/roryclaasen/ReactChess/issues"
 	},
+	"homepage" : "http://roryclaasen.github.io/ReactChess",
 	"dependencies": {
 		"@material-ui/core": "^3.6.2",
 		"@material-ui/icons": "^3.0.1",
