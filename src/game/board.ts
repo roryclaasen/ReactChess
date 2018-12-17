@@ -3,21 +3,34 @@ import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn }
 import { PieceColors, PieceTypes, BOARD_SIZE, WinnerState } from '../constants';
 import Move from './move';
 import Piece from './piece/piece';
-import { IBoard, IPiece, IMove } from '../interface';
 
-export default class Board implements IBoard {
+import { ICords } from '../interface';
+
+export default class Board {
 	private _grid: Piece[][];
 	private _current: PieceColors;
 	private _winner: WinnerState;
 	private _moves: Move[];
 
+	public upgradeWaiting: {
+		waiting: boolean;
+		color: PieceColors;
+	} & ICords;
+
 	constructor() {
 		this._grid = this.blankGrid();
 		this._current = PieceColors.WHITE;
 		this._moves = [];
+
+		this.upgradeWaiting = {
+			waiting: false,
+			x: undefined,
+			y: undefined,
+			color: undefined
+		};
 	}
 
-	private emptyGrid(): Piece[][] {
+	private blankGrid(): Piece[][] {
 		const grid: Piece[][] = [];
 		for (let i = 0; i < BOARD_SIZE; i += 1) {
 			grid[i] = [];
@@ -25,11 +38,6 @@ export default class Board implements IBoard {
 				grid[i][j] = undefined;
 			}
 		}
-		return grid;
-	}
-
-	private blankGrid(): Piece[][] {
-		const grid: Piece[][] = this.emptyGrid();
 
 		// Pawns
 		for (let x = 0; x < BOARD_SIZE; x += 1) {
@@ -83,6 +91,7 @@ export default class Board implements IBoard {
 	}
 
 	public isCheck(color: PieceColors, grid: Piece[][]): boolean {
+		if (grid === undefined) return false;
 		if (color === undefined) {
 			const white = this.isCheck(PieceColors.WHITE, grid);
 			const black = this.isCheck(PieceColors.BLACK, grid);
@@ -99,6 +108,7 @@ export default class Board implements IBoard {
 	}
 
 	public isCheckMate(color: PieceColors, grid: Piece[][]): boolean {
+		if (grid === undefined) return false;
 		let canMove = false;
 		const pieces = this.getPiece(color, undefined, grid);
 		pieces.some((piece) => {
@@ -120,10 +130,8 @@ export default class Board implements IBoard {
 		if (!this.isTurn(x1, y1) || !this.canMove(x1, y1, x2, y2, this.grid)) return;
 
 		const piece = this.grid[x1][y1];
-		const capture = this.grid[x2][y2];
-
-		if (piece.color === PieceColors.WHITE) this.moves.push(new Move());
-		this.moves[this.moves.length - 1].add(piece, { x: x1, y: y1 }, { x: x2, y: y2 }, capture);
+		let capture = this.grid[x2][y2];
+		if (capture) capture = capture.copy();
 
 		this.grid[x2][y2] = this.grid[x1][y1];
 		this.grid[x1][y1] = undefined;
@@ -135,8 +143,42 @@ export default class Board implements IBoard {
 			if (this.winner === WinnerState.BLACK) this._winner = WinnerState.STALEMATE;
 			else this._winner = WinnerState.WHITE;
 		}
-		// TODO Propper stalemate
-		if (this.winner === undefined) this._current = this.current === PieceColors.WHITE ? PieceColors.BLACK : PieceColors.WHITE;
+
+		// TODO: Propper stalemate
+
+		if (this.winner === undefined) {
+			this._current = this.current === PieceColors.WHITE ? PieceColors.BLACK : PieceColors.WHITE;
+
+			this.getPiece(undefined, PieceTypes.PAWN, this.grid).forEach((l) => {
+				(this.grid[l.x][l.y] as PiecePawn).allowEnPassant = false;
+			});
+
+			if (piece.type === PieceTypes.PAWN) {
+				const dY = y2 - y1;
+				if (Math.abs(dY) === 2) {
+					(this.grid[x2][y2] as PiecePawn).allowEnPassant = true;
+				}
+				const enPassantPiece = this.grid[x2][y2 + (dY < 0 ? 1 : -1)];
+				if (enPassantPiece) {
+					if (enPassantPiece.type === PieceTypes.PAWN && enPassantPiece.color !== piece.color) {
+						capture = this.grid[x2][y2 + (dY < 0 ? 1 : -1)].copy();
+						this.grid[x2][y2 + (dY < 0 ? 1 : -1)] = undefined;
+					}
+				}
+				if (y2 === 0 || y2 === BOARD_SIZE - 1) {
+					this.upgradeWaiting = {
+						x: x2,
+						y: y2,
+						color: piece.color,
+						waiting: true
+					};
+					// this.promotePiece(x2, y2, PieceTypes.QUEEN);
+				}
+			}
+		}
+
+		if (piece.color === PieceColors.WHITE) this.moves.push(new Move());
+		this.moves[this.moves.length - 1].add(piece, { x: x1, y: y1 }, { x: x2, y: y2 }, capture);
 	}
 
 	public isTurn(x: number, y: number): boolean {
@@ -162,6 +204,41 @@ export default class Board implements IBoard {
 		return checl;
 	}
 
+	public promotePiece(x: number, y: number, type: PieceTypes, grid: Piece[][] = this.grid) {
+		if (!grid[x][y]) return;
+		const color = grid[x][y].color;
+		let piece: Piece;
+		switch (type) {
+			case PieceTypes.QUEEN: {
+				piece = new PieceQueen(color);
+				break;
+			}
+			case PieceTypes.ROOK: {
+				piece = new PieceRook(color);
+				break;
+			}
+			case PieceTypes.BISHOP: {
+				piece = new PieceBishop(color);
+				break;
+			}
+			case PieceTypes.KNIGHT: {
+				piece = new PieceKnight(color);
+				break;
+			}
+			default: {
+				piece = grid[x][y];
+				break;
+			}
+		}
+		grid[x][y] = piece;
+		this.upgradeWaiting = {
+			waiting: false,
+			x: undefined,
+			y: undefined,
+			color: undefined
+		};
+	}
+
 	public copyGrid(grid: Piece[][]): Piece[][] {
 		return grid.map((arr: any) => arr.slice());
 	}
@@ -180,65 +257,5 @@ export default class Board implements IBoard {
 
 	public get current() {
 		return this._current;
-	}
-
-	private newPiece(data: IPiece): Piece {
-		switch (data.type) {
-			case PieceTypes.BISHOP: return new PieceBishop(data.color);
-			case PieceTypes.KING: return new PieceKing(data.color);
-			case PieceTypes.QUEEN: return new PieceQueen(data.color);
-			case PieceTypes.KNIGHT: return new PieceKnight(data.color);
-			case PieceTypes.ROOK: return new PieceRook(data.color);
-			default: return new PiecePawn(data.color);
-		}
-	}
-
-	public write(): IBoard {
-		const simpleGrid: IPiece[][] = [];
-		for (let x = 0; x < BOARD_SIZE; x += 1) {
-			for (let y = 0; y < BOARD_SIZE; y += 1) {
-				const cell = this.grid[x][y];
-				if (cell !== undefined) {
-					simpleGrid[x][y] = {
-						color: cell.color,
-						type: cell.type
-					};
-				} else simpleGrid[x][y] = undefined;
-			}
-		}
-
-		const simpleMoves: IMove[] = [];
-		this.moves.forEach((m) => {
-			simpleMoves.push({
-				black: m.black,
-				white: m.white
-			});
-		});
-		return {
-			winner: this.winner,
-			current: this.current,
-			grid: simpleGrid,
-			moves: simpleMoves
-		};
-	}
-
-	public read(data: IBoard): void {
-		this._grid = this.emptyGrid();
-		for (let x = 0; x < BOARD_SIZE; x += 1) {
-			for (let y = 0; y < BOARD_SIZE; y += 1) {
-				const cell = data.grid[x][y];
-				if (cell === undefined) continue;
-				this._grid[x][y] = this.newPiece(cell);
-			}
-		}
-		this._moves = [];
-		data.moves.forEach((m) => {
-			const move = new Move();
-			move.white = m.white;
-			move.black = m.black;
-			this._moves.push(move);
-		});
-		this._current = data.current;
-		this._winner = data.winner;
 	}
 }

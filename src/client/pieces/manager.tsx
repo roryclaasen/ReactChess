@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import DefaultBlackBishop from './default/b_bishop.png';
 import DefaultBlackKing from './default/b_king.png';
 import DefaultBlackKnight from './default/b_knight.png';
@@ -82,6 +84,12 @@ class PieceManager {
 		const image = new Image();
 		image.src = this.getImageDataString(color, type);
 		return image;
+	}
+
+	public getImageJSX(color: PieceColors, type: PieceTypes): JSX.Element {
+		return (
+			<img src={this.getImageDataString(color, type)} />
+		);
 	}
 
 	private addSet(key: string, set: IPieceSet): void {

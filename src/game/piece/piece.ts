@@ -21,4 +21,6 @@ export default abstract class Piece implements IPiece {
 	 * @memberof Piece
 	 */
 	public abstract canMove(x: number, y: number, toX: number, toY: number, grid?: Piece[][]): boolean;
+
+	public abstract copy(): Piece;
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ConnectDragPreview, ConnectDragSource, DragSourceSpec, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
+import { ConnectDragPreview, ConnectDragSource, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
 
 import piece from '../../../game/piece/piece';
 
@@ -18,6 +18,7 @@ export interface IPieceProps {
 
 export interface IPieceState {
 	image: HTMLImageElement;
+	imageJSX: JSX.Element;
 }
 
 const pieceSource = {
@@ -43,28 +44,28 @@ function collect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
 
 @DragSource('piece', pieceSource, collect)
 export default class PieceComponent extends React.Component<IPieceProps, IPieceState> {
-
 	constructor(props: IPieceProps) {
 		super(props);
 
 		const { piece } = this.props;
 		this.state = {
-			image: PieceManager.getImageElement(piece.color, piece.type)
+			image: PieceManager.getImageElement(piece.color, piece.type),
+			imageJSX: PieceManager.getImageJSX(piece.color, piece.type)
 		};
 	}
 
-	public componentDidMount() {
+	public componentDidMount(): void {
 		const { connectDragPreview } = this.props;
 		const { image } = this.state;
 		image.onload = () => connectDragPreview(image);
 	}
 
-	private pieceDOM = () => {
+	public render(): JSX.Element {
 		const { piece, isDragging } = this.props;
-		const { image } = this.state;
+		const { imageJSX } = this.state;
 		const className = `piece ${piece.type}`;
-
-		return (
+		const { connectDragSource } = this.props;
+		return connectDragSource(
 			<div
 				className={className}
 				style={{
@@ -72,16 +73,8 @@ export default class PieceComponent extends React.Component<IPieceProps, IPieceS
 				}}
 			>
 				{/* {piece.type} */}
-				<img
-					src={image.src}
-					alt="gamePiece"
-				/>
+				{imageJSX}
 			</div>
 		);
-	}
-
-	public render() {
-		const { connectDragSource } = this.props;
-		return connectDragSource(this.pieceDOM());
 	}
 }

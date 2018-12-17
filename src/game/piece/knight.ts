@@ -10,6 +10,10 @@ class PieceKnight extends Piece {
 	public canMove(x: number, y: number, toX: number, toY: number) {
 		return moveLogic(x, y, toX, toY);
 	}
+
+	public copy(): Piece {
+		return new PieceKnight(this.color);
+	}
 }
 
 export default PieceKnight;

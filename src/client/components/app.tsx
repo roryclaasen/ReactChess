@@ -12,7 +12,7 @@ import OptionsModal from './options';
 import MainMenu from './home';
 
 export enum MainAppStage {
-	MENU, ONLINE, LOCAL
+	MENU, LOCAL, AI
 }
 
 export interface IMainAppState {
@@ -44,29 +44,15 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 		});
 	}
 
-	private showOptions = () => {
-		this.setState({ optionsOpen: true });
-	}
+	private showOptions = () => this.setState({ optionsOpen: true });
+	private closeOptions = () => this.setState({ optionsOpen: false });
+	private mainMenu = () => this.setState({ stage: MainAppStage.MENU });
+	private playLocal = () => this.setState({ stage: MainAppStage.LOCAL, board: new Board() });
+	private newGame = () => this.setState({ board: new Board() });
 
-	private closeOptions = () => {
-		this.setState({ optionsOpen: false });
-	}
-
-	private mainMenu = () => {
-		this.setState({ stage: MainAppStage.MENU });
-	}
-
-	private playLocal = () => {
-		this.setState({ stage: MainAppStage.LOCAL, board: new Board() });
-	}
-
-	private newGanme = () => {
-		this.setState({ board: new Board() });
-	}
-
-	public render() {
+	public render(): JSX.Element {
 		const { board, options, optionsOpen, update, stage } = this.state;
-		// TODO Menu & UI
+		// TODO: Better menu & user interface infomation
 		const gridClass = ['grid-main'];
 		if (options.showBackground) gridClass.push('background');
 
@@ -91,10 +77,10 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 						</Button>
 						<Button
 							size="small"
-							disabled={true}
 							variant="outlined"
+							disabled={true}
 						>
-							Play Online
+							Play AI
 						</Button>
 					</MainMenu>
 				);
@@ -122,7 +108,7 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 									size="small"
 									color="secondary"
 									variant="outlined"
-									onClick={this.newGanme}
+									onClick={this.newGame}
 								>
 									New Game
 								</Button>
@@ -169,7 +155,8 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 				/>
 				<GithubCorner
 					href="https://github.com/roryclaasen/ReactChess"
-					bannerColor="rgba(0, 0, 0, 0.5)"
+					bannerColor="rgba(0, 0, 0, 0.75)"
+					svgStyle={{ mixBlendMode: 'darken' }}
 					octoColor="#fff"
 					size={100}
 					direction="right"

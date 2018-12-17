@@ -10,6 +10,10 @@ class PieceQueen extends Piece {
 	public canMove(x: number, y: number, toX: number, toY: number, grid: Piece[][]): boolean {
 		return moveLogic(x, y, toX, toY, grid);
 	}
+
+	public copy(): Piece {
+		return new PieceQueen(this.color);
+	}
 }
 
 export default PieceQueen;

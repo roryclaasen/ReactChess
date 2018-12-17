@@ -2,12 +2,12 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import 'normalize.css';
-import './index.scss';
+import './client/index.scss';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import MainApp from './components/app';
+import MainApp from './client/components/app';
 
 const theme = createMuiTheme({
 	typography: {

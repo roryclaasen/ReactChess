@@ -1,5 +1,6 @@
-import { PieceColors, BOARD_SIZE } from '../constants';
+import { PieceColors, BOARD_SIZE, PieceTypes } from '../constants';
 import Piece from './piece/piece';
+import PiecePawn from './piece/pawn';
 
 export function bishop(x: number, y: number, toX: number, toY: number, grid: Piece[][]): boolean {
 	const dx = toX - x;
@@ -42,12 +43,6 @@ export function pawn(x: number, y: number, toX: number, toY: number, grid: Piece
 
 	const moveTwo = y === 1 || y === BOARD_SIZE - 2;
 
-	// TODO En Passant
-	if (y === 0 || y === BOARD_SIZE - 1) {
-		// TODO Promotion
-		// Might need to move this logic
-	}
-
 	const path = (Math.abs(dy) === 1 || (moveTwo && Math.abs(dy) === 2)) && Math.abs(dx) === 0;
 	if (grid === undefined) return path;
 	if (path) {
@@ -57,7 +52,14 @@ export function pawn(x: number, y: number, toX: number, toY: number, grid: Piece
 		return grid[toX][toY] === undefined;
 	}
 	if (Math.abs(dx) === 1 && Math.abs(dy) === 1) {
-		return grid[toX][toY] !== undefined;
+		if (grid[toX][toY] === undefined) {
+			const piece = grid[toX][toY + (dy < 0 ? 1 : -1)];
+			if (piece) {
+				if (piece.type === PieceTypes.PAWN) {
+					return (piece as PiecePawn).allowEnPassant;
+				}
+			}
+		} else return true;
 	}
 	return false;
 }

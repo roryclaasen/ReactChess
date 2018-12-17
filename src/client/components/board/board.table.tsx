@@ -30,7 +30,7 @@ export default class BoardComponent extends React.Component<IBoardComponentProps
 		return false;
 	}
 
-	private makeItem(x: number, y: number) {
+	private makeItem(x: number, y: number): JSX.Element {
 		const { board, move } = this.props;
 		const itemKey = `${x},${y}`;
 		if ((y === -1 && (x === -1 || x === BOARD_SIZE)) || (y === BOARD_SIZE && (x === -1 || x === BOARD_SIZE))) {
@@ -87,7 +87,7 @@ export default class BoardComponent extends React.Component<IBoardComponentProps
 		);
 	}
 
-	private makeRow(y: number) {
+	private makeRow(y: number): JSX.Element {
 		const items = [];
 		const rowKey = `row${y}`;
 		for (let x = -1; x < BOARD_SIZE + 1; x += 1) {
@@ -103,7 +103,7 @@ export default class BoardComponent extends React.Component<IBoardComponentProps
 		);
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		const { fliped, options } = this.props;
 		const rows = [];
 		if (fliped) {

@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 
 export default class MainMenu extends React.Component<{}, {}> {
-	public render() {
+	public render(): JSX.Element  {
 		const { children } = this.props;
 		return (
 			<React.Fragment>
@@ -35,10 +35,10 @@ export default class MainMenu extends React.Component<{}, {}> {
 							Take turns playing chess on this device
 						</Typography>
 						<Typography variant="h5">
-							Play Online
+							Play AI
 						</Typography>
 						<Typography component="p" gutterBottom={true}>
-							Play online against an opponent
+							Planned feature
 						</Typography>
 					</CardContent>
 					<CardActions>

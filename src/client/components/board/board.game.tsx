@@ -8,10 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Chip from '@material-ui/core/Chip';
 
 import BoardRenderer from './board.renderer';
 import Board from '../../../game/board';
 import Options from '../../options.client';
+
+import { PieceTypes } from '../../../constants';
 
 export interface IGameBoardProps {
 	board: Board;
@@ -42,18 +45,36 @@ export default class GameBoard extends React.Component<IGameBoardProps, IGameBoa
 		});
 	}
 
-	private generateMove() {
+	private promote = (type: PieceTypes) => {
+		const { update } = this.state;
+		const { board } = this.props;
+
+		board.promotePiece(board.upgradeWaiting.x, board.upgradeWaiting.y, type);
+
+		this.setState({
+			update: update + 1
+		});
+	}
+
+	private generateMove(): JSX.Element[] {
 		const { board } = this.props;
 
 		const moves = [];
-		for (let i = 0; i < board.moves.length; i += 1) {
+		for (let i = board.moves.length - 1; i >= 0; i -= 1) {
 			const move = board.moves[i].notation;
 			moves.push(
 				<ListItem
 					key={`move${i}`}
 					className="item"
 					dense={true}
+					button={true}
 				>
+					<ListItemText
+						primary={(
+							<Chip label={`${i + 1}`} />
+						)}
+						className="text index"
+					/>
 					<ListItemText
 						primary={move[0]}
 						className="text left"
@@ -68,7 +89,7 @@ export default class GameBoard extends React.Component<IGameBoardProps, IGameBoa
 		return moves;
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		const { board, children, options } = this.props;
 		const { update } = this.state;
 		return (
@@ -110,6 +131,7 @@ export default class GameBoard extends React.Component<IGameBoardProps, IGameBoa
 						move={this.move}
 						key={`board ${update}`}
 						options={options}
+						promote={this.promote}
 					/>
 				</Grid>
 			</Grid>
