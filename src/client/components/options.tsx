@@ -44,7 +44,7 @@ export default class OptionsModal extends React.Component<IOptionsModalProps, {}
 		updateOptions(options);
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		const { open, close, options } = this.props;
 
 		const pieceOptions: JSX.Element[] = [];

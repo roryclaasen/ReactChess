@@ -42,9 +42,9 @@
 	"scripts": {
 		"start": "react-app-rewired start",
 		"build": "react-app-rewired build",
-		"lint": "run-s lint:sass lint:ts",
+		"lint": "run-s lint:sass lint:js lint:ts",
 		"lint:sass": "sass-lint -v",
-		"lint:js": "eslint src/**/*.js",
+		"lint:js": "eslint config-overrides.js",
 		"lint:ts": "tslint --project tsconfig.json"
 	},
 	"browserslist": [

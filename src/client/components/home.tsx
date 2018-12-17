@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 
 export default class MainMenu extends React.Component<{}, {}> {
-	public render() {
+	public render(): JSX.Element  {
 		const { children } = this.props;
 		return (
 			<React.Fragment>

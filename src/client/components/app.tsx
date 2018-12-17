@@ -44,27 +44,13 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 		});
 	}
 
-	private showOptions = () => {
-		this.setState({ optionsOpen: true });
-	}
+	private showOptions = () => this.setState({ optionsOpen: true });
+	private closeOptions = () => this.setState({ optionsOpen: false });
+	private mainMenu = () => this.setState({ stage: MainAppStage.MENU });
+	private playLocal = () => this.setState({ stage: MainAppStage.LOCAL, board: new Board() });
+	private newGame = () => this.setState({ board: new Board() });
 
-	private closeOptions = () => {
-		this.setState({ optionsOpen: false });
-	}
-
-	private mainMenu = () => {
-		this.setState({ stage: MainAppStage.MENU });
-	}
-
-	private playLocal = () => {
-		this.setState({ stage: MainAppStage.LOCAL, board: new Board() });
-	}
-
-	private newGanme = () => {
-		this.setState({ board: new Board() });
-	}
-
-	public render() {
+	public render(): JSX.Element {
 		const { board, options, optionsOpen, update, stage } = this.state;
 		// TODO: Better menu & user interface infomation
 		const gridClass = ['grid-main'];
@@ -88,6 +74,13 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 							onClick={this.playLocal}
 						>
 							Pass and Play
+						</Button>
+						<Button
+							size="small"
+							variant="outlined"
+							disabled={true}
+						>
+							Play AI
 						</Button>
 					</MainMenu>
 				);
@@ -115,7 +108,7 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 									size="small"
 									color="secondary"
 									variant="outlined"
-									onClick={this.newGanme}
+									onClick={this.newGame}
 								>
 									New Game
 								</Button>

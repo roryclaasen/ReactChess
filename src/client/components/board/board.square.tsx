@@ -38,7 +38,7 @@ export default class SquareComponent extends React.Component<ISquareProps, {}> {
 		return <div className={className} />;
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		const { connectDropTarget, isOver, canDrop, children } = this.props;
 
 		return connectDropTarget(

@@ -42,7 +42,7 @@ export default class GameBoard extends React.Component<IGameBoardProps, IGameBoa
 		});
 	}
 
-	private generateMove() {
+	private generateMove(): JSX.Element[] {
 		const { board } = this.props;
 
 		const moves = [];
@@ -68,7 +68,7 @@ export default class GameBoard extends React.Component<IGameBoardProps, IGameBoa
 		return moves;
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		const { board, children, options } = this.props;
 		const { update } = this.state;
 		return (

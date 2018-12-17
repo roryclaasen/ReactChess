@@ -21,12 +21,3 @@ export interface ICords {
 	x: number;
 	y: number;
 }
-
-export interface IBoard {
-	winner: WinnerState;
-	current: PieceColors;
-
-	grid: IPiece[][];
-
-	moves: IMove[];
-}

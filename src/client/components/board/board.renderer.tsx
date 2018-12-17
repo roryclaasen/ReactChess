@@ -28,7 +28,7 @@ export default class BoardRenderer extends React.Component<IBoardRendererProps, 
 		return message;
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		const { board, move, options } = this.props;
 
 		return (

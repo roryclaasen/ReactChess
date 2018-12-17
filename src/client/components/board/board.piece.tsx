@@ -53,13 +53,13 @@ export default class PieceComponent extends React.Component<IPieceProps, IPieceS
 		};
 	}
 
-	public componentDidMount() {
+	public componentDidMount(): void {
 		const { connectDragPreview } = this.props;
 		const { image } = this.state;
 		image.onload = () => connectDragPreview(image);
 	}
 
-	private pieceDOM = () => {
+	private pieceDOM(): JSX.Element {
 		const { piece, isDragging } = this.props;
 		const { image } = this.state;
 		const className = `piece ${piece.type}`;
@@ -80,7 +80,7 @@ export default class PieceComponent extends React.Component<IPieceProps, IPieceS
 		);
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		const { connectDragSource } = this.props;
 		return connectDragSource(this.pieceDOM());
 	}

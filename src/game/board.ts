@@ -3,9 +3,9 @@ import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn }
 import { PieceColors, PieceTypes, BOARD_SIZE, WinnerState } from '../constants';
 import Move from './move';
 import Piece from './piece/piece';
-import { IBoard, IPiece, IMove } from '../interface';
+import { IPiece, IMove } from '../interface';
 
-export default class Board implements IBoard {
+export default class Board {
 	private _grid: Piece[][];
 	private _current: PieceColors;
 	private _winner: WinnerState;
@@ -17,7 +17,7 @@ export default class Board implements IBoard {
 		this._moves = [];
 	}
 
-	private emptyGrid(): Piece[][] {
+	private blankGrid(): Piece[][] {
 		const grid: Piece[][] = [];
 		for (let i = 0; i < BOARD_SIZE; i += 1) {
 			grid[i] = [];
@@ -25,11 +25,6 @@ export default class Board implements IBoard {
 				grid[i][j] = undefined;
 			}
 		}
-		return grid;
-	}
-
-	private blankGrid(): Piece[][] {
-		const grid: Piece[][] = this.emptyGrid();
 
 		// Pawns
 		for (let x = 0; x < BOARD_SIZE; x += 1) {
@@ -83,6 +78,7 @@ export default class Board implements IBoard {
 	}
 
 	public isCheck(color: PieceColors, grid: Piece[][]): boolean {
+		if (grid === undefined) return false;
 		if (color === undefined) {
 			const white = this.isCheck(PieceColors.WHITE, grid);
 			const black = this.isCheck(PieceColors.BLACK, grid);
@@ -99,6 +95,7 @@ export default class Board implements IBoard {
 	}
 
 	public isCheckMate(color: PieceColors, grid: Piece[][]): boolean {
+		if (grid === undefined) return false;
 		let canMove = false;
 		const pieces = this.getPiece(color, undefined, grid);
 		pieces.some((piece) => {
