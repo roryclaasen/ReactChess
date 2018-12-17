@@ -3,7 +3,8 @@ import { PieceKing, PieceQueen, PieceKnight, PieceBishop, PieceRook, PiecePawn }
 import { PieceColors, PieceTypes, BOARD_SIZE, WinnerState } from '../constants';
 import Move from './move';
 import Piece from './piece/piece';
-import { IPiece, IMove } from '../interface';
+
+import { ICords } from '../interface';
 
 export default class Board {
 	private _grid: Piece[][];
@@ -11,10 +12,22 @@ export default class Board {
 	private _winner: WinnerState;
 	private _moves: Move[];
 
+	public upgradeWaiting: {
+		waiting: boolean;
+		color: PieceColors;
+	} & ICords;
+
 	constructor() {
 		this._grid = this.blankGrid();
 		this._current = PieceColors.WHITE;
 		this._moves = [];
+
+		this.upgradeWaiting = {
+			waiting: false,
+			x: undefined,
+			y: undefined,
+			color: undefined
+		};
 	}
 
 	private blankGrid(): Piece[][] {
@@ -152,11 +165,14 @@ export default class Board {
 						this.grid[x2][y2 + (dY < 0 ? 1 : -1)] = undefined;
 					}
 				}
-
 				if (y2 === 0 || y2 === BOARD_SIZE - 1) {
-					// TODO: Make the user choose what to promote to
-					this.promotePiece(x2, y2, PieceTypes.QUEEN);
-					console.log('PROMOTION');
+					this.upgradeWaiting = {
+						x: x2,
+						y: y2,
+						color: piece.color,
+						waiting: true
+					};
+					// this.promotePiece(x2, y2, PieceTypes.QUEEN);
 				}
 			}
 		}
@@ -215,6 +231,12 @@ export default class Board {
 			}
 		}
 		grid[x][y] = piece;
+		this.upgradeWaiting = {
+			waiting: false,
+			x: undefined,
+			y: undefined,
+			color: undefined
+		};
 	}
 
 	public copyGrid(grid: Piece[][]): Piece[][] {

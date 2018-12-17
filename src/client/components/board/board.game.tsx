@@ -13,6 +13,8 @@ import BoardRenderer from './board.renderer';
 import Board from '../../../game/board';
 import Options from '../../options.client';
 
+import { PieceTypes } from '../../../constants';
+
 export interface IGameBoardProps {
 	board: Board;
 	options: Options;
@@ -36,6 +38,17 @@ export default class GameBoard extends React.Component<IGameBoardProps, IGameBoa
 		const { update } = this.state;
 
 		board.move(x1, y1, x2, y2);
+
+		this.setState({
+			update: update + 1
+		});
+	}
+
+	private promote = (type: PieceTypes) => {
+		const { update } = this.state;
+		const { board } = this.props;
+
+		board.promotePiece(board.upgradeWaiting.x, board.upgradeWaiting.y, type);
 
 		this.setState({
 			update: update + 1
@@ -110,6 +123,7 @@ export default class GameBoard extends React.Component<IGameBoardProps, IGameBoa
 						move={this.move}
 						key={`board ${update}`}
 						options={options}
+						promote={this.promote}
 					/>
 				</Grid>
 			</Grid>
