@@ -6,6 +6,7 @@
 |:-------|:----------|:-------|
 | [Production](https://github.com/roryclaasen/ReactChess/tree/master) | [![Build Status][CI-MASTER]](https://travis-ci.com/roryclaasen/ReactChess) | [GitHub Pages](https://roryclaasen.github.com/ReactChess) |
 | [Develop](https://github.com/roryclaasen/ReactChess/tree/develop) | [![Build Status][CI-DEVELOP]](https://travis-ci.com/roryclaasen/ReactChess) | N/A |
+| [Custom](https://github.com/roryclaasen/ReactChess/tree/Custom) | [![Build Status][CI-CUSTOM]](https://travis-ci.com/roryclaasen/ReactChess) | N/A |
 
 ## License
 
@@ -13,3 +14,4 @@ This project is licensed under the MIT License - see the [license file](LICENSE)
 
 [CI-MASTER]: https://travis-ci.com/roryclaasen/ReactChess.svg?branch=master
 [CI-DEVELOP]: https://travis-ci.com/roryclaasen/ReactChess.svg?branch=develop
+[CI-CUSTOM]: https://travis-ci.com/roryclaasen/ReactChess.svg?branch=custom
