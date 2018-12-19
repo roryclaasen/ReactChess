@@ -146,6 +146,8 @@ export default class Board {
 
 		// TODO: Propper stalemate
 
+		// TODO: Castling
+
 		if (this.winner === undefined) {
 			this._current = this.current === PieceColors.WHITE ? PieceColors.BLACK : PieceColors.WHITE;
 
@@ -200,8 +202,7 @@ export default class Board {
 
 		testGrid[x2][y2] = testGrid[x1][y1];
 		testGrid[x1][y1] = undefined;
-		const checl = !this.isCheck(piece.color, testGrid);
-		return checl;
+		return !this.isCheck(piece.color, testGrid);
 	}
 
 	public promotePiece(x: number, y: number, type: PieceTypes, grid: Piece[][] = this.grid) {

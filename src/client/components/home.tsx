@@ -14,7 +14,7 @@ export default class MainMenu extends React.Component<{}, {}> {
 				<Card>
 					<CardMedia
 						component="img"
-						image="/static/images/banner.png"
+						image="static/images/banner.png"
 						title="Chess"
 						style={{ height: 140, objectFit: 'cover' }}
 					/>
