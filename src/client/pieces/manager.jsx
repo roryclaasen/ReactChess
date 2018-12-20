@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import DefaultBlackBishop from './default/b_bishop.png';
 import DefaultBlackKing from './default/b_king.png';

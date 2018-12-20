@@ -4,15 +4,14 @@ const chess = require('chess.js');
 
 export default class ChessGame {
 
-	private game: ChessInstance;
+	public readonly game: ChessInstance;
 
 	constructor() {
 		this.game = new chess();
 	}
 
 	public get(x: number, y: number) {
-		const a = this.actual(x, y);
-		return this.game.get(`${a.x}${a.y}` as Square);
+		return this.game.get(this.actualSquare(x, y));
 	}
 
 	public actual(x: number, y: number) {
@@ -24,16 +23,19 @@ export default class ChessGame {
 		};
 	}
 
-	public boardColor(x: number, y: number) {
-		if (x % 2 === 0 && y % 2 === 0) return 'alternate';
-		if (x % 2 === 1 && y % 2 === 1) return 'alternate';
-		return 'default';
+	public actualSquare(x: number, y: number): Square {
+		const a = this.actual(x, y);
+		return `${a.x}${a.y}` as Square;
+	}
+
+	public color(x: number, y: number) {
+		return this.game.square_color(this.actualSquare(x, y));
 	}
 
 	public board() {
 		const board = [];
 		const size = 8;
-		for (let y = 0; y < size; y += 1) {
+		for (let y = size - 1; y >= 0; y -= 1) {
 			const row = [];
 			for (let x = 0; x < size; x += 1) {
 				row.push(this.get(x, y));
@@ -43,7 +45,9 @@ export default class ChessGame {
 		return board;
 	}
 
-	public instance(): ChessInstance {
-		return this.game;
+	public move(x1: number, y1: number, x2: number, y2: number) {
+		const from = this.actualSquare(x1, y1);
+		const to = this.actualSquare(x2, y2);
+		return this.game.move({ from, to });
 	}
 }

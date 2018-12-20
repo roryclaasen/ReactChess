@@ -36,14 +36,14 @@
 			}
 
 			&.color {
-				&.default {
-					background-color: $cell-color;
-					color: darken($cell-color-alternate, 20%);
+				&.light {
+					background-color: $cell-color-light;
+					color: darken($cell-color-dark, 20%);
 				}
 
-				&.alternate {
-					background-color: $cell-color-alternate;
-					color: lighten($cell-color, 20%);
+				&.dark {
+					background-color: $cell-color-dark;
+					color: lighten($cell-color-light, 20%);
 				}
 			}
 		}
@@ -58,6 +58,16 @@
 					}
 				}
 			}
+		}
+	}
+
+	.piece {
+		cursor: move;
+		height: 100%;
+		width: 100%;
+
+		.dragging {
+			opacity: .5;
 		}
 	}
 }
