@@ -1,5 +1,7 @@
+@import '../scss/vars';
+
 body {
-	font-family: 'Roboto Slab', serif;
+	font-family: $font-global;
 }
 
 .grid-main {

@@ -1,40 +1,63 @@
-@import 'vars';
-@import 'table';
+@import '../../../scss/vars';
+@import '../../../scss/mixins';
 
-.game-info-panel {
-	height: 100%;
-	position: relative;
-	width: $panel-width;
+.chess {
+	@include select(none);
 
-	.panel-actions {
-		bottom: 0;
-		margin-bottom: 4px;
-		position: absolute;
-		width: 100%;
+	border-collapse: collapse;
+	font-family: $font-board;
 
-		@media (min-width: 600px) {
-			margin-bottom: 12px;
+	tr {
+		td {
+			height: $cell-size;
+			line-height: $cell-size;
+
+			position: relative;
+			text-align: center;
+			vertical-align: middle;
+			width: $cell-size;
+
+			span {
+				display: inline-block;
+
+				&.note {
+					font-size: $note-size;
+					line-height: $note-size;
+					opacity: .9;
+					padding: .2rem;
+					position: absolute;
+
+					&.x,
+					&.y {
+						bottom: 0;
+						left: 0;
+					}
+				}
+			}
+
+			&.color {
+				&.default {
+					background-color: $cell-color;
+					color: darken($cell-color-alternate, 20%);
+				}
+
+				&.alternate {
+					background-color: $cell-color-alternate;
+					color: lighten($cell-color, 20%);
+				}
+			}
 		}
 
-		button {
-			margin: auto;
-		}
-	}
-
-	.list {
-		max-height: $panel-width;
-		overflow-y: auto;
-
-		.item {
-			margin-bottom: 2px;
-			padding-bottom: 2px;
-			padding-left: 0;
-			padding-top: 2px;
-
-			.text {
-				width: calc(100% - 40px / 2);
+		&:last-child {
+			td {
+				span {
+					&.note {
+						&.y {
+							left: calc(#{$note-size} - .3rem);
+						}
+					}
+				}
 			}
 		}
 	}
 }
-
