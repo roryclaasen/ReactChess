@@ -3,7 +3,7 @@ import React from 'react';
 import { DragDropContextProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import { Piece } from 'chess.js';
+import Card from '@material-ui/core/Card';
 
 import ChessGame from '../../../game';
 
@@ -41,39 +41,39 @@ export default class BoardComponent extends React.Component<IBoardProps, IBoardS
 		this.setState({ update: update + 1 });
 	}
 
-	// public update
-
 	public render(): JSX.Element {
 		const { update } = this.state;
 		const { chess } = this.props;
 		return (
-			<DragDropContextProvider backend={HTML5Backend}>
+			<Card className="chess-card">
 				<table key={update} className="chess">
 					<tbody>
-						{chess.board().map((row, y) => (
-							<tr key={7 - y}>
-								{row.map((item, x) => (
-									<SquareComponent
-										key={x}
-										chess={chess}
-										x={x}
-										y={7 - y}
-										move={this.handleMove}
-									>
-										{item !== null &&
-											<PieceComponent
-												piece={item}
-												x={x}
-												y={7 - y}
-											/>
-										}
-									</SquareComponent>
-								))}
-							</tr>
-						))}
+						<DragDropContextProvider backend={HTML5Backend}>
+							{chess.board().map((row, y) => (
+								<tr key={7 - y}>
+									{row.map((item, x) => (
+										<SquareComponent
+											key={x}
+											chess={chess}
+											x={x}
+											y={7 - y}
+											move={this.handleMove}
+										>
+											{item !== null &&
+												<PieceComponent
+													piece={item}
+													x={x}
+													y={7 - y}
+												/>
+											}
+										</SquareComponent>
+									))}
+								</tr>
+							))}
+						</DragDropContextProvider>
 					</tbody>
 				</table>
-			</DragDropContextProvider>
+			</Card>
 		);
 	}
 }

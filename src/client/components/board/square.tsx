@@ -77,11 +77,14 @@ class SquareComponent extends React.Component<ISquareProps, {}> {
 		if (!connectDropTarget) return <React.Fragment />;
 		return connectDropTarget(
 			<td className={['color', chess.color(x, y)].join(' ')}>
-				{y === 0 &&
-					<span className="note x">{chess.actual(x, y).x}</span>
+				{(x !== 0 && y === 0) &&
+					<span className="note">{chess.actual(x, y).x}</span>
 				}
-				{x === 0 &&
-					<span className="note y">{chess.actual(x, y).y}</span>
+				{(x === 0 && y !== 0) &&
+					<span className="note">{chess.actual(x, y).y}</span>
+				}
+				{(x === 0 && y === 0) &&
+					<span className="note">{chess.actual(x, y).x}{chess.actual(x, y).y}</span>
 				}
 				{children}
 				{isOver && !canDrop && this.renderOverlay('red')}

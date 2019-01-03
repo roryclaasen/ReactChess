@@ -1,6 +1,11 @@
 @import '../../../scss/vars';
 @import '../../../scss/mixins';
 
+.chess-card {
+	border-radius: 0;
+	padding: 0;
+}
+
 .chess {
 	@include select(none);
 
@@ -21,17 +26,14 @@
 				display: inline-block;
 
 				&.note {
+					bottom: 0;
 					font-size: $note-size;
+					left: 0;
 					line-height: $note-size;
 					opacity: .9;
 					padding: .2rem;
+					pointer-events: none;
 					position: absolute;
-
-					&.x,
-					&.y {
-						bottom: 0;
-						left: 0;
-					}
 				}
 			}
 
@@ -44,18 +46,6 @@
 				&.dark {
 					background-color: $cell-color-dark;
 					color: lighten($cell-color-light, 20%);
-				}
-			}
-		}
-
-		&:last-child {
-			td {
-				span {
-					&.note {
-						&.y {
-							left: calc(#{$note-size} - .3rem);
-						}
-					}
 				}
 			}
 		}
