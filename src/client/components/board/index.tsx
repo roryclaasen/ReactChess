@@ -14,6 +14,7 @@ import './board.scss';
 
 interface IBoardProps {
 	chess: ChessGame;
+	flip?: boolean;
 }
 
 interface IBoardState {
@@ -43,27 +44,28 @@ export default class BoardComponent extends React.Component<IBoardProps, IBoardS
 
 	public render(): JSX.Element {
 		const { update } = this.state;
-		const { chess } = this.props;
+		const { chess, flip } = this.props;
 		return (
-			<Card className="chess-card">
+			<Card className="chess-card" style={{ backgroundColor: 'initial' }}>
 				<table key={update} className="chess">
 					<tbody>
 						<DragDropContextProvider backend={HTML5Backend}>
-							{chess.board().map((row, y) => (
-								<tr key={7 - y}>
+							{chess.board(flip).map((row, y) => (
+								<tr key={flip ? y : 7 - y}>
 									{row.map((item, x) => (
 										<SquareComponent
 											key={x}
 											chess={chess}
 											x={x}
-											y={7 - y}
+											y={flip ? y : 7 - y}
+											flip={flip}
 											move={this.handleMove}
 										>
 											{item !== null &&
 												<PieceComponent
 													piece={item}
 													x={x}
-													y={7 - y}
+													y={flip ? y : 7 - y}
 												/>
 											}
 										</SquareComponent>

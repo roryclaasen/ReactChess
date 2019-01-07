@@ -74,10 +74,11 @@ class PieceManager {
 		return image;
 	}
 
-	getImageJSX(piece: Piece): JSX.Element {
-		return (
-			<img src={this.get(piece)} alt={`${piece.color} ${piece.type}`} />
-		);
+	getImageJSX(piece: Piece, className: string | string[] = ''): JSX.Element {
+		let styleClass: string[] = [];
+		if (className instanceof String) styleClass.push(className as string);
+		else styleClass = className as string[];
+		return <img src={this.get(piece)} alt={`${piece.color} ${piece.type}`} className={styleClass.join(' ')} />;
 	}
 }
 

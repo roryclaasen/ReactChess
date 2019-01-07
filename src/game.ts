@@ -32,17 +32,26 @@ export default class ChessGame {
 		return this.game.square_color(this.actualSquare(x, y));
 	}
 
-	public board() {
+	public board(flip: boolean = false) {
 		const board = [];
-		const size = 8;
-		for (let y = size - 1; y >= 0; y -= 1) {
-			const row = [];
-			for (let x = 0; x < size; x += 1) {
-				row.push(this.get(x, y));
+		if (flip) {
+			for (let y = 0; y < 8; y += 1) {
+				board.push(this.boardRow(y));
 			}
-			board.push(row);
+		} else {
+			for (let y = 7; y >= 0; y -= 1) {
+				board.push(this.boardRow(y));
+			}
 		}
 		return board;
+	}
+
+	private boardRow(y: number) {
+		const row = [];
+		for (let x = 0; x < 8; x += 1) {
+			row.push(this.get(x, y));
+		}
+		return row;
 	}
 
 	public move(x1: number, y1: number, x2: number, y2: number) {

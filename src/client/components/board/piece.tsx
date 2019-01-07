@@ -5,6 +5,8 @@ import { DragSource, DragSourceConnector, DragSourceMonitor, ConnectDragSource, 
 
 import ChessGame from '../../../game';
 
+import manager from '../../pieces/manager';
+
 interface IPieceProps {
 	chess?: ChessGame;
 	x: number;
@@ -29,11 +31,19 @@ const dragSource = {
 function collect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
 	return {
 		connectDragSource: connect.dragSource(),
+		connectDragPreview: connect.dragPreview(),
 		isDragging: monitor.isDragging()
 	};
 }
 
 class PieceComponent extends React.Component<IPieceProps, {}> {
+	public componentDidMount() {
+		const { connectDragPreview, piece } = this.props;
+		if (!connectDragPreview) return;
+		const img = manager.getImageElement(piece);
+		img.onload = () => connectDragPreview(img);
+	}
+
 	public render(): JSX.Element {
 		const { piece, connectDragSource, isDragging } = this.props;
 		if (!connectDragSource) return <React.Fragment />;
@@ -42,7 +52,7 @@ class PieceComponent extends React.Component<IPieceProps, {}> {
 		if (isDragging) classNames.push('dragging');
 
 		return connectDragSource(
-			<span className={classNames.join(' ')}>{piece.type}, {piece.color}</span>
+			manager.getImageJSX(piece, classNames)
 		);
 	}
 }

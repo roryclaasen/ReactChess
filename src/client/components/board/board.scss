@@ -2,7 +2,6 @@
 @import '../../../scss/mixins';
 
 .chess-card {
-	border-radius: 0;
 	padding: 0;
 }
 
@@ -17,10 +16,17 @@
 			height: $cell-size;
 			line-height: $cell-size;
 
+			max-height:  $cell-size;
 			position: relative;
 			text-align: center;
 			vertical-align: middle;
 			width: $cell-size;
+
+			img {
+				display: block;
+				margin: auto;
+				position: relative;
+			}
 
 			span {
 				display: inline-block;
@@ -30,11 +36,25 @@
 					font-size: $note-size;
 					left: 0;
 					line-height: $note-size;
-					opacity: .9;
-					padding: .2rem;
+					opacity: .8;
+					padding: .18rem;
 					pointer-events: none;
 					position: absolute;
 				}
+			}
+
+			.overlay {
+				height: 100%;
+				left: 0;
+				opacity: .5;
+				position: absolute;
+				top: 0;
+				width: 100%;
+				z-index: 1;
+
+				&.deny { background-color: $drag-deny; }
+				&.available { background-color:  $drag-available; }
+				&.valid { background-color: $drag-valid; }
 			}
 
 			&.color {
@@ -53,11 +73,9 @@
 
 	.piece {
 		cursor: move;
-		height: 100%;
-		width: 100%;
 
 		.dragging {
-			opacity: .5;
+			opacity: $drag-opacity;
 		}
 	}
 }

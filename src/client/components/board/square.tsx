@@ -12,6 +12,7 @@ interface ISquareProps {
 	children: any;
 	move: (x1: number, y1: number, x2: number, y2: number) => Move | null;
 
+	flip?: boolean;
 	connectDropTarget?: ConnectDropTarget;
 	isOver?: boolean;
 	canDrop?: boolean;
@@ -55,43 +56,31 @@ const collect: DropTargetCollector<any> = (connect, monitor) => {
 };
 
 class SquareComponent extends React.Component<ISquareProps, {}> {
-	private renderOverlay(color: string): JSX.Element {
-		return (
-			<div
-				style={{
-					position: 'absolute',
-					top: 0,
-					left: 0,
-					height: '100%',
-					width: '100%',
-					zIndex: 1,
-					opacity: 0.5,
-					backgroundColor: color
-				}}
-			/>
-		);
+	private renderOverlay(overlay: string): JSX.Element {
+		const classes = ['overlay'];
+		classes.push(overlay);
+		return <div className={classes.join(' ')} />;
+	}
+
+	renderNotes(): JSX.Element | undefined {
+		const { chess, x, y, flip } = this.props;
+		const letterY = flip ? 7 : 0;
+		if (x !== 0 && y === letterY) return <span className="note">{chess.actual(x, y).x}</span>;
+		if (x === 0 && y !== letterY) return <span className="note">{chess.actual(x, y).y}</span>;
+		if (x === 0 && y === letterY) return <span className="note">{chess.actual(x, y).x}{chess.actual(x, y).y}</span>;
 	}
 
 	public render(): JSX.Element {
-		const { chess, x, y, children, connectDropTarget, isOver, canDrop } = this.props;
+		const { chess, x, y, children, flip, connectDropTarget, isOver, canDrop } = this.props;
 		if (!connectDropTarget) return <React.Fragment />;
 		return connectDropTarget(
 			<td className={['color', chess.color(x, y)].join(' ')}>
-				{(x !== 0 && y === 0) &&
-					<span className="note">{chess.actual(x, y).x}</span>
-				}
-				{(x === 0 && y !== 0) &&
-					<span className="note">{chess.actual(x, y).y}</span>
-				}
-				{(x === 0 && y === 0) &&
-					<span className="note">{chess.actual(x, y).x}{chess.actual(x, y).y}</span>
-				}
+				{this.renderNotes()}
 				{children}
-				{isOver && !canDrop && this.renderOverlay('red')}
-				{!isOver && canDrop && this.renderOverlay('yellow')}
-				{isOver && canDrop && this.renderOverlay('green')}
+				{isOver && !canDrop && this.renderOverlay('deny')}
+				{!isOver && canDrop && this.renderOverlay('available')}
+				{isOver && canDrop && this.renderOverlay('valid')}
 			</td>
-
 		);
 	}
 }
