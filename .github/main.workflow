@@ -5,13 +5,13 @@ workflow "Build and Test on push" {
 
 action "Lint Code" {
   uses = "actions/npm@e7aaefe"
-  args = "lint"
+  args = "run lint"
 }
 
 action "Build Project" {
   uses = "actions/npm@e7aaefe"
   needs = ["Lint Code"]
-  args = "build"
+  args = "run build"
 }
 
 action "Fliter Master" {
