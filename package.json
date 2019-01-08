@@ -48,7 +48,7 @@
 		"build": "react-app-rewired build",
 		"lint": "run-s lint:sass lint:js lint:ts",
 		"lint:sass": "sass-lint -v",
-		"lint:js": "eslint --ext .jsx,.js config-overrides.js src",
+		"lint:js": "eslint --ext .jsx,.js config-overrides.js server",
 		"lint:ts": "tslint --project tsconfig.json"
 	},
 	"browserslist": [

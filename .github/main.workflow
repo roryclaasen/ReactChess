@@ -42,14 +42,8 @@ action "Filter Develop" {
 	args = "branch develop"
 }
 
-action "Docker build" {
-	uses = "actions/docker/cli@master"
-	args = "build -t roryclaasen/reactchess ."
-	needs = ["Filter Develop"]
-}
-
 action "Login Heroku" {
-	needs = ["Docker build"]
+	needs = ["Filter Develop"]
 	uses = "actions/heroku@master"
 	args = "container:login"
 	secrets = ["HEROKU_API_KEY"]

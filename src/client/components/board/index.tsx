@@ -62,13 +62,11 @@ export default class BoardComponent extends React.Component<IBoardProps, IBoardS
 											move={this.handleMove}
 										>
 											{item !== null &&
-												<div className="piece-parent">
-													<PieceComponent
-														piece={item}
-														x={x}
-														y={flip ? y : 7 - y}
-													/>
-												</div>
+												<PieceComponent
+													piece={item}
+													x={x}
+													y={flip ? y : 7 - y}
+												/>
 											}
 										</SquareComponent>
 									))}

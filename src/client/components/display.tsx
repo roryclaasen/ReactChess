@@ -25,7 +25,7 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 				direction="column"
 				alignItems="center"
 			>
-				<Grid item={true}>
+				{/* <Grid item={true}>
 					<Card>
 						<CardContent>
 							<Typography variant="h5" component="h2">
@@ -33,7 +33,7 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 							</Typography>
 						</CardContent>
 					</Card>
-				</Grid>
+				</Grid> */}
 				<Grid item={true}>
 					<BoardComponent
 						chess={chess}

@@ -20,7 +20,21 @@
 			min-width:  $cell-size;
 			position: relative;
 			text-align: center;
+			vertical-align: middle;
 			width: $cell-size;
+
+			img {
+				&.piece {
+					cursor: move;
+					display: block;
+					margin: auto;
+					position: relative;
+
+					&.dragging {
+						opacity: $drag-opacity;
+					}
+				}
+			}
 
 			span {
 				display: inline-block;
@@ -60,26 +74,6 @@
 				&.dark {
 					background-color: $cell-color-dark;
 					color: lighten($cell-color-light, 20%);
-				}
-			}
-		}
-	}
-
-	.piece-parent {
-		height: $cell-size;
-		line-height: $cell-size;
-		vertical-align: middle;
-		width: $cell-size;
-
-		img {
-			margin: auto;
-
-			.piece {
-				cursor: move;
-				position: relative;
-
-				&.dragging {
-					opacity: $drag-opacity;
 				}
 			}
 		}
