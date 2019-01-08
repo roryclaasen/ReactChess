@@ -4,7 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import GithubCorner from 'react-github-corner';
 
 import ChessGame from '../../game';
-import BoardComponent from './board';
+
+import DisplayComponent from './display';
 
 interface IAppState {
 	chess: ChessGame;
@@ -33,7 +34,7 @@ export default class MainApp extends React.Component<{}, IAppState> {
 					className={gridClass.join(' ')}
 				>
 					<Grid item={true}>
-						<BoardComponent
+						<DisplayComponent
 							chess={chess}
 						/>
 					</Grid>

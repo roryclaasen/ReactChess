@@ -33,7 +33,7 @@ export default class BoardComponent extends React.Component<IBoardProps, IBoardS
 	private handleMove = (x1: number, y1: number, x2: number, y2: number) => {
 		const { chess } = this.props;
 		const move = chess.move(x1, y1, x2, y2);
-		this.update();
+		if (move !== null) this.update();
 		return move;
 	}
 
@@ -62,11 +62,13 @@ export default class BoardComponent extends React.Component<IBoardProps, IBoardS
 											move={this.handleMove}
 										>
 											{item !== null &&
-												<PieceComponent
-													piece={item}
-													x={x}
-													y={flip ? y : 7 - y}
-												/>
+												<div className="piece-parent">
+													<PieceComponent
+														piece={item}
+														x={x}
+														y={flip ? y : 7 - y}
+													/>
+												</div>
 											}
 										</SquareComponent>
 									))}

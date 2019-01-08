@@ -16,17 +16,11 @@
 			height: $cell-size;
 			line-height: $cell-size;
 
-			max-height:  $cell-size;
+			min-height:  $cell-size;
+			min-width:  $cell-size;
 			position: relative;
 			text-align: center;
-			vertical-align: middle;
 			width: $cell-size;
-
-			img {
-				display: block;
-				margin: auto;
-				position: relative;
-			}
 
 			span {
 				display: inline-block;
@@ -46,7 +40,7 @@
 			.overlay {
 				height: 100%;
 				left: 0;
-				opacity: .5;
+				opacity: .35;
 				position: absolute;
 				top: 0;
 				width: 100%;
@@ -71,11 +65,23 @@
 		}
 	}
 
-	.piece {
-		cursor: move;
+	.piece-parent {
+		height: $cell-size;
+		line-height: $cell-size;
+		vertical-align: middle;
+		width: $cell-size;
 
-		.dragging {
-			opacity: $drag-opacity;
+		img {
+			margin: auto;
+
+			.piece {
+				cursor: move;
+				position: relative;
+
+				&.dragging {
+					opacity: $drag-opacity;
+				}
+			}
 		}
 	}
 }

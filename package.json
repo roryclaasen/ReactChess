@@ -11,12 +11,12 @@
 	"bugs": {
 		"url": "https://github.com/roryclaasen/ReactChess/issues"
 	},
-	"homepage": "http://roryclaasen.github.io/ReactChess",
 	"dependencies": {
 		"@material-ui/core": "^3.7.0",
 		"@material-ui/icons": "^3.0.1",
 		"chess.js": "^0.10.2",
 		"es6-promise": "^4.2.5",
+		"express": "^4.16.4",
 		"normalize.css": "^8.0.1",
 		"npm-run-all": "^4.1.5",
 		"prop-types": "^15.6.2",
@@ -44,10 +44,11 @@
 	},
 	"scripts": {
 		"start": "react-app-rewired start",
+		"start:server": "node server",
 		"build": "react-app-rewired build",
 		"lint": "run-s lint:sass lint:js lint:ts",
 		"lint:sass": "sass-lint -v",
-		"lint:js": "eslint --ext .jsx,.js config-overrides.js",
+		"lint:js": "eslint --ext .jsx,.js config-overrides.js src",
 		"lint:ts": "tslint --project tsconfig.json"
 	},
 	"browserslist": [

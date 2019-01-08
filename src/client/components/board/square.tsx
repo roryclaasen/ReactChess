@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Move, ChessInstance } from 'chess.js';
+import { Move } from 'chess.js';
 import { DropTarget, DropTargetSpec, DropTargetCollector, ConnectDropTarget } from 'react-dnd';
 
 import ChessGame from '../../../game';

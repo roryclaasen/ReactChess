@@ -1,28 +1,28 @@
 import React from 'react';
 
-import BlackBishop from './default/b_bishop.png';
-import BlackKing from './default/b_king.png';
-import BlackKnight from './default/b_knight.png';
-import BlackQueen from './default/b_queen.png';
 import BlackPawn from './default/b_pawn.png';
+import BlackKnight from './default/b_knight.png';
+import BlackBishop from './default/b_bishop.png';
 import BlackRook from './default/b_rook.png';
+import BlackQueen from './default/b_queen.png';
+import BlackKing from './default/b_king.png';
 
-import WhiteBishop from './default/w_bishop.png';
-import WhiteKing from './default/w_king.png';
-import WhiteKnight from './default/w_knight.png';
-import WhiteQueen from './default/w_queen.png';
 import WhitePawn from './default/w_pawn.png';
+import WhiteKnight from './default/w_knight.png';
+import WhiteBishop from './default/w_bishop.png';
 import WhiteRook from './default/w_rook.png';
+import WhiteQueen from './default/w_queen.png';
+import WhiteKing from './default/w_king.png';
 
 import { Piece } from 'chess.js';
 
 interface IPieces {
-	BISHOP: string;
-	KING: string;
-	KNIGHT: string;
-	QUEEN: string;
 	PAWN: string;
+	KNIGHT: string;
+	BISHOP: string;
 	ROOK: string;
+	QUEEN: string;
+	KING: string;
 }
 
 interface ISourceSet {
@@ -36,20 +36,20 @@ class PieceManager {
 	constructor() {
 		this.source = {
 			BLACK: {
-				BISHOP: BlackBishop,
-				KING: BlackKing,
-				KNIGHT: BlackKnight,
-				QUEEN: BlackQueen,
 				PAWN: BlackPawn,
-				ROOK: BlackRook
+				KNIGHT: BlackKnight,
+				BISHOP: BlackBishop,
+				ROOK: BlackRook,
+				QUEEN: BlackQueen,
+				KING: BlackKing
 			},
 			WHITE: {
-				BISHOP: WhiteBishop,
-				KING: WhiteKing,
-				KNIGHT: WhiteKnight,
-				QUEEN: WhiteQueen,
 				PAWN: WhitePawn,
-				ROOK: WhiteRook
+				KNIGHT: WhiteKnight,
+				BISHOP: WhiteBishop,
+				ROOK: WhiteRook,
+				QUEEN: WhiteQueen,
+				KING: WhiteKing
 			}
 		};
 	}
