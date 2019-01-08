@@ -2,8 +2,8 @@ workflow "Build and Test on push" {
 	on = "push"
 	resolves = [
 		"Docker build",
-		"Fliter Master",
-		"Release Heroku",
+		"Release Heroku Production",
+		"Release Heroku Develop",
 	]
 }
 
@@ -30,35 +30,55 @@ action "Docker build" {
 	needs = ["Build Project"]
 }
 
-action "Fliter Master" {
-	needs = "Docker build"
-	uses = "actions/bin/filter@master"
-	args = "branch master"
-}
-
-action "Filter Develop" {
+action "Is Branch" {
 	uses = "actions/bin/filter@master"
 	needs = ["Docker build"]
-	args = "branch develop"
+	args = "branch"
 }
 
 action "Login Heroku" {
-	needs = ["Filter Develop"]
 	uses = "actions/heroku@master"
+	needs = ["Is Branch"]
 	args = "container:login"
 	secrets = ["HEROKU_API_KEY"]
 }
 
-action "Push Heroku" {
+action "Filter Production" {
+	uses = "actions/bin/filter@master"
+	needs = ["Login Heroku"]
+	args = "branch master"
+}
+
+action "Push Heroku Production" {
 	uses = "actions/heroku@master"
-	needs = "Login Heroku"
+	needs = ["Filter Production"]
 	args = "container:push -a react-chessgame web"
 	secrets = ["HEROKU_API_KEY"]
 }
 
-action "Release Heroku" {
+action "Release Heroku Production" {
 	uses = "actions/heroku@master"
-	needs = "Push Heroku"
+	needs = ["Push Heroku Production"]
 	args = "container:release -a react-chessgame web"
+	secrets = ["HEROKU_API_KEY"]
+}
+
+action "Filter Develop" {
+	uses = "actions/bin/filter@master"
+	needs = ["Login Heroku"]
+	args = "branch develop"
+}
+
+action "Push Heroku Develop" {
+	uses = "actions/heroku@master"
+	needs = ["Filter Develop"]
+	args = "container:push -a react-chessgame-dev web"
+	secrets = ["HEROKU_API_KEY"]
+}
+
+action "Release Heroku Develop" {
+	uses = "actions/heroku@master"
+	needs = "Push Heroku Develop"
+	args = "container:release -a react-chessgame-dev web"
 	secrets = ["HEROKU_API_KEY"]
 }
