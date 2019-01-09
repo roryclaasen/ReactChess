@@ -2,7 +2,7 @@ workflow "Build and Test on push" {
 	on = "push"
 	resolves = [
 		"Docker build",
-		"Release Heroku Production",
+		# "Release Heroku Production",
 		"Release Heroku Develop",
 	]
 }
