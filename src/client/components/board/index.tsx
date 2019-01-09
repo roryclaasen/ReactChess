@@ -14,6 +14,7 @@ import './board.scss';
 
 interface IBoardProps {
 	chess: ChessGame;
+	update: () => void;
 	flip?: boolean;
 }
 
@@ -40,6 +41,7 @@ export default class BoardComponent extends React.Component<IBoardProps, IBoardS
 	private update() {
 		const { update } = this.state;
 		this.setState({ update: update + 1 });
+		this.props.update();
 	}
 
 	public render(): JSX.Element {

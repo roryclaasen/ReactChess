@@ -43,25 +43,27 @@ action "Login Heroku" {
 	secrets = ["HEROKU_API_KEY"]
 }
 
-action "Filter Production" {
-	uses = "actions/bin/filter@master"
-	needs = ["Login Heroku"]
-	args = "branch master"
-}
+# Currently there is no abilty to do this
 
-action "Push Heroku Production" {
-	uses = "actions/heroku@master"
-	needs = ["Filter Production"]
-	args = "container:push -a react-chessgame web"
-	secrets = ["HEROKU_API_KEY"]
-}
+# action "Filter Production" {
+# 	uses = "actions/bin/filter@master"
+# 	needs = ["Login Heroku"]
+# 	args = "branch master"
+# }
 
-action "Release Heroku Production" {
-	uses = "actions/heroku@master"
-	needs = ["Push Heroku Production"]
-	args = "container:release -a react-chessgame web"
-	secrets = ["HEROKU_API_KEY"]
-}
+# action "Push Heroku Production" {
+# 	uses = "actions/heroku@master"
+# 	needs = ["Filter Production"]
+# 	args = "container:push -a react-chessgame web"
+# 	secrets = ["HEROKU_API_KEY"]
+# }
+
+# action "Release Heroku Production" {
+# 	uses = "actions/heroku@master"
+# 	needs = ["Push Heroku Production"]
+# 	args = "container:release -a react-chessgame web"
+# 	secrets = ["HEROKU_API_KEY"]
+# }
 
 action "Filter Develop" {
 	uses = "actions/bin/filter@master"

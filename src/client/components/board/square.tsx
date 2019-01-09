@@ -4,6 +4,7 @@ import { Move } from 'chess.js';
 import { DropTarget, DropTargetSpec, DropTargetCollector, ConnectDropTarget } from 'react-dnd';
 
 import ChessGame from '../../../game';
+import { IPieceData } from './piece';
 
 interface ISquareProps {
 	chess: ChessGame;
@@ -20,25 +21,20 @@ interface ISquareProps {
 
 const squareTarget: DropTargetSpec<ISquareProps> = {
 	drop(props, monitor) {
-		const item = monitor.getItem();
+		const item = monitor.getItem() as IPieceData;
 		props.move(item.x, item.y, props.x, props.y);
 	},
 	canDrop(props, monitor) {
-		// TODO: If I can... tidy this up
+		const { chess } = props;
+		const item = monitor.getItem() as IPieceData;
 
-		const item = monitor.getItem();
-		const to = props.chess.actualSquare(props.x, props.y);
-		const from = props.chess.actualSquare(item.x, item.y);
-		const moves = props.chess.game.moves({ square: from });
+		const to = chess.actualSquare(props.x, props.y);
+		const from = chess.actualSquare(item.x, item.y);
+
+		const moves = chess.game.moves({ verbose: true, square: from });
 		let canDrop = false;
 		for (const move of moves) {
-			if (move.length === 2) {
-				if (move === to as string) {
-					canDrop = true;
-					break;
-				}
-			}
-			if (move.endsWith(to as string)) {
+			if (move.to === to) {
 				canDrop = true;
 				break;
 			}
@@ -71,7 +67,7 @@ class SquareComponent extends React.Component<ISquareProps, {}> {
 	}
 
 	public render(): JSX.Element {
-		const { chess, x, y, children, flip, connectDropTarget, isOver, canDrop } = this.props;
+		const { chess, x, y, children, connectDropTarget, isOver, canDrop } = this.props;
 		if (!connectDropTarget) return <React.Fragment />;
 		return connectDropTarget(
 			<td className={['color', chess.color(x, y)].join(' ')}>

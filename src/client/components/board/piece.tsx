@@ -7,6 +7,12 @@ import ChessGame from '../../../game';
 
 import manager from '../../pieces/manager';
 
+export interface IPieceData {
+	piece: Piece;
+	x: number;
+	y: number;
+}
+
 interface IPieceProps {
 	chess?: ChessGame;
 	x: number;
@@ -19,7 +25,7 @@ interface IPieceProps {
 }
 
 const dragSource = {
-	beginDrag(props: IPieceProps) {
+	beginDrag(props: IPieceProps): IPieceData {
 		return {
 			piece: props.piece,
 			x: props.x,
@@ -51,8 +57,10 @@ class PieceComponent extends React.Component<IPieceProps, {}> {
 		const classNames = ['piece'];
 		if (isDragging) classNames.push('dragging');
 
-		return connectDragSource(
-			manager.getImageJSX(piece, classNames)
+		return (
+			<div className="piece-parent">
+				{connectDragSource(manager.getImageJSX(piece, classNames))}
+			</div>
 		);
 	}
 }

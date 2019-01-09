@@ -8,34 +8,23 @@
 .chess {
 	@include select(none);
 
+	// background-color: $cell-color-light;
 	border-collapse: collapse;
 	font-family: $font-board;
 
 	tr {
-		td {
+		td,
+		.piece-parent {
 			height: $cell-size;
 			line-height: $cell-size;
-
-			min-height:  $cell-size;
-			min-width:  $cell-size;
+			padding: 0;
 			position: relative;
 			text-align: center;
 			vertical-align: middle;
 			width: $cell-size;
+		}
 
-			img {
-				&.piece {
-					cursor: move;
-					display: block;
-					margin: auto;
-					position: relative;
-
-					&.dragging {
-						opacity: $drag-opacity;
-					}
-				}
-			}
-
+		td {
 			span {
 				display: inline-block;
 
@@ -52,20 +41,25 @@
 			}
 
 			.overlay {
-				height: 100%;
+				border-radius: 50%;
+				height: 80%;
 				left: 0;
-				opacity: .35;
+				margin: 10%;
+				opacity: .25;
 				position: absolute;
 				top: 0;
-				width: 100%;
+				width: 80%;
 				z-index: 1;
 
 				&.deny { background-color: $drag-deny; }
-				&.available { background-color:  $drag-available; }
+				&.available { background-color: $drag-available; }
 				&.valid { background-color: $drag-valid; }
 			}
 
 			&.color {
+				min-height:  $cell-size;
+				min-width:  $cell-size;
+
 				&.light {
 					background-color: $cell-color-light;
 					color: darken($cell-color-dark, 20%);
@@ -74,6 +68,23 @@
 				&.dark {
 					background-color: $cell-color-dark;
 					color: lighten($cell-color-light, 20%);
+				}
+			}
+
+			.piece-parent {
+				bottom: 0;
+				left: 0;
+				position: absolute;
+
+				.piece {
+					cursor: move;
+					display: inline-block;
+					margin: auto;
+					vertical-align: middle;
+
+					&.dragging {
+						opacity: $drag-opacity;
+					}
 				}
 			}
 		}
