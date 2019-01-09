@@ -73,7 +73,7 @@ action "Filter Develop" {
 
 action "Push Heroku Develop" {
 	uses = "actions/heroku@master"
-	needs = ["Filter Develop"]
+	needs = ["Login Heroku", "Filter Develop"]
 	args = "container:push -a react-chessgame-dev web"
 	secrets = ["HEROKU_API_KEY"]
 }
