@@ -51,7 +51,7 @@ action "Filter Production" {
 
 action "Push Heroku Production" {
 	uses = "actions/heroku@master"
-	needs = ["Filter Production"]
+	needs = ["Login Heroku", "Filter Production"]
 	args = "container:push -a react-chessgame web"
 	secrets = ["HEROKU_API_KEY"]
 }
@@ -71,7 +71,7 @@ action "Filter Develop" {
 
 action "Push Heroku Develop" {
 	uses = "actions/heroku@master"
-	needs = ["Filter Develop"]
+	needs = ["Login Heroku", "Filter Develop"]
 	args = "container:push -a react-chessgame-dev web"
 	secrets = ["HEROKU_API_KEY"]
 }
