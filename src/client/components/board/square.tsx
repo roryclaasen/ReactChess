@@ -31,7 +31,7 @@ const squareTarget: DropTargetSpec<ISquareProps> = {
 		const to = chess.actualSquare(props.x, props.y);
 		const from = chess.actualSquare(item.x, item.y);
 
-		const moves = chess.game.moves({ verbose: true, square: from });
+		const moves = chess.instance.moves({ verbose: true, square: from });
 		let canDrop = false;
 		for (const move of moves) {
 			if (move.to === to) {
