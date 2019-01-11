@@ -2,13 +2,28 @@
 
 body {
 	font-family: $font-global;
+	overflow-y: scroll;
 }
 
 .grid-main {
 	height: 100%;
 	min-height: 100vh;
+	padding: 1em;
+}
+
+.card-width {
+	width: 100%;
+	// Medium devices (tablets, 768px and up)
+	@media (min-width: 768px) { width: 90%; }
+
+	// Large devices (desktops, 992px and up)
+	@media (min-width: 992px) {width: 70%; }
+
+	// Extra large devices (large desktops, 1200px and up)
+	@media (min-width: 1200px) { width: 50%; }
 }
 
 .background {
+	background-attachment: fixed;
 	background-image: url('table.jpg');
 }

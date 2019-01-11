@@ -22,6 +22,12 @@ export default class ChessGame {
 		this.game.header(color, name);
 	}
 
+	public getName(color: 'White' | 'Black'): string | undefined {
+		const name = this.game.header()[color];
+		if (name) return name;
+		return undefined;
+	}
+
 	public get(x: number, y: number): Piece | null {
 		return this.game.get(this.actualSquare(x, y));
 	}

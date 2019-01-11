@@ -33,7 +33,7 @@ export default class MainApp extends React.Component<{}, IAppState> {
 					alignItems="center"
 					className={gridClass.join(' ')}
 				>
-					<Grid item={true}>
+					<Grid item={true} style={{ width: '100%' }}>
 						<DisplayComponent
 							chess={chess}
 						/>
