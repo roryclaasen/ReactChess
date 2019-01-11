@@ -21,7 +21,6 @@ interface IDisplayState {
 	update: number;
 	expand: {
 		[key: string]: string | undefined;
-
 		game: string | undefined;
 	};
 }
