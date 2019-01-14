@@ -1,40 +1,111 @@
-@import 'vars';
-@import 'table';
+@import '../../../scss/vars';
+@import '../../../scss/mixins';
 
-.game-info-panel {
-	height: 100%;
-	position: relative;
-	width: $panel-width;
+.chess-card {
+	padding: 0;
+}
 
-	.panel-actions {
-		bottom: 0;
-		margin-bottom: 4px;
-		position: absolute;
-		width: 100%;
+.chess {
+	@include select(none);
 
-		@media (min-width: 600px) {
-			margin-bottom: 12px;
+	// background-color: $cell-color-light;
+	border-collapse: collapse;
+	font-family: $font-board;
+
+	tr {
+		td,
+		.piece-parent {
+			height: $cell-size-small;
+			line-height: $cell-size-small;
+			padding: 0;
+			position: relative;
+			text-align: center;
+			vertical-align: middle;
+			width: $cell-size-small;
+
+			@media (min-width: 768px) {
+				height: $cell-size;
+				line-height: $cell-size;
+				width: $cell-size;
+			}
 		}
 
-		button {
-			margin: auto;
-		}
-	}
+		td {
+			span {
+				display: inline-block;
 
-	.list {
-		max-height: $panel-width;
-		overflow-y: auto;
+				&.note {
+					bottom: 0;
+					font-size: $note-size;
+					left: 0;
+					line-height: $note-size;
+					opacity: .8;
+					padding: .18rem;
+					pointer-events: none;
+					position: absolute;
+				}
+			}
 
-		.item {
-			margin-bottom: 2px;
-			padding-bottom: 2px;
-			padding-left: 0;
-			padding-top: 2px;
+			.overlay {
+				border-radius: 50%;
+				height: 80%;
+				left: 0;
+				margin: 10%;
+				opacity: .25;
+				position: absolute;
+				top: 0;
+				width: 80%;
+				z-index: 1;
 
-			.text {
-				width: calc(100% - 40px / 2);
+				&.deny { background-color: $drag-deny; }
+				&.available { background-color: $drag-available; }
+				&.valid { background-color: $drag-valid; }
+			}
+
+			&.color {
+				min-height: $cell-size-small;
+				min-width: $cell-size-small;
+
+				@media (min-width: 768px) {
+					min-height: $cell-size;
+					min-width: $cell-size;
+				}
+
+				&.light {
+					background-color: $cell-color-light;
+					color: darken($cell-color-dark, 20%);
+				}
+
+				&.dark {
+					background-color: $cell-color-dark;
+					color: lighten($cell-color-light, 20%);
+				}
+			}
+
+			.piece-parent {
+				bottom: 0;
+				left: 0;
+				position: absolute;
+
+				.piece {
+					cursor: move;
+					display: inline-block;
+					margin: auto;
+
+					max-height: calc(#{$cell-size-small} - 10px);
+					max-width: calc(#{$cell-size-small} - 10px);
+					vertical-align: middle;
+
+					@media (min-width: 768px) {
+						max-height: $cell-size;
+						max-width: $cell-size;
+					}
+
+					&.dragging {
+						opacity: $drag-opacity;
+					}
+				}
 			}
 		}
 	}
 }
-

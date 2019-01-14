@@ -1,101 +1,86 @@
-import * as React from 'react';
+import React from 'react';
 
-import DefaultBlackBishop from './default/b_bishop.png';
-import DefaultBlackKing from './default/b_king.png';
-import DefaultBlackKnight from './default/b_knight.png';
-import DefaultBlackQueen from './default/b_queen.png';
-import DefaultBlackPawn from './default/b_pawn.png';
-import DefaultBlackRook from './default/b_rook.png';
+import BlackPawn from './default/b_pawn.png';
+import BlackKnight from './default/b_knight.png';
+import BlackBishop from './default/b_bishop.png';
+import BlackRook from './default/b_rook.png';
+import BlackQueen from './default/b_queen.png';
+import BlackKing from './default/b_king.png';
 
-import DefaultWhiteBishop from './default/w_bishop.png';
-import DefaultWhiteKing from './default/w_king.png';
-import DefaultWhiteKnight from './default/w_knight.png';
-import DefaultWhiteQueen from './default/w_queen.png';
-import DefaultWhitePawn from './default/w_pawn.png';
-import DefaultWhiteRook from './default/w_rook.png';
+import WhitePawn from './default/w_pawn.png';
+import WhiteKnight from './default/w_knight.png';
+import WhiteBishop from './default/w_bishop.png';
+import WhiteRook from './default/w_rook.png';
+import WhiteQueen from './default/w_queen.png';
+import WhiteKing from './default/w_king.png';
 
-import { PieceColors, PieceTypes } from '../../constants';
+import { Piece } from 'chess.js';
 
-interface IPieceList {
-	[key: string]: string;
-
-	BISHOP: string;
-	KING: string;
-	KNIGHT: string;
-	QUEEN: string;
+interface IPieces {
 	PAWN: string;
+	KNIGHT: string;
+	BISHOP: string;
 	ROOK: string;
+	QUEEN: string;
+	KING: string;
 }
 
-interface IPieceSet {
-	[key: string]: IPieceList;
-
-	BLACK: IPieceList;
-	WHITE: IPieceList;
+interface ISourceSet {
+	BLACK: IPieces;
+	WHITE: IPieces;
 }
 
 class PieceManager {
-	private source: { [key: string]: IPieceSet };
-	private currentKey: string;
+	private source: ISourceSet;
 
 	constructor() {
-		this.source = {};
-
-		this.addSet('Default', {
+		this.source = {
 			BLACK: {
-				BISHOP: DefaultBlackBishop,
-				KING: DefaultBlackKing,
-				KNIGHT: DefaultBlackKnight,
-				QUEEN: DefaultBlackQueen,
-				PAWN: DefaultBlackPawn,
-				ROOK: DefaultBlackRook
+				PAWN: BlackPawn,
+				KNIGHT: BlackKnight,
+				BISHOP: BlackBishop,
+				ROOK: BlackRook,
+				QUEEN: BlackQueen,
+				KING: BlackKing
 			},
 			WHITE: {
-				BISHOP: DefaultWhiteBishop,
-				KING: DefaultWhiteKing,
-				KNIGHT: DefaultWhiteKnight,
-				QUEEN: DefaultWhiteQueen,
-				PAWN: DefaultWhitePawn,
-				ROOK: DefaultWhiteRook
+				PAWN: WhitePawn,
+				KNIGHT: WhiteKnight,
+				BISHOP: WhiteBishop,
+				ROOK: WhiteRook,
+				QUEEN: WhiteQueen,
+				KING: WhiteKing
 			}
-		});
-
-		this.currentKey = this.keys[0];
+		};
 	}
 
-	public get current(): IPieceSet {
-		return this.source[this.currentKey];
+	get(piece: Piece): string {
+		let set;
+		if (piece.color === 'b') set = this.source.BLACK;
+		if (piece.color === 'w') set = this.source.WHITE;
+		if (!set) return '';
+		if (piece.type === 'p') return set.PAWN;
+		if (piece.type === 'n') return set.KNIGHT;
+		if (piece.type === 'b') return set.BISHOP;
+		if (piece.type === 'r') return set.ROOK;
+		if (piece.type === 'q') return set.QUEEN;
+		if (piece.type === 'k') return set.KING;
+		return '';
 	}
 
-	public get keys(): string[] {
-		return Object.keys(this.source);
-	}
-
-	public changeCurrent(key: string): void {
-		if (!(key in this.keys)) return;
-		this.currentKey = key;
-	}
-
-	public getImageDataString(color: PieceColors, type: PieceTypes): string {
-		return this.current[PieceColors[color]][PieceTypes[type]];
-	}
-
-	public getImageElement(color: PieceColors, type: PieceTypes): HTMLImageElement {
+	getImageElement(piece: Piece): HTMLImageElement {
 		const image = new Image();
-		image.src = this.getImageDataString(color, type);
+		image.src = this.get(piece);
 		return image;
 	}
 
-	public getImageJSX(color: PieceColors, type: PieceTypes): JSX.Element {
-		return (
-			<img src={this.getImageDataString(color, type)} />
-		);
-	}
-
-	private addSet(key: string, set: IPieceSet): void {
-		this.source[key] = set;
+	getImageJSX(piece: Piece, className: string | string[] = ''): JSX.Element {
+		let styleClass: string[] = [];
+		if (className instanceof String) styleClass.push(className as string);
+		else styleClass = className as string[];
+		return <img src={this.get(piece)} alt={`${piece.color} ${piece.type}`} className={styleClass.join(' ')} />;
 	}
 }
 
 const manager = new PieceManager();
-export default manager as PieceManager;
+export default manager;

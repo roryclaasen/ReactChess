@@ -1,12 +1,17 @@
+@import '../scss/vars';
+
 body {
-	font-family: 'Roboto Slab', serif;
+	font-family: $font-global;
+	overflow-y: scroll;
 }
 
 .grid-main {
 	height: 100%;
 	min-height: 100vh;
+	padding: 1em;
 }
 
 .background {
+	background-attachment: fixed;
 	background-image: url('table.jpg');
 }

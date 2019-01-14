@@ -1,0 +1,20 @@
+// index.scss
+
+$font-global: 'Roboto Slab', serif;
+
+
+// board.scss
+
+$font-board: 'Noto Serif', serif;
+
+$cell-size: 3.5rem;
+$cell-size-small: 2.25rem;
+$note-size: .75rem;
+
+$cell-color-light: rgb(124, 76, 62);
+$cell-color-dark: rgb(81, 42, 42);
+
+$drag-opacity: .5;
+$drag-deny: rgb(255, 0, 0);
+$drag-available: rgb(255, 255, 0);
+$drag-valid: rgb(0, 255, 0);

@@ -1,138 +1,35 @@
 import * as React from 'react';
 
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import { DragDropContextProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import TouchBackend from 'react-dnd-touch-backend';
+import { isMobile } from 'react-device-detect';
 
+import Grid from '@material-ui/core/Grid';
 import GithubCorner from 'react-github-corner';
 
-import Board from '../../game/board';
-import GameBoard from './board/board.game';
-import Options from '../options.client';
-import OptionsModal from './options';
-import MainMenu from './home';
+import ChessGame from '../../game';
 
-export enum MainAppStage {
-	MENU, LOCAL, AI
+import DisplayComponent from './display';
+
+interface IAppState {
+	chess: ChessGame;
 }
 
-export interface IMainAppState {
-	options: Options;
-	optionsOpen: boolean;
-	board: Board;
-	update: number;
-	stage: MainAppStage;
-}
+const BACKEND = isMobile ? TouchBackend : HTML5Backend;
 
-export default class MainApp extends React.Component<{}, IMainAppState> {
+export default class MainApp extends React.Component<{}, IAppState> {
 	constructor(props: any) {
 		super(props);
 
 		this.state = {
-			options: new Options(),
-			optionsOpen: false,
-			board: new Board(),
-			update: 0,
-			stage: MainAppStage.MENU
+			chess: new ChessGame()
 		};
 	}
 
-	private updateOptions = (options: Options) => {
-		const { update } = this.state;
-		this.setState({
-			options,
-			update: update + 1
-		});
-	}
-
-	private showOptions = () => this.setState({ optionsOpen: true });
-	private closeOptions = () => this.setState({ optionsOpen: false });
-	private mainMenu = () => this.setState({ stage: MainAppStage.MENU });
-	private playLocal = () => this.setState({ stage: MainAppStage.LOCAL, board: new Board() });
-	private newGame = () => this.setState({ board: new Board() });
-
-	public render(): JSX.Element {
-		const { board, options, optionsOpen, update, stage } = this.state;
-		// TODO: Better menu & user interface infomation
-		const gridClass = ['grid-main'];
-		if (options.showBackground) gridClass.push('background');
-
-		let currentStage;
-		switch (stage) {
-			case MainAppStage.MENU: {
-				currentStage = (
-					<MainMenu>
-						<Button
-							size="small"
-							variant="outlined"
-							onClick={this.showOptions}
-						>
-							Options
-						</Button>
-						<Button
-							size="small"
-							variant="outlined"
-							onClick={this.playLocal}
-						>
-							Pass and Play
-						</Button>
-						<Button
-							size="small"
-							variant="outlined"
-							disabled={true}
-						>
-							Play AI
-						</Button>
-					</MainMenu>
-				);
-				break;
-			}
-			case MainAppStage.LOCAL: {
-				currentStage = (
-					<GameBoard
-						board={board}
-						options={options}
-						key={`board ${update}`}
-					>
-						<Grid container={true} spacing={8}>
-							<Grid item={true} xs={12}>
-								<Button
-									size="small"
-									variant="outlined"
-									onClick={this.showOptions}
-								>
-									Options
-								</Button>
-							</Grid>
-							<Grid item={true} xs={6}>
-								<Button
-									size="small"
-									color="secondary"
-									variant="outlined"
-									onClick={this.newGame}
-								>
-									New Game
-								</Button>
-							</Grid>
-							<Grid item={true} xs={6}>
-								<Button
-									size="small"
-									color="primary"
-									variant="outlined"
-									onClick={this.mainMenu}
-								>
-									Main Menu
-								</Button>
-							</Grid>
-						</Grid>
-					</GameBoard>
-				);
-				break;
-			}
-			default: {
-				currentStage = <React.Fragment />;
-				break;
-			}
-		}
+	render() {
+		const { chess } = this.state;
+		const gridClass = ['grid-main', 'background'];
 
 		return (
 			<React.Fragment>
@@ -143,16 +40,14 @@ export default class MainApp extends React.Component<{}, IMainAppState> {
 					alignItems="center"
 					className={gridClass.join(' ')}
 				>
-					<Grid item={true}>
-						{currentStage}
+					<Grid item={true} xs={12}>
+						<DragDropContextProvider backend={BACKEND as any}>
+							<DisplayComponent
+								chess={chess}
+							/>
+						</DragDropContextProvider>
 					</Grid>
 				</Grid>
-				<OptionsModal
-					options={options}
-					open={optionsOpen}
-					close={this.closeOptions}
-					updateOptions={this.updateOptions}
-				/>
 				<GithubCorner
 					href="https://github.com/roryclaasen/ReactChess"
 					bannerColor="rgba(0, 0, 0, 0.75)"

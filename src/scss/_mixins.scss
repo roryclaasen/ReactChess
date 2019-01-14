@@ -1,0 +1,6 @@
+@mixin select($select) {
+	-moz-user-select: $select;
+	-ms-user-select: $select;
+	-webkit-user-select: $select;
+	user-select: $select;
+}

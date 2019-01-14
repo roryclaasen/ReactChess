@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
+		"module": "esnext",
 		"target": "es5",
 		"esModuleInterop": true,
 		"sourceMap": true,
@@ -10,7 +10,20 @@
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"outDir": "./build/",
-		"jsx": "react"
+		"jsx": "preserve",
+		"skipLibCheck": false,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"lib": [
+			"es2015",
+			"es2017",
+			"dom"
+		]
 	},
 	"include": [
 		"src/**/*"
