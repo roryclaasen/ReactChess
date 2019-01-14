@@ -88,9 +88,8 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 				direction="column"
 				alignItems="center"
 				spacing={16}
-				style={{ width: '100%' }}
 			>
-				<Grid item={true} className="card-width">
+				<Grid item={true} xs={12} style={{ width: '100%' }}>
 					<Card key={`card${update}`}>
 						<CardContent>
 							<Typography color="textSecondary">
@@ -111,7 +110,7 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 						update={this.update}
 					/>
 				</Grid>
-				<Grid item={true} className="card-width">
+				<Grid item={true} xs={12}>
 					<ExpansionPanel expanded={expand.game === 'options'} onChange={this.expandChange('options')}>
 						<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
 							<Typography>Game Options</Typography>
