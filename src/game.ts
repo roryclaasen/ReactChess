@@ -11,10 +11,16 @@ export default class ChessGame {
 	}
 
 	public newGame(fen?: string): void {
+		const names = {
+			white: this.getName('White'),
+			black: this.getName('Black')
+		};
 		const date = new Date();
 		this.game = new chess();
 		if (fen) this.game.load(fen);
 		this.game.header('date', date.toLocaleDateString('en-GB'));
+		if (names.white) this.setName('White', names.white);
+		if (names.black) this.setName('Black', names.black);
 	}
 
 	public setName(color: 'White' | 'Black', name: string): void {

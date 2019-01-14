@@ -69,13 +69,11 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 		this.update();
 	}
 
-	private expandChange = (panel: string) => (event: any, isExpanded: boolean) => {
-		this.setState({
-			expand: {
-				game: isExpanded ? panel : undefined
-			}
-		});
-	}
+	private expandChange = (panel: string) => (event: any, isExpanded: boolean) => this.setState({
+		expand: {
+			game: isExpanded ? panel : undefined
+		}
+	})
 
 	private newGame = () => {
 		const { chess } = this.props;
@@ -83,15 +81,13 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 		this.update();
 	}
 
-	private dialogOpen = () => {
-		this.setState({
-			dialog: {
-				open: true,
-				input: '',
-				error: false
-			}
-		});
-	}
+	private dialogOpen = () => this.setState({
+		dialog: {
+			open: true,
+			input: '',
+			error: false
+		}
+	})
 
 	private dialogClose = () => {
 		const { update } = this.state;
@@ -130,15 +126,13 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 		}
 	}
 
-	private fenChange = (event: any) => {
-		this.setState({
-			dialog: {
-				open: true,
-				input: event.target.value,
-				error: false
-			}
-		});
-	}
+	private fenChange = (event: any) => this.setState({
+		dialog: {
+			open: true,
+			input: event.target.value,
+			error: false
+		}
+	})
 
 	public render(): JSX.Element {
 		const { chess } = this.props;
@@ -149,12 +143,10 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 
 		if (chess.instance.game_over()) {
 			turn = 'Game over';
-			if (chess.instance.in_check()) {
-				turn += ', ';
-				if (chess.turnColor() === 'White') turn += chess.opponent();
-				else turn += chess.turn();
-				turn += ' Wins!';
-			} else turn += `, ${chess.turn()} wins`;
+
+			// TODO: Test this works as expected
+			if (chess.instance.in_check()) turn += `, ${chess.opponent()} Wins!`;
+			else turn += `, ${chess.turn()} wins`;
 			if (chess.instance.in_draw()) turn = 'Draw!';
 		}
 
