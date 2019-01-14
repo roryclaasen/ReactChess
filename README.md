@@ -1,5 +1,21 @@
 # React Chess
 
+## Docker
+
+### Build Docker Image
+
+```shell
+$ npm run build
+  ...
+  Creating an optimized production build
+  ...
+```
+
+```shell
+$ docker build -t roryclaasen/reactchess .
+  ...
+```
+
 ## Branches
 
 | Branch | Travis CI | Server |

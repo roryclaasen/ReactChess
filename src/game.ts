@@ -3,7 +3,6 @@ import { ChessInstance, Square, Move, Piece } from 'chess.js';
 const chess = require('chess.js');
 
 export default class ChessGame {
-
 	protected game: ChessInstance;
 
 	constructor() {
@@ -11,7 +10,7 @@ export default class ChessGame {
 		this.newGame();
 	}
 
-	public newGame(fen?: string) {
+	public newGame(fen?: string): void {
 		const date = new Date();
 		this.game = new chess();
 		if (fen) this.game.load(fen);
@@ -64,7 +63,7 @@ export default class ChessGame {
 		return board;
 	}
 
-	private boardRow(y: number) {
+	private boardRow(y: number): (Piece | null)[] {
 		const row = [];
 		for (let x = 0; x < 8; x += 1) {
 			row.push(this.get(x, y));

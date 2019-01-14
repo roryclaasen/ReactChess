@@ -141,13 +141,16 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 							<Typography>Game FEN</Typography>
 						</ExpansionPanelSummary>
 						<ExpansionPanelDetails>
-							<Typography
-								component="code"
+							<TextField
+								label="Forsyth–Edwards Notation (FEN)"
 								key={`fen${update}`}
-								style={{ wordWrap: 'break-word' }}
-							>
-								{chess.instance.fen()}
-							</Typography>
+								defaultValue={chess.instance.fen()}
+								InputProps={{
+									readOnly: true
+								}}
+								variant="outlined"
+								style={{ width: '100%' }}
+							/>
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
 				</Grid >
