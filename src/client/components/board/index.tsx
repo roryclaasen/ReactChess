@@ -1,10 +1,5 @@
 import React from 'react';
 
-import { DragDropContextProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-import TouchBackend from 'react-dnd-touch-backend';
-import { isMobile } from 'react-device-detect';
-
 import Card from '@material-ui/core/Card';
 
 import ChessGame from '../../../game';
@@ -25,7 +20,6 @@ interface IBoardState {
 }
 
 export default class BoardComponent extends React.Component<IBoardProps, IBoardState> {
-	private backend: any;
 
 	constructor(props: IBoardProps) {
 		super(props);
@@ -33,8 +27,6 @@ export default class BoardComponent extends React.Component<IBoardProps, IBoardS
 		this.state = {
 			update: 0
 		};
-		if (isMobile) this.backend = TouchBackend;
-		else this.backend = HTML5Backend;
 	}
 
 	private handleMove = (x1: number, y1: number, x2: number, y2: number) => {
@@ -57,30 +49,29 @@ export default class BoardComponent extends React.Component<IBoardProps, IBoardS
 			<Card className="chess-card" style={{ backgroundColor: 'initial' }}>
 				<table key={update} className="chess">
 					<tbody>
-						<DragDropContextProvider backend={this.backend}>
-							{chess.board(flip).map((row, y) => (
-								<tr key={flip ? y : 7 - y}>
-									{row.map((item, x) => (
-										<SquareComponent
-											key={x}
-											chess={chess}
-											x={x}
-											y={flip ? y : 7 - y}
-											flip={flip}
-											move={this.handleMove}
-										>
-											{item !== null &&
-												<PieceComponent
-													piece={item}
-													x={x}
-													y={flip ? y : 7 - y}
-												/>
-											}
-										</SquareComponent>
-									))}
-								</tr>
-							))}
-						</DragDropContextProvider>
+						{chess.board(flip).map((row, y) => (
+							<tr key={flip ? y : 7 - y}>
+								{row.map((item, x) => (
+									<SquareComponent
+										key={x}
+										chess={chess}
+										x={x}
+										y={flip ? y : 7 - y}
+										flip={flip}
+										move={this.handleMove}
+									>
+										{item !== null &&
+											<PieceComponent
+												piece={item}
+												x={x}
+												y={flip ? y : 7 - y}
+											/>
+										}
+									</SquareComponent>
+								))}
+							</tr>
+						))}
+						{/* </DragDropContextProvider> */}
 					</tbody>
 				</table>
 			</Card>
