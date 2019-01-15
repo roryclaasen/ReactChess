@@ -7,7 +7,6 @@
 		"url": "git+https://github.com/roryclaasen/ReactChess.git"
 	},
 	"author": "Rory Claasen",
-	"homepage" : "http://roryclaasen.github.io/ReactChess",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/roryclaasen/ReactChess/issues"
