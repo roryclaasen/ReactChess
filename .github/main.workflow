@@ -36,13 +36,13 @@ action "Login Heroku" {
 workflow "Develop Test, Build And Deploy" {
 	on = "push"
 	resolves = [
-		"Docker build",
+		"Docker Build",
 		"Release Heroku Develop",
 	]
 }
 
 action "Filter Develop" {
-	needs = ["Docker build"]
+	needs = ["Docker Build"]
 	uses = "actions/bin/filter@master"
 	args = "branch develop"
 }
@@ -71,7 +71,7 @@ workflow "Production Develop Build And Deploy" {
 }
 
 action "Filter Production" {
-	needs = ["Docker build"]
+	needs = ["Docker Build"]
 	uses = "actions/bin/filter@master"
 	args = "branch master"
 }
