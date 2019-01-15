@@ -42,7 +42,7 @@ action "Login Heroku" {
 }
 
 action "Push Heroku Production" {
-	needs = ["Filter Production"]
+	needs = ["Login Heroku"]
 	uses = "actions/heroku@master"
 	args = "container:push -a react-chessgame web"
 	secrets = ["HEROKU_API_KEY"]
