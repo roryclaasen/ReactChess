@@ -30,7 +30,7 @@ action "Docker build" {
 }
 
 action "Filter Develop" {
-	needs = ["Login Heroku"]
+	needs = ["Docker build"]
 	uses = "actions/bin/filter@master"
 	args = "branch develop"
 }
