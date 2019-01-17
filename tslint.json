@@ -26,6 +26,7 @@
 		"variable-name": [true, "allow-leading-underscore"],
 		"import-name": false,
 		"max-line-length": false,
-		"jsx-no-multiline-js": false
+		"jsx-no-multiline-js": false,
+		"jsx-no-lambda": false
 	}
 }

@@ -10,14 +10,10 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
 import BoardComponent from './board';
 import ChessGame from '../../game';
+
+import DialogMessage, { IDialogOptions } from './dialog-message';
 
 interface IDisplayProps {
 	chess: ChessGame;
@@ -29,11 +25,7 @@ interface IDisplayState {
 		[key: string]: string | undefined;
 		game: string | undefined;
 	};
-	dialog: {
-		open: boolean;
-		input: string;
-		error: boolean;
-	};
+	dialog: IDialogOptions;
 }
 
 export default class DisplayComponent extends React.Component<IDisplayProps, IDisplayState> {
@@ -47,13 +39,15 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 			},
 			dialog: {
 				open: false,
-				input: '',
-				error: false
+				title: '',
+				agree: 'Agree',
+				message: ''
 			}
 		};
 
 		this.update = this.update.bind(this);
-		// this.fenChange = this.fenChange.bind(this);
+		this.newGame = this.newGame.bind(this);
+		this.closeDialogAndUpdate = this.closeDialogAndUpdate.bind(this);
 	}
 
 	public update = () => {
@@ -61,6 +55,16 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 		this.setState({
 			update: update + 1
 		});
+	}
+
+	public closeDialogAndUpdate = (options: IDialogOptions) => {
+		const { update } = this.state;
+		this.setState({
+			update: update + 1,
+			dialog: options
+		});
+
+		// FIXME: STOP THE DIALOG FROM REOPING AFTER PIECE MOVE!!!
 	}
 
 	private nameChange = (name: 'White' | 'Black') => (event: any) => {
@@ -75,64 +79,11 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 		}
 	})
 
-	private newGame = () => {
+	private newGame = (fen?: string) => {
 		const { chess } = this.props;
-		chess.newGame();
+		chess.newGame(fen);
 		this.update();
 	}
-
-	private dialogOpen = () => this.setState({
-		dialog: {
-			open: true,
-			input: '',
-			error: false
-		}
-	})
-
-	private dialogClose = () => {
-		const { update } = this.state;
-		const { input } = this.state.dialog;
-		if (input && input.length > 0) {
-			const { chess } = this.props;
-			const valid = chess.instance.validate_fen(input);
-			if (valid.valid) {
-				chess.newGame(input);
-				this.setState({
-					dialog: {
-						open: false,
-						input: '',
-						error: false
-					},
-					update: update + 1
-				});
-			} else {
-				this.setState({
-					dialog: {
-						input,
-						open: true,
-						error: true
-					}
-				});
-				return;
-			}
-		} else {
-			this.setState({
-				dialog: {
-					open: false,
-					input: '',
-					error: false
-				}
-			});
-		}
-	}
-
-	private fenChange = (event: any) => this.setState({
-		dialog: {
-			open: true,
-			input: event.target.value,
-			error: false
-		}
-	})
 
 	public render(): JSX.Element {
 		const { chess } = this.props;
@@ -161,6 +112,7 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 				alignItems="center"
 				spacing={16}
 			>
+				<DialogMessage all={dialog} key={`dialog${update}`} />
 				<Grid item={true} xs={12} style={{ width: '100%' }}>
 					<Card key={`card${update}`}>
 						<CardContent>
@@ -213,7 +165,7 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 									<Button
 										variant="outlined"
 										style={{ height: '100%' }}
-										onClick={this.newGame}
+										onClick={() => this.newGame()}
 									>
 										New Game
 									</Button>
@@ -243,38 +195,32 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 									<Button
 										variant="outlined"
 										style={{ height: '100%', float: 'right' }}
-										onClick={this.dialogOpen}
+										onClick={() => {
+											const { update } = this.state;
+											this.setState({
+												update: update + 1,
+												dialog: {
+													open: true,
+													title: 'Change FEN',
+													message: 'Enter a valid Forsyth–Edwards Notation (FEN)',
+													agree: 'Set FEN',
+													disagree: 'Cancel',
+													input: '',
+													action: (input?: string) => {
+														if (input === undefined) return false;
+														const valid = chess.instance.validate_fen(input).valid;
+														if (valid) chess.newGame(input);
+														return valid;
+													},
+													onClose: (value: boolean, state: IDialogOptions) => {
+														if (value) this.closeDialogAndUpdate(state);
+													}
+												}
+											});
+										}}
 									>
 										Change
 									</Button>
-									<Dialog open={dialog.open} onClose={this.dialogClose} aria-labelledby="form-dialog-title">
-										<DialogTitle id="form-dialog-title">Change FEN</DialogTitle>
-										<DialogContent>
-											<DialogContentText>
-												Enter a valid Forsyth–Edwards Notation (FEN)
-											</DialogContentText>
-											<TextField
-												error={dialog.error}
-												autoFocus={true}
-												variant="outlined"
-												margin="dense"
-												id="FEN"
-												label="Forsyth–Edwards Notation (FEN)"
-												type="text"
-												fullWidth={true}
-												value={dialog.input}
-												onChange={this.fenChange}
-											/>
-										</DialogContent>
-										<DialogActions>
-											<Button onClick={this.dialogClose} color="primary">
-												Cancel
-											</Button>
-											<Button onClick={this.dialogClose} color="primary">
-												Set FEN
-											</Button>
-										</DialogActions>
-									</Dialog>
 								</Grid>
 							</Grid>
 						</ExpansionPanelDetails>

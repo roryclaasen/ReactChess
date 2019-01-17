@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { DragDropContextProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -8,27 +8,12 @@ import { isMobile } from 'react-device-detect';
 import Grid from '@material-ui/core/Grid';
 import GithubCorner from 'react-github-corner';
 
-import ChessGame from '../../game';
-
-import DisplayComponent from './display';
-
-interface IAppState {
-	chess: ChessGame;
-}
+import AppRouter from './router';
 
 const BACKEND = isMobile ? TouchBackend : HTML5Backend;
 
-export default class MainApp extends React.Component<{}, IAppState> {
-	constructor(props: any) {
-		super(props);
-
-		this.state = {
-			chess: new ChessGame()
-		};
-	}
-
+export default class MainApp extends React.Component<{}, {}> {
 	render() {
-		const { chess } = this.state;
 		const gridClass = ['grid-main', 'background'];
 
 		return (
@@ -42,9 +27,7 @@ export default class MainApp extends React.Component<{}, IAppState> {
 				>
 					<Grid item={true} xs={12}>
 						<DragDropContextProvider backend={BACKEND as any}>
-							<DisplayComponent
-								chess={chess}
-							/>
+							<AppRouter />
 						</DragDropContextProvider>
 					</Grid>
 				</Grid>
