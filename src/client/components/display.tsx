@@ -14,6 +14,7 @@ import BoardComponent from './board';
 import ChessGame from '../../game';
 
 import DialogMessage, { IDialogOptions } from './dialog-message';
+import { Link } from 'react-router-dom';
 
 interface IDisplayProps {
 	chess: ChessGame;
@@ -27,6 +28,8 @@ interface IDisplayState {
 	};
 	dialog: IDialogOptions;
 }
+
+const LINK_MENU = (props: any) => <Link to="/" {...props} />;
 
 export default class DisplayComponent extends React.Component<IDisplayProps, IDisplayState> {
 	constructor(props: IDisplayProps) {
@@ -63,8 +66,6 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 			update: update + 1,
 			dialog: options
 		});
-
-		// FIXME: STOP THE DIALOG FROM REOPING AFTER PIECE MOVE!!!
 	}
 
 	private nameChange = (name: 'White' | 'Black') => (event: any) => {
@@ -95,7 +96,7 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 		if (chess.instance.game_over()) {
 			turn = 'Game over';
 
-			// TODO: Test this works as expected
+			// TODO Test this works as expected
 			if (chess.instance.in_check()) turn += `, ${chess.opponent()} Wins!`;
 			else turn += `, ${chess.turn()} wins`;
 			if (chess.instance.in_draw()) turn = 'Draw!';
@@ -118,6 +119,13 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 						<CardContent>
 							<Typography color="textSecondary">
 								{header.date}
+								<Button
+									variant="outlined"
+									style={{ float: 'right' }}
+									component={LINK_MENU}
+								>
+									Leave Game
+								</Button>
 							</Typography>
 							<Typography variant="h5" component="h2">
 								{turn}
@@ -212,9 +220,7 @@ export default class DisplayComponent extends React.Component<IDisplayProps, IDi
 														if (valid) chess.newGame(input);
 														return valid;
 													},
-													onClose: (value: boolean, state: IDialogOptions) => {
-														if (value) this.closeDialogAndUpdate(state);
-													}
+													onClose: (value: boolean, state: IDialogOptions) => this.closeDialogAndUpdate(state)
 												}
 											});
 										}}

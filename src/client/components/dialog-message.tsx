@@ -42,11 +42,11 @@ export default class DialogMessage extends React.Component<IDialogProps | IDialo
 		let result = true;
 		if (agreed === true && action !== undefined) result = action(input);
 		if (result) {
-			this.setState({
-				open: false,
-				action: undefined
-			});
-			if (onClose) onClose(agreed !== undefined ? agreed : false, this.state);
+			const newState = { ... this.state };
+			newState.open = false;
+			newState.action = undefined;
+			this.setState(newState);
+			if (onClose) onClose(agreed !== undefined ? agreed : false, newState);
 		} else if (input) this.setState({ inputError: true });
 		return result;
 	}

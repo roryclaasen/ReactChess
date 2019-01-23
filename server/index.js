@@ -18,6 +18,10 @@ app.get([
 	res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
 });
 
+app.get([
+	'/favicon.png'
+], (req, res) => res.sendFile(path.join(__dirname, '..', 'build', 'chess-knight-32.png')));
+
 app.get('/license', (req, res) => {
 	res.sendFile(path.join(__dirname, '..', 'LICENSE.md'));
 });
